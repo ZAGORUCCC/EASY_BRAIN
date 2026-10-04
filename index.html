@@ -1,11 +1,10 @@
-[04.10.2026 21:40] @FarmBrainrots_bot: <!DOCTYPE html>
+[04.10.2026 21:46] @FarmBrainrots_bot: <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Brain</title>
 
-    <!-- Telegram Mini App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
@@ -13,15 +12,18 @@
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
         }
 
         /* СТАРТОВИЙ ЕКРАН */
         #startScreen {
+            width: 100%;
             min-height: 100vh;
             background: white;
 
@@ -36,6 +38,7 @@
 
         .logo {
             margin: 0 0 60px 0;
+
             font-family: "Trebuchet MS", Arial, sans-serif;
             font-size: 58px;
             font-weight: 800;
@@ -62,12 +65,14 @@
             transform: scale(0.97);
         }
 
-        /* ЕКРАН МЕНЮ */
+        /* МЕНЮ */
         #menuScreen {
             display: none;
 
-            min-height: 100vh;
+            position: relative;
+
             width: 100%;
+            min-height: 100vh;
 
             background:
                 radial-gradient(
@@ -76,22 +81,20 @@
                     #160c24 35%,
                     #050505 75%
                 );
-
-            position: relative;
         }
 
         /* НИЖНЄ МЕНЮ */
         .bottom-menu {
             position: absolute;
 
-            bottom: 35px;
             left: 50%;
+            bottom: 35px;
 
             transform: translateX(-50%);
 
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
 
             gap: 20px;
 
@@ -99,6 +102,8 @@
         }
 
         .menu-button {
+            padding: 8px 10px;
+
             background: transparent;
             border: none;
 
@@ -108,8 +113,6 @@
             font-weight: 600;
 
             cursor: pointer;
-
-            padding: 8px 10px;
         }
 
         .menu-button:active {
@@ -120,8 +123,10 @@
         #profileScreen {
             display: none;
 
-            min-height: 100vh;
             width: 100%;
+            min-height: 100vh;
+
+            padding: 35px 25px;
 
             background:
                 radial-gradient(
@@ -132,8 +137,6 @@
                 );
 
             color: white;
-
-            padding: 35px 25px;
         }
 
         .profile-header {
@@ -157,11 +160,9 @@
             background: #333;
 
             flex-shrink: 0;
-
-            display: none;
         }
 
-        .profile-avatar-placeholder {
+        .profile-placeholder {
             width: 90px;
             height: 90px;
 
@@ -169,11 +170,11 @@
 
             background: #333;
 
-            color: white;
-
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+
+            color: white;
 
             font-size: 36px;
             font-weight: bold;
@@ -183,7 +184,6 @@
 
         .profile-info {
             margin-left: 20px;
-            text-align: left;
         }
 
         .profile-name {
@@ -202,10 +202,10 @@
 
         .back-button {
             margin-top: 40px;
-[04.10.2026 21:40] @FarmBrainrots_bot: background: transparent;
-            border: none;
 
-            color: white;
+            background: transparent;
+            border: none;
+[04.10.2026 21:46] @FarmBrainrots_bot: color: white;
 
             font-size: 20px;
             font-weight: 600;
@@ -218,6 +218,7 @@
 <body>
 
     <!-- СТАРТОВИЙ ЕКРАН -->
+
     <div id="startScreen">
 
         <div class="start-container">
@@ -226,7 +227,10 @@
                 🧠 Easy Brain
             </h1>
 
-            <button class="start-button" id="startButton">
+            <button
+                type="button"
+                class="start-button"
+                id="startButton">
                 Start
             </button>
 
@@ -235,20 +239,30 @@
     </div>
 
 
-    <!-- ЕКРАН МЕНЮ -->
+    <!-- МЕНЮ -->
+
     <div id="menuScreen">
 
         <div class="bottom-menu">
 
-            <button class="menu-button" id="casesButton">
+            <button
+                type="button"
+                class="menu-button"
+                id="casesButton">
                 Cases
             </button>
 
-            <button class="menu-button" id="upgradeButton">
+            <button
+                type="button"
+                class="menu-button"
+                id="upgradeButton">
                 Upgrade
             </button>
 
-            <button class="menu-button" id="profileButton">
+            <button
+                type="button"
+                class="menu-button"
+                id="profileButton">
                 Profile
             </button>
 
@@ -258,36 +272,46 @@
 
 
     <!-- ПРОФІЛЬ -->
+
     <div id="profileScreen">
 
         <div class="profile-header">
 
-            <div id="profileAvatarPlaceholder"
-                 class="profile-avatar-placeholder">
+            <div
+                id="profilePlaceholder"
+                class="profile-placeholder">
                 ?
             </div>
 
             <img
                 id="profileAvatar"
                 class="profile-avatar"
-                alt="Avatar"
-            >
+                alt="Telegram avatar"
+                style="display: none;">
 
             <div class="profile-info">
 
-                <h2 id="profileName" class="profile-name">
+                <h2
+                    id="profileName"
+                    class="profile-name">
                     Telegram User
                 </h2>
 
                 <p class="profile-id">
-                    ID: <span id="profileId">Не визначено</span>
+                    ID:
+                    <span id="profileId">
+                        Не визначено
+                    </span>
                 </p>
 
             </div>
 
         </div>
 
-        <button class="back-button" id="backButton">
+        <button
+            type="button"
+            class="back-button"
+            id="backButton">
             ← Назад
         </button>
 
@@ -296,13 +320,16 @@
 
     <script>
 
-        /* TELEGRAM MINI APP */
+        /* TELEGRAM */
 
-        const tg = window.Telegram && window.Telegram.WebApp
-            ? window.Telegram.WebApp
-            : null;
+        let tg = null;
 
-        if (tg) {
+        if (
+            window.Telegram &&
+            window.Telegram.WebApp
+        ) {
+            tg = window.Telegram.WebApp;
+
             tg.ready();
             tg.expand();
         }
@@ -310,42 +337,54 @@
 
         /* ЕЛЕМЕНТИ */
 
-        const startButton = document.getElementById("startButton");
+        const startScreen =
+            document.getElementById("startScreen");
 
-        const startScreen = document.getElementById("startScreen");
-        const menuScreen = document.getElementById("menuScreen");
-        const profileScreen = document.getElementById("profileScreen");
+        const menuScreen =
+            document.getElementById("menuScreen");
 
-        const profileButton = document.getElementById("profileButton");
-        const backButton = document.getElementById("backButton");
+        const profileScreen =
+            document.getElementById("profileScreen");
 
-        const profileAvatar = document.getElementById("profileAvatar");
-        const profileAvatarPlaceholder =
-            document.getElementById("profileAvatarPlaceholder");
+        const startButton =
+            document.getElementById("startButton");
 
-        const profileName = document.getElementById("profileName");
-        const profileId = document.getElementById("profileId");
+        const profileButton =
+            document.getElementById("profileButton");
+
+        const backButton =
+            document.getElementById("backButton");
+
+        const profileName =
+            document.getElementById("profileName");
+
+        const profileId =
+            document.getElementById("profileId");
+
+        const profileAvatar =
+            document.getElementById("profileAvatar");
+
+        const profilePlaceholder =
+            document.getElementById("profilePlaceholder");
 
 
         /* START */
 
-        startButton.addEventListener("click", function() {
+        startButton.onclick = function () {
 
             startScreen.style.display = "none";
             menuScreen.style.display = "block";
 
-        });
+        };
 
 
-        /* ПРОФІЛЬ */
+        /* PROFILE */
 
-        profileButton.addEventListener("click", function() {
+        profileButton.onclick = function () {
 
             menuScreen.style.display = "none";
             profileScreen.style.display = "block";
 
-
-            /* Якщо Telegram передав користувача */
 
             if (
                 tg &&
@@ -353,79 +392,96 @@
                 tg.initDataUnsafe.user
             ) {
 
-                const user = tg.initDataUnsafe.user;
+                const user =
+                    tg.initDataUnsafe.user;
 
 
                 /* ID */
 
                 if (user.id) {
-                    profileId.textContent = user.id;
+                    profileId.textContent =
+                        user.id;
                 }
 
 
-                /* Ім'я */
+                /* ІМ'Я */
 
                 if (user.username) {
 
                     profileName.textContent =
                         "@" + user.username;
+[04.10.2026 21:46] @FarmBrainrots_bot: } else {
 
-                } else {
+                    let name =
+                        user.first_name || "";
 
-                    const fullName =
-                        (user.first_name || "") +
-                        (user.last_name
-                            ? " " + user.last_name
-                            : "");
+                    if (user.last_name) {
+                        name +=
+                            " " + user.last_name;
+                    }
 
                     profileName.textContent =
-                        fullName.trim() || "Telegram User";
+                        name.trim() ||
+                        "Telegram User";
                 }
 
 
-                /* Аватар */
+                /* АВАТАР */
 
                 if (user.photo_url) {
-[04.10.2026 21:40] @FarmBrainrots_bot: profileAvatar.src = user.photo_url;
 
-                    profileAvatar.style.display = "block";
-                    profileAvatarPlaceholder.style.display = "none";
+                    profileAvatar.src =
+                        user.photo_url;
+
+                    profileAvatar.style.display =
+                        "block";
+
+                    profilePlaceholder.style.display =
+                        "none";
 
                 } else {
 
-                    profileAvatar.style.display = "none";
-                    profileAvatarPlaceholder.style.display = "flex";
+                    profileAvatar.style.display =
+                        "none";
 
-                    profileAvatarPlaceholder.textContent =
+                    profilePlaceholder.style.display =
+                        "flex";
+
+                    profilePlaceholder.textContent =
                         (user.first_name || "U")
                         .charAt(0)
                         .toUpperCase();
                 }
 
-
             } else {
 
-                /* Якщо сайт відкритий НЕ через Telegram */
+                profileName.textContent =
+                    "Telegram User";
 
-                profileName.textContent = "Telegram User";
-                profileId.textContent = "Не визначено";
+                profileId.textContent =
+                    "Не визначено";
 
-                profileAvatar.style.display = "none";
-                profileAvatarPlaceholder.style.display = "flex";
-                profileAvatarPlaceholder.textContent = "?";
+                profileAvatar.style.display =
+                    "none";
+
+                profilePlaceholder.style.display =
+                    "flex";
+
+                profilePlaceholder.textContent =
+                    "?";
             }
 
-        });
+        };
 
 
         /* НАЗАД */
 
-        backButton.addEventListener("click", function() {
+        backButton.onclick = function () {
 
             profileScreen.style.display = "none";
             menuScreen.style.display = "block";
 
-        });
+        };
 
     </script>
 

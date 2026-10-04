@@ -1,416 +1,4 @@
-[04.10.2026 21:46] @FarmBrainrots_bot: <!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Brain</title>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        /* СТАРТОВИЙ ЕКРАН */
-        #startScreen {
-            width: 100%;
-            min-height: 100vh;
-            background: white;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .start-container {
-            text-align: center;
-        }
-
-        .logo {
-            margin: 0 0 60px 0;
-
-            font-family: "Trebuchet MS", Arial, sans-serif;
-            font-size: 58px;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-
-        .start-button {
-            width: 300px;
-            height: 110px;
-
-            border: none;
-            border-radius: 25px;
-
-            background: #32cd65;
-            color: white;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .start-button:active {
-            transform: scale(0.97);
-        }
-
-        /* МЕНЮ */
-        #menuScreen {
-            display: none;
-
-            position: relative;
-
-            width: 100%;
-            min-height: 100vh;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-        }
-
-        /* НИЖНЄ МЕНЮ */
-        .bottom-menu {
-            position: absolute;
-
-            left: 50%;
-            bottom: 35px;
-
-            transform: translateX(-50%);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 20px;
-
-            width: max-content;
-        }
-
-        .menu-button {
-            padding: 8px 10px;
-
-            background: transparent;
-            border: none;
-
-            color: white;
-
-            font-size: 24px;
-            font-weight: 600;
-
-            cursor: pointer;
-        }
-
-        .menu-button:active {
-            opacity: 0.6;
-        }
-
-        /* ПРОФІЛЬ */
-        #profileScreen {
-            display: none;
-
-            width: 100%;
-            min-height: 100vh;
-
-            padding: 35px 25px;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-
-            color: white;
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-
-            width: 100%;
-            max-width: 500px;
-
-            margin: 20px auto 0;
-        }
-
-        .profile-avatar {
-            width: 90px;
-            height: 90px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #333;
-
-            flex-shrink: 0;
-        }
-
-        .profile-placeholder {
-            width: 90px;
-            height: 90px;
-
-            border-radius: 50%;
-
-            background: #333;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: white;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            flex-shrink: 0;
-        }
-
-        .profile-info {
-            margin-left: 20px;
-        }
-
-        .profile-name {
-            margin: 0 0 8px;
-
-            font-size: 27px;
-            font-weight: bold;
-        }
-
-        .profile-id {
-            margin: 0;
-
-            font-size: 17px;
-            color: #bdbdbd;
-        }
-
-        .back-button {
-            margin-top: 40px;
-
-            background: transparent;
-            border: none;
-[04.10.2026 21:46] @FarmBrainrots_bot: color: white;
-
-            font-size: 20px;
-            font-weight: 600;
-
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- СТАРТОВИЙ ЕКРАН -->
-
-    <div id="startScreen">
-
-        <div class="start-container">
-
-            <h1 class="logo">
-                🧠 Easy Brain
-            </h1>
-
-            <button
-                type="button"
-                class="start-button"
-                id="startButton">
-                Start
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- МЕНЮ -->
-
-    <div id="menuScreen">
-
-        <div class="bottom-menu">
-
-            <button
-                type="button"
-                class="menu-button"
-                id="casesButton">
-                Cases
-            </button>
-
-            <button
-                type="button"
-                class="menu-button"
-                id="upgradeButton">
-                Upgrade
-            </button>
-
-            <button
-                type="button"
-                class="menu-button"
-                id="profileButton">
-                Profile
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- ПРОФІЛЬ -->
-
-    <div id="profileScreen">
-
-        <div class="profile-header">
-
-            <div
-                id="profilePlaceholder"
-                class="profile-placeholder">
-                ?
-            </div>
-
-            <img
-                id="profileAvatar"
-                class="profile-avatar"
-                alt="Telegram avatar"
-                style="display: none;">
-
-            <div class="profile-info">
-
-                <h2
-                    id="profileName"
-                    class="profile-name">
-                    Telegram User
-                </h2>
-
-                <p class="profile-id">
-                    ID:
-                    <span id="profileId">
-                        Не визначено
-                    </span>
-                </p>
-
-            </div>
-
-        </div>
-
-        <button
-            type="button"
-            class="back-button"
-            id="backButton">
-            ← Назад
-        </button>
-
-    </div>
-
-
-    <script>
-
-        /* TELEGRAM */
-
-        let tg = null;
-
-        if (
-            window.Telegram &&
-            window.Telegram.WebApp
-        ) {
-            tg = window.Telegram.WebApp;
-
-            tg.ready();
-            tg.expand();
-        }
-
-
-        /* ЕЛЕМЕНТИ */
-
-        const startScreen =
-            document.getElementById("startScreen");
-
-        const menuScreen =
-            document.getElementById("menuScreen");
-
-        const profileScreen =
-            document.getElementById("profileScreen");
-
-        const startButton =
-            document.getElementById("startButton");
-
-        const profileButton =
-            document.getElementById("profileButton");
-
-        const backButton =
-            document.getElementById("backButton");
-
-        const profileName =
-            document.getElementById("profileName");
-
-        const profileId =
-            document.getElementById("profileId");
-
-        const profileAvatar =
-            document.getElementById("profileAvatar");
-
-        const profilePlaceholder =
-            document.getElementById("profilePlaceholder");
-
-
-        /* START */
-
-        startButton.onclick = function () {
-
-            startScreen.style.display = "none";
-            menuScreen.style.display = "block";
-
-        };
-
-
-        /* PROFILE */
-
-        profileButton.onclick = function () {
-
-            menuScreen.style.display = "none";
-            profileScreen.style.display = "block";
-
-
-            if (
-                tg &&
-                tg.initDataUnsafe &&
-                tg.initDataUnsafe.user
-            ) {
-
-                const user =
-                    tg.initDataUnsafe.user;
-
-
-                /* ID */
-
-                if (user.id) {
-                    profileId.textContent =
-                        user.id;
-                }
-
-
-                /* ІМ'Я */
-
-                if (user.username) {
-
-                    profileName.textContent =
-                        "@" + user.username;
-[04.10.2026 21:51] @FarmBrainrots_bot: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -434,7 +22,12 @@
             overflow: hidden;
         }
 
-        /* START */
+        button {
+            font-family: Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ================= START ================= */
 
         #startScreen {
             width: 100%;
@@ -444,7 +37,7 @@
             align-items: center;
             justify-content: center;
 
-            background: white;
+            background: #ffffff;
         }
 
         .start-container {
@@ -459,31 +52,32 @@
             font-weight: 800;
             letter-spacing: 2px;
 
-            color: #000;
+            color: #000000;
         }
 
-        .start-button {
+        #startButton {
             width: 300px;
             height: 110px;
 
-            border: 0;
+            border: none;
             border-radius: 25px;
 
             background: #32cd65;
-            color: white;
+            color: #ffffff;
 
             font-size: 36px;
             font-weight: bold;
 
             cursor: pointer;
+
+            touch-action: manipulation;
         }
 
-        .start-button:active {
+        #startButton:active {
             transform: scale(0.97);
         }
 
-
-        /* MENU */
+        /* ================= MENU ================= */
 
         #menuScreen {
             display: none;
@@ -518,10 +112,10 @@
         }
 
         .menu-button {
-            border: 0;
+            border: none;
             background: transparent;
 
-            color: white;
+            color: #ffffff;
 
             font-size: 24px;
             font-weight: 600;
@@ -529,10 +123,11 @@
             padding: 8px 10px;
 
             cursor: pointer;
+
+            touch-action: manipulation;
         }
 
-
-        /* PROFILE */
+        /* ================= PROFILE ================= */
 
         #profileScreen {
             display: none;
@@ -550,7 +145,7 @@
                     #050505 75%
                 );
 
-            color: white;
+            color: #ffffff;
         }
 
         .profile-header {
@@ -567,19 +162,18 @@
 
             border-radius: 50%;
 
-            background: #333;
+            background: #333333;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            color: white;
+            color: #ffffff;
 
             font-size: 36px;
             font-weight: bold;
 
             overflow: hidden;
-
             flex-shrink: 0;
         }
 
@@ -607,270 +201,284 @@
             font-size: 17px;
             color: #bdbdbd;
         }
-
-        .back-button {
+[04.10.2026 21:58] @FarmBrainrots_bot: .back-button {
             margin-top: 40px;
 
-            border: 0;
+            border: none;
             background: transparent;
 
-            color: white;
+            color: #ffffff;
 
             font-size: 20px;
             font-weight: 600;
 
             cursor: pointer;
+
+            touch-action: manipulation;
         }
     </style>
 </head>
 
 <body>
 
+    <!-- START -->
 
-<!-- START SCREEN -->
+    <div id="startScreen">
 
-<div id="startScreen">
+        <div class="start-container">
 
-    <div class="start-container">
-[04.10.2026 21:51] @FarmBrainrots_bot: <h1 class="logo">
-            🧠 Easy Brain
-        </h1>
+            <h1 class="logo">
+                🧠 Easy Brain
+            </h1>
 
-        <button
-            class="start-button"
-            type="button"
-            onclick="openMenu()">
-            Start
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- MENU -->
-
-<div id="menuScreen">
-
-    <div class="bottom-menu">
-
-        <button
-            class="menu-button"
-            type="button">
-            Cases
-        </button>
-
-        <button
-            class="menu-button"
-            type="button">
-            Upgrade
-        </button>
-
-        <button
-            class="menu-button"
-            type="button"
-            onclick="openProfile()">
-            Profile
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- PROFILE -->
-
-<div id="profileScreen">
-
-    <div class="profile-header">
-
-        <div
-            id="avatar"
-            class="avatar">
-            ?
-        </div>
-
-        <div class="profile-info">
-
-            <h2
-                id="profileName"
-                class="profile-name">
-                Telegram User
-            </h2>
-
-            <p class="profile-id">
-                ID:
-                <span id="profileId">
-                    Не визначено
-                </span>
-            </p>
+            <button id="startButton" type="button">
+                Start
+            </button>
 
         </div>
 
     </div>
 
 
-    <button
-        class="back-button"
-        type="button"
-        onclick="closeProfile()">
-        ← Назад
-    </button>
+    <!-- MENU -->
 
-</div>
+    <div id="menuScreen">
 
+        <div class="bottom-menu">
 
-<script>
+            <button id="casesButton" class="menu-button" type="button">
+                Cases
+            </button>
 
-/* START */
+            <button id="upgradeButton" class="menu-button" type="button">
+                Upgrade
+            </button>
 
-function openMenu() {
+            <button id="profileButton" class="menu-button" type="button">
+                Profile
+            </button>
 
-    document.getElementById("startScreen").style.display = "none";
+        </div>
 
-    document.getElementById("menuScreen").style.display = "block";
-
-}
-
-
-/* TELEGRAM */
-
-function getTelegramUser() {
-
-    if (
-        window.Telegram &&
-        window.Telegram.WebApp &&
-        window.Telegram.WebApp.initDataUnsafe &&
-        window.Telegram.WebApp.initDataUnsafe.user
-    ) {
-
-        return window.Telegram.WebApp.initDataUnsafe.user;
-
-    }
-
-    return null;
-}
+    </div>
 
 
-/* PROFILE */
+    <!-- PROFILE -->
 
-function openProfile() {
+    <div id="profileScreen">
 
-    document.getElementById("menuScreen").style.display = "none";
+        <div class="profile-header">
 
-    document.getElementById("profileScreen").style.display = "block";
+            <div id="avatar" class="avatar">
+                ?
+            </div>
+
+            <div class="profile-info">
+
+                <h2 id="profileName" class="profile-name">
+                    Telegram User
+                </h2>
+
+                <p class="profile-id">
+                    ID:
+                    <span id="profileId">Не визначено</span>
+                </p>
+
+            </div>
+
+        </div>
+
+        <button id="backButton" class="back-button" type="button">
+            ← Назад
+        </button>
+
+    </div>
 
 
-    var user = getTelegramUser();
+    <script>
+        "use strict";
 
-    var nameElement =
-        document.getElementById("profileName");
+        /* ================= TELEGRAM ================= */
 
-    var idElement =
-        document.getElementById("profileId");
+        const tg =
+            window.Telegram &&
+            window.Telegram.WebApp
+                ? window.Telegram.WebApp
+                : null;
 
-    var avatarElement =
-        document.getElementById("avatar");
+
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
 
 
-    if (user) {
+        /* ================= ELEMENTS ================= */
 
-        /* ID */
+        const startScreen =
+            document.getElementById("startScreen");
 
-        if (user.id) {
+        const menuScreen =
+            document.getElementById("menuScreen");
 
-            idElement.textContent = user.id;
+        const profileScreen =
+            document.getElementById("profileScreen");
+
+        const startButton =
+            document.getElementById("startButton");
+
+        const profileButton =
+            document.getElementById("profileButton");
+
+        const backButton =
+            document.getElementById("backButton");
+
+        const profileName =
+            document.getElementById("profileName");
+
+        const profileId =
+            document.getElementById("profileId");
+
+        const avatar =
+            document.getElementById("avatar");
+
+
+        /* ================= START ================= */
+
+        startButton.addEventListener("click", function () {
+
+            startScreen.style.display = "none";
+            menuScreen.style.display = "block";
+
+        });
+
+
+        /* ================= TELEGRAM USER ================= */
+
+        function getUser() {
+
+            if (!tg) {
+                return null;
+            }
+
+            if (!tg.initDataUnsafe) {
+                return null;
+            }
+
+            if (!tg.initDataUnsafe.user) {
+                return null;
+            }
+
+            return tg.initDataUnsafe.user;
 
         }
 
 
-        /* NAME */
+        /* ================= PROFILE ================= */
 
-        if (user.username) {
+        function openProfile() {
 
-            nameElement.textContent =
-                "@" + user.username;
+            menuScreen.style.display = "none";
+            profileScreen.style.display = "block";
 
-        } else {
 
-            var fullName =
-                user.first_name || "";
+            const user = getUser();
 
-            if (user.last_name) {
 
-                fullName +=
-                    " " + user.last_name;
+            if (!user) {
+
+                profileName.textContent = "Telegram User";
+                profileId.textContent = "Не визначено";
+                avatar.textContent = "?";
+
+                return;
 
             }
 
-            nameElement.textContent =
-                fullName || "Telegram User";
+
+            /* ID */
+
+            if (user.id) {
+                profileId.textContent = String(user.id);
+            }
+
+
+            /* NAME */
+
+            if (user.username) {
+[04.10.2026 21:58] @FarmBrainrots_bot: profileName.textContent =
+                    "@" + user.username;
+
+            } else {
+
+                let fullName =
+                    user.first_name || "";
+
+                if (user.last_name) {
+
+                    fullName +=
+                        " " + user.last_name;
+
+                }
+
+                profileName.textContent =
+                    fullName.trim() || "Telegram User";
+
+            }
+
+
+            /* AVATAR */
+
+            if (user.photo_url) {
+
+                avatar.innerHTML = "";
+
+                const image =
+                    document.createElement("img");
+
+                image.src = user.photo_url;
+                image.alt = "Avatar";
+
+                avatar.appendChild(image);
+
+            } else {
+
+                const firstLetter =
+                    (user.first_name || "U")
+                        .charAt(0)
+                        .toUpperCase();
+
+                avatar.textContent = firstLetter;
+
+            }
 
         }
 
 
-        /* AVATAR */
+        /* ================= CLOSE PROFILE ================= */
 
-        if (user.photo_url) {
+        function closeProfile() {
 
-            avatarElement.innerHTML =
-                '<img src="' +
-                user.photo_url +
-                '" alt="Avatar">';
-
-        } else {
-
-            var firstLetter =
-                (user.first_name || "U")
-                .charAt(0)
-                .toUpperCase();
-
-            avatarElement.textContent =
-                firstLetter;
+            profileScreen.style.display = "none";
+            menuScreen.style.display = "block";
 
         }
 
-    } else {
 
-        nameElement.textContent =
-            "Telegram User";
+        /* ================= BUTTONS ================= */
 
-        idElement.textContent =
-            "Не визначено";
-
-        avatarElement.textContent =
-            "?";
-
-    }
-
-}
+        profileButton.addEventListener(
+            "click",
+            openProfile
+        );
 
 
-/* CLOSE PROFILE */
+        backButton.addEventListener(
+            "click",
+            closeProfile
+        );
 
-function closeProfile() {
-
-    document.getElementById("profileScreen").style.display = "none";
-
-    document.getElementById("menuScreen").style.display = "block";
-
-}
-
-
-/* TELEGRAM INITIALIZATION */
-
-if (
-    window.Telegram &&
-    window.Telegram.WebApp
-) {
-
-    window.Telegram.WebApp.ready();
-
-    window.Telegram.WebApp.expand();
-
-}
-
-</script>
+    </script>
 
 </body>
 </html>

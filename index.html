@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Easy Brain</title>
 
     <style>
@@ -15,13 +14,14 @@
             margin: 0;
             min-height: 100vh;
             font-family: Arial, sans-serif;
-            background: white;
             overflow: hidden;
         }
 
-        /* Головний екран */
-        .start-screen {
+        /* СТАРТОВИЙ ЕКРАН */
+        #startScreen {
             min-height: 100vh;
+            background: white;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,7 +31,7 @@
             text-align: center;
         }
 
-        h1 {
+        .logo {
             margin: 0 0 60px 0;
             font-family: "Trebuchet MS", Arial, sans-serif;
             font-size: 58px;
@@ -42,12 +42,16 @@
         .start-button {
             width: 300px;
             height: 110px;
+
             border: none;
             border-radius: 25px;
+
             background: #32cd65;
             color: white;
+
             font-size: 36px;
             font-weight: bold;
+
             cursor: pointer;
         }
 
@@ -55,34 +59,52 @@
             transform: scale(0.97);
         }
 
-        /* Екран меню */
-        .menu-screen {
+        /* ЕКРАН МЕНЮ */
+        #menuScreen {
             display: none;
+
             min-height: 100vh;
-            background: #000;
+            width: 100%;
+
+            background:
+                radial-gradient(
+                    circle at 75% 20%,
+                    #3b155c 0%,
+                    #160c24 35%,
+                    #050505 75%
+                );
+
             position: relative;
         }
 
-        /* Нижнє меню */
+        /* НИЖНЄ МЕНЮ */
         .bottom-menu {
             position: absolute;
+
             bottom: 35px;
             left: 50%;
+
             transform: translateX(-50%);
 
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+
             gap: 55px;
         }
 
         .menu-button {
-            background: none;
+            background: transparent;
             border: none;
+
             color: white;
-            font-size: 16px;
+
+            font-size: 24px;
+            font-weight: 600;
+
             cursor: pointer;
-            padding: 8px;
+
+            padding: 8px 12px;
         }
 
         .menu-button:active {
@@ -93,35 +115,59 @@
 
 <body>
 
-    <!-- Перший екран -->
-    <div class="start-screen" id="startScreen">
-        <div class="start-container">
-            <h1>🧠 Easy Brain</h1>
+    <!-- СТАРТОВИЙ ЕКРАН -->
+    <div id="startScreen">
 
-            <button class="start-button" onclick="openMenu()">
+        <div class="start-container">
+
+            <h1 class="logo">
+                🧠 Easy Brain
+            </h1>
+
+            <button class="start-button" id="startButton">
                 Start
             </button>
+
         </div>
+
     </div>
 
 
-    <!-- Екран меню -->
-    <div class="menu-screen" id="menuScreen">
+    <!-- ЕКРАН МЕНЮ -->
+    <div id="menuScreen">
 
         <div class="bottom-menu">
-            <button class="menu-button">Cases</button>
-            <button class="menu-button">Upgrade</button>
-            <button class="menu-button">Profile</button>
+
+            <button class="menu-button">
+                Cases
+            </button>
+
+            <button class="menu-button">
+                Upgrade
+            </button>
+
+            <button class="menu-button">
+                Profile
+            </button>
+
         </div>
 
     </div>
 
 
     <script>
-        function openMenu() {
-            document.getElementById("startScreen").style.display = "none";
-            document.getElementById("menuScreen").style.display = "block";
-        }
+
+        const startButton = document.getElementById("startButton");
+        const startScreen = document.getElementById("startScreen");
+        const menuScreen = document.getElementById("menuScreen");
+
+        startButton.addEventListener("click", function() {
+
+            startScreen.style.display = "none";
+            menuScreen.style.display = "block";
+
+        });
+
     </script>
 
 </body>

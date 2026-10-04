@@ -1,4 +1,4 @@
-[04.10.2026 22:22] @FarmBrainrots_bot: <!DOCTYPE html>
+[04.10.2026 22:36] @FarmBrainrots_bot: <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -79,7 +79,6 @@
 
         #profileScreen {
             display: none;
-
             position: relative;
 
             width: 100%;
@@ -149,239 +148,10 @@
             font-size: 20px;
             font-weight: 600;
 
-            text-decoration: none;
             background: transparent;
             border: none;
 
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-
-
-<!-- МЕНЮ -->
-
-<div id="menuScreen">
-
-    <div class="bottom-menu">
-
-        <button
-            class="menu-button"
-            id="casesButton">
-            Cases
-        </button>
-
-        <button
-            class="menu-button"
-            id="upgradeButton">
-            Upgrade
-        </button>
-
-        <button
-            class="menu-button"
-            id="profileButton">
-            Profile
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ПРОФІЛЬ -->
-
-<div id="profileScreen">
-
-    <div class="profile-box">
-
-        <div
-            id="avatar"
-            class="avatar">
-            ?
-        </div>
-
-        <div
-            id="username"
-            class="username">
-            Telegram User
-        </div>
-
-    </div>
-
-    <button
-        id="backButton"
-        class="back-button">
-        ← Назад
-    </button>
-
-</div>
-
-
-<script>
-
-    /* ЕКРАНИ */
-
-    const menuScreen =
-        document.getElementById("menuScreen");
-
-    const profileScreen =
-        document.getElementById("profileScreen");
-[04.10.2026 22:31] @FarmBrainrots_bot: <!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Brain</title>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            overflow: hidden;
-        }
-
-        /* МЕНЮ */
-
-        #menuScreen {
-            display: block;
-            position: relative;
-
-            width: 100%;
-            height: 100vh;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-        }
-
-        .bottom-menu {
-            position: absolute;
-
-            left: 50%;
-            bottom: 35px;
-
-            transform: translateX(-50%);
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 20px;
-
-            width: max-content;
-        }
-
-        .menu-button {
-            border: none;
-            background: transparent;
-
-            color: white;
-
-            font-size: 24px;
-            font-weight: 600;
-
-            padding: 8px 10px;
-
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-
-        /* ПРОФІЛЬ */
-
-        #profileScreen {
-            display: none;
-
-            position: relative;
-
-            width: 100%;
-            height: 100vh;
-
-            padding: 35px 25px;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-
-            color: white;
-        }
-
-        .profile-box {
-            display: flex;
-            align-items: center;
-
-            margin-top: 30px;
-        }
-
-        .avatar {
-            width: 90px;
-            height: 90px;
-
-            border-radius: 50%;
-
-            background: #333;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            flex-shrink: 0;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-        }
-
-        .username {
-            margin-left: 20px;
-
-            font-size: 27px;
-            font-weight: bold;
-        }
-
-        .back-button {
-            display: inline-block;
-
-            margin-top: 40px;
-
-            color: white;
-
-            font-size: 20px;
-            font-weight: 600;
-
-            text-decoration: none;
-            background: transparent;
-            border: none;
 
             cursor: pointer;
         }
@@ -390,165 +160,183 @@
 
 <body>
 
+    <!-- МЕНЮ -->
 
-<!-- МЕНЮ -->
+    <div id="menuScreen">
 
-<div id="menuScreen">
+        <div class="bottom-menu">
 
-    <div class="bottom-menu">
+            <button
+                type="button"
+                class="menu-button"
+                id="casesButton">
+                Cases
+            </button>
 
-        <button
-            class="menu-button"
-            id="casesButton">
-            Cases
-        </button>
+            <button
+                type="button"
+                class="menu-button"
+                id="upgradeButton">
+                Upgrade
+            </button>
 
-        <button
-            class="menu-button"
-            id="upgradeButton">
-            Upgrade
-        </button>
+            <button
+                type="button"
+                class="menu-button"
+                id="profileButton">
+                Profile
+            </button>
 
-        <button
-            class="menu-button"
-            onclick="openProfile()">
-            Profile
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ПРОФІЛЬ -->
-
-<div id="profileScreen">
-
-    <div class="profile-box">
-
-        <div
-            id="avatar"
-            class="avatar">
-            ?
-        </div>
-
-        <div
-            id="username"
-            class="username">
-            Telegram User
         </div>
 
     </div>
 
-    <button
-        class="back-button"
-        onclick="closeProfile()">
-        ← Назад
-    </button>
 
-</div>
+    <!-- ПРОФІЛЬ -->
 
+    <div id="profileScreen">
 
-<script>
+        <div class="profile-box">
 
-    /* ВІДКРИТТЯ ПРОФІЛЮ */
+            <div
+                id="avatar"
+                class="avatar">
+                ?
+            </div>
 
-    function openProfile() {
+            <div
+                id="username"
+                class="username">
+                Telegram User
+            </div>
 
-        document.getElementById("menuScreen").style.display = "none";
-[04.10.2026 22:31] @FarmBrainrots_bot: document.getElementById("profileScreen").style.display = "block";
+        </div>
+[04.10.2026 22:36] @FarmBrainrots_bot: <button
+            type="button"
+            id="backButton"
+            class="back-button">
+            ← Назад
+        </button>
 
-    }
-
-
-    /* ПОВЕРНЕННЯ В МЕНЮ */
-
-    function closeProfile() {
-
-        document.getElementById("profileScreen").style.display = "none";
-
-        document.getElementById("menuScreen").style.display = "block";
-
-    }
+    </div>
 
 
-    /* TELEGRAM */
+    <script>
 
-    if (
-        window.Telegram &&
-        window.Telegram.WebApp
-    ) {
+        document.addEventListener("DOMContentLoaded", function () {
 
-        const tg =
-            window.Telegram.WebApp;
+            /* ЕЛЕМЕНТИ */
 
-        tg.ready();
-        tg.expand();
+            const menuScreen =
+                document.getElementById("menuScreen");
 
+            const profileScreen =
+                document.getElementById("profileScreen");
 
-        /* КОРИСТУВАЧ */
+            const profileButton =
+                document.getElementById("profileButton");
 
-        const user =
-            tg.initDataUnsafe &&
-            tg.initDataUnsafe.user;
+            const backButton =
+                document.getElementById("backButton");
 
 
-        if (user) {
+            /* ПРОФІЛЬ */
 
-            const username =
-                document.getElementById("username");
+            profileButton.addEventListener("click", function () {
 
-            const avatar =
-                document.getElementById("avatar");
+                menuScreen.style.display = "none";
+                profileScreen.style.display = "block";
+
+            });
 
 
-            /* НІК */
+            /* НАЗАД */
 
-            if (user.username) {
+            backButton.addEventListener("click", function () {
 
-                username.textContent =
-                    "@" + user.username;
+                profileScreen.style.display = "none";
+                menuScreen.style.display = "block";
 
-            } else {
+            });
 
-                username.textContent =
-                    user.first_name ||
-                    "Telegram User";
+
+            /* TELEGRAM */
+
+            if (
+                window.Telegram &&
+                window.Telegram.WebApp
+            ) {
+
+                const tg =
+                    window.Telegram.WebApp;
+
+                tg.ready();
+                tg.expand();
+
+
+                const user =
+                    tg.initDataUnsafe &&
+                    tg.initDataUnsafe.user;
+
+
+                if (user) {
+
+                    const username =
+                        document.getElementById("username");
+
+                    const avatar =
+                        document.getElementById("avatar");
+
+
+                    /* НІК */
+
+                    if (user.username) {
+
+                        username.textContent =
+                            "@" + user.username;
+
+                    } else {
+
+                        username.textContent =
+                            user.first_name ||
+                            "Telegram User";
+
+                    }
+
+
+                    /* АВАТАР */
+
+                    if (user.photo_url) {
+
+                        const image =
+                            document.createElement("img");
+
+                        image.src =
+                            user.photo_url;
+
+                        image.alt =
+                            "Avatar";
+
+                        avatar.textContent = "";
+
+                        avatar.appendChild(image);
+
+                    } else {
+
+                        avatar.textContent =
+                            (user.first_name || "U")
+                            .charAt(0)
+                            .toUpperCase();
+
+                    }
+
+                }
 
             }
 
+        });
 
-            /* АВАТАР */
-
-            if (user.photo_url) {
-
-                const image =
-                    document.createElement("img");
-
-                image.src =
-                    user.photo_url;
-
-                image.alt =
-                    "Avatar";
-
-                avatar.textContent = "";
-
-                avatar.appendChild(image);
-
-            } else {
-
-                avatar.textContent =
-                    (user.first_name || "U")
-                    .charAt(0)
-                    .toUpperCase();
-
-            }
-
-        }
-
-    }
-
-</script>
+    </script>
 
 </body>
 </html>

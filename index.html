@@ -1,4 +1,4 @@
-[04.10.2026 22:05] @FarmBrainrots_bot: <!DOCTYPE html>
+[04.10.2026 22:13] @FarmBrainrots_bot: <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -68,6 +68,8 @@
             font-weight: bold;
 
             text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
         .start-button:active {
@@ -75,9 +77,9 @@
         }
 
 
-        /* МЕНЮ */
+        /* ЕКРАНИ */
 
-        #menuScreen {
+        .screen {
             display: none;
 
             position: relative;
@@ -94,9 +96,12 @@
                 );
         }
 
-        #menuScreen:target {
+        .screen.active {
             display: block;
         }
+
+
+        /* МЕНЮ */
 
         .bottom-menu {
             position: absolute;
@@ -127,32 +132,16 @@
             padding: 8px 10px;
 
             text-decoration: none;
+            cursor: pointer;
         }
 
 
         /* ПРОФІЛЬ */
 
         #profileScreen {
-            display: none;
-
-            width: 100%;
-            height: 100vh;
-
             padding: 35px 25px;
 
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-
             color: white;
-        }
-
-        #profileScreen:target {
-            display: block;
         }
 
         .profile-box {
@@ -217,17 +206,18 @@
 <!-- СТАРТОВИЙ ЕКРАН -->
 
 <div id="startScreen">
-[04.10.2026 22:05] @FarmBrainrots_bot: <div class="start-container">
+
+    <div class="start-container">
 
         <h1 class="logo">
             🧠 Easy Brain
         </h1>
 
-        <a
-            class="start-button"
-            href="#menuScreen">
+        <button
+            id="startButton"
+            class="start-button">
             Start
-        </a>
+        </button>
 
     </div>
 
@@ -235,28 +225,27 @@
 
 
 <!-- МЕНЮ -->
-
-<div id="menuScreen">
+[04.10.2026 22:13] @FarmBrainrots_bot: <div id="menuScreen" class="screen">
 
     <div class="bottom-menu">
 
-        <a
+        <button
             class="menu-button"
-            href="#">
+            id="casesButton">
             Cases
-        </a>
+        </button>
 
-        <a
+        <button
             class="menu-button"
-            href="#">
+            id="upgradeButton">
             Upgrade
-        </a>
+        </button>
 
-        <a
+        <button
             class="menu-button"
-            href="#profileScreen">
+            id="profileButton">
             Profile
-        </a>
+        </button>
 
     </div>
 
@@ -265,7 +254,7 @@
 
 <!-- ПРОФІЛЬ -->
 
-<div id="profileScreen">
+<div id="profileScreen" class="screen">
 
     <div class="profile-box">
 
@@ -283,16 +272,94 @@
 
     </div>
 
-    <a
-        class="back-button"
-        href="#menuScreen">
+    <button
+        id="backButton"
+        class="back-button">
         ← Назад
-    </a>
+    </button>
 
 </div>
 
 
 <script>
+
+    /* ПЕРЕМИКАННЯ ЕКРАНІВ */
+
+    const startScreen =
+        document.getElementById("startScreen");
+
+    const menuScreen =
+        document.getElementById("menuScreen");
+
+    const profileScreen =
+        document.getElementById("profileScreen");
+
+
+    const startButton =
+        document.getElementById("startButton");
+
+    const profileButton =
+        document.getElementById("profileButton");
+
+    const backButton =
+        document.getElementById("backButton");
+
+
+    function showScreen(screen) {
+
+        startScreen.style.display = "none";
+        menuScreen.classList.remove("active");
+        profileScreen.classList.remove("active");
+
+        if (screen === "start") {
+
+            startScreen.style.display = "flex";
+
+        }
+
+        if (screen === "menu") {
+
+            menuScreen.classList.add("active");
+
+        }
+
+        if (screen === "profile") {
+
+            profileScreen.classList.add("active");
+
+        }
+    }
+
+
+    startButton.addEventListener(
+        "click",
+        function () {
+
+            showScreen("menu");
+
+        }
+    );
+
+
+    profileButton.addEventListener(
+        "click",
+        function () {
+
+            showScreen("profile");
+
+        }
+    );
+
+
+    backButton.addEventListener(
+        "click",
+        function () {
+
+            showScreen("menu");
+
+        }
+    );
+
 
     /* TELEGRAM */
 
@@ -344,10 +411,18 @@
 
             if (user.photo_url) {
 
-                avatar.innerHTML =
-                    '<img src="' +
-                    user.photo_url +
-                    '" alt="Avatar">';
+                const image =
+                    document.createElement("img");
+
+                image.src =
+                    user.photo_url;
+
+                image.alt =
+                    "Avatar";
+
+                avatar.textContent = "";
+
+                avatar.appendChild(image);
 
             } else {
 
@@ -361,6 +436,11 @@
         }
 
     }
+
+
+    /* ПОКАЗУЄМО СТАРТОВИЙ ЕКРАН */
+
+    showScreen("start");
 
 </script>
 

@@ -1,130 +1,4 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Brain</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        /* СТАРТОВИЙ ЕКРАН */
-        #startScreen {
-            min-height: 100vh;
-            background: white;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .start-container {
-            text-align: center;
-        }
-
-        .logo {
-            margin: 0 0 60px 0;
-            font-family: "Trebuchet MS", Arial, sans-serif;
-            font-size: 58px;
-            font-weight: 800;
-            letter-spacing: 2px;
-        }
-
-        .start-button {
-            width: 300px;
-            height: 110px;
-
-            border: none;
-            border-radius: 25px;
-
-            background: #32cd65;
-            color: white;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        .start-button:active {
-            transform: scale(0.97);
-        }
-
-        /* ЕКРАН МЕНЮ */
-        #menuScreen {
-            display: none;
-
-            min-height: 100vh;
-            width: 100%;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-
-            position: relative;
-        }
-
-        /* НИЖНЄ МЕНЮ */
-        .bottom-menu {
-            position: absolute;
-
-            bottom: 35px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            gap: 55px;
-        }
-
-        .menu-button {
-            background: transparent;
-            border: none;
-
-            color: white;
-
-            font-size: 24px;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            padding: 8px 12px;
-        }
-
-        .menu-button:active {
-            opacity: 0.6;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- СТАРТОВИЙ ЕКРАН -->
-    <div id="startScreen">
-
-        <div class="start-container">
-
-            <h1 class="logo">
-                🧠 Easy Brain
-            </h1>
-
-            <button class="start-button" id="startButton">
+<button class="start-button" id="startButton">
                 Start
             </button>
 
@@ -138,15 +12,15 @@
 
         <div class="bottom-menu">
 
-            <button class="menu-button">
+            <button class="menu-button" id="casesButton">
                 Cases
             </button>
 
-            <button class="menu-button">
+            <button class="menu-button" id="upgradeButton">
                 Upgrade
             </button>
 
-            <button class="menu-button">
+            <button class="menu-button" id="profileButton">
                 Profile
             </button>
 
@@ -155,15 +29,119 @@
     </div>
 
 
+    <!-- ПРОФІЛЬ -->
+    <div id="profileScreen">
+
+        <div class="profile-header">
+
+            <img
+                id="profileAvatar"
+                class="profile-avatar"
+                src=""
+                alt="Avatar"
+            >
+
+            <div class="profile-info">
+
+                <h2 id="profileName" class="profile-name">
+                    User
+                </h2>
+
+                <p class="profile-id">
+                    ID: <span id="profileId">—</span>
+                </p>
+
+            </div>
+
+        </div>
+
+        <button class="back-button" id="backButton">
+            ← Назад
+        </button>
+
+    </div>
+
+
     <script>
 
         const startButton = document.getElementById("startButton");
+
         const startScreen = document.getElementById("startScreen");
         const menuScreen = document.getElementById("menuScreen");
+        const profileScreen = document.getElementById("profileScreen");
+
+        const profileButton = document.getElementById("profileButton");
+        const backButton = document.getElementById("backButton");
+
+        const profileAvatar = document.getElementById("profileAvatar");
+        const profileName = document.getElementById("profileName");
+        const profileId = document.getElementById("profileId");
+
+
+        /* TELEGRAM MINI APP */
+
+        const tg = window.Telegram?.WebApp;
+
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
+
+
+        /* START */
 
         startButton.addEventListener("click", function() {
 
             startScreen.style.display = "none";
+            menuScreen.style.display = "block";
+
+        });
+
+
+        /* ПРОФІЛЬ */
+
+        profileButton.addEventListener("click", function() {
+
+            menuScreen.style.display = "none";
+            profileScreen.style.display = "block";
+
+            if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+
+                const user = tg.initDataUnsafe.user;
+
+                profileId.textContent = user.id;
+
+                if (user.username) {
+                    profileName.textContent = "@" + user.username;
+                } else {
+                    profileName.textContent =
+                        (user.first_name || "") +
+                        (user.last_name ? " " + user.last_name : "");
+                }
+
+                if (user.photo_url) {
+                    profileAvatar.src = user.photo_url;
+                } else {
+                    profileAvatar.src =
+                        "https://ui-avatars.com/api/?name=" +
+                        encodeURIComponent(user.first_name || "User");
+                }
+
+            } else {
+
+                profileName.textContent = "Telegram User";
+                profileId.textContent = "Не визначено";
+
+            }
+
+        });
+
+
+        /* НАЗАД */
+
+        backButton.addEventListener("click", function() {
+
+            profileScreen.style.display = "none";
             menuScreen.style.display = "block";
 
         });

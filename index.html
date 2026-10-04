@@ -14,14 +14,20 @@
         body {
             margin: 0;
             min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: white;
+            overflow: hidden;
+        }
+
+        /* Головний екран */
+        .start-screen {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
-            background: white;
         }
 
-        .container {
+        .start-container {
             text-align: center;
         }
 
@@ -48,16 +54,75 @@
         .start-button:active {
             transform: scale(0.97);
         }
+
+        /* Екран меню */
+        .menu-screen {
+            display: none;
+            min-height: 100vh;
+            background: #000;
+            position: relative;
+        }
+
+        /* Нижнє меню */
+        .bottom-menu {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 55px;
+        }
+
+        .menu-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .menu-button:active {
+            opacity: 0.6;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>🧠 Easy Brain</h1>
+    <!-- Перший екран -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-container">
+            <h1>🧠 Easy Brain</h1>
 
-        <button class="start-button">Start</button>
+            <button class="start-button" onclick="openMenu()">
+                Start
+            </button>
+        </div>
     </div>
+
+
+    <!-- Екран меню -->
+    <div class="menu-screen" id="menuScreen">
+
+        <div class="bottom-menu">
+            <button class="menu-button">Cases</button>
+            <button class="menu-button">Upgrade</button>
+            <button class="menu-button">Profile</button>
+        </div>
+
+    </div>
+
+
+    <script>
+        function openMenu() {
+            document.getElementById("startScreen").style.display = "none";
+            document.getElementById("menuScreen").style.display = "block";
+        }
+    </script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-[04.10.2026 22:13] @FarmBrainrots_bot: <!DOCTYPE html>
+[04.10.2026 22:22] @FarmBrainrots_bot: <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -24,64 +24,10 @@
             overflow: hidden;
         }
 
-        /* СТАРТОВИЙ ЕКРАН */
+        /* МЕНЮ */
 
-        #startScreen {
-            width: 100%;
-            height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            background: white;
-        }
-
-        .start-container {
-            text-align: center;
-        }
-
-        .logo {
-            margin: 0 0 60px 0;
-
-            font-family: "Trebuchet MS", Arial, sans-serif;
-            font-size: 58px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: black;
-        }
-
-        .start-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            width: 300px;
-            height: 110px;
-
-            border-radius: 25px;
-
-            background: #32cd65;
-            color: white;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .start-button:active {
-            transform: scale(0.97);
-        }
-
-
-        /* ЕКРАНИ */
-
-        .screen {
-            display: none;
-
+        #menuScreen {
+            display: block;
             position: relative;
 
             width: 100%;
@@ -95,13 +41,6 @@
                     #050505 75%
                 );
         }
-
-        .screen.active {
-            display: block;
-        }
-
-
-        /* МЕНЮ */
 
         .bottom-menu {
             position: absolute;
@@ -139,7 +78,22 @@
         /* ПРОФІЛЬ */
 
         #profileScreen {
+            display: none;
+
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+
             padding: 35px 25px;
+
+            background:
+                radial-gradient(
+                    circle at 75% 20%,
+                    #3b155c 0%,
+                    #160c24 35%,
+                    #050505 75%
+                );
 
             color: white;
         }
@@ -196,6 +150,10 @@
             font-weight: 600;
 
             text-decoration: none;
+            background: transparent;
+            border: none;
+
+            cursor: pointer;
         }
     </style>
 </head>
@@ -203,29 +161,9 @@
 <body>
 
 
-<!-- СТАРТОВИЙ ЕКРАН -->
-
-<div id="startScreen">
-
-    <div class="start-container">
-
-        <h1 class="logo">
-            🧠 Easy Brain
-        </h1>
-
-        <button
-            id="startButton"
-            class="start-button">
-            Start
-        </button>
-
-    </div>
-
-</div>
-
-
 <!-- МЕНЮ -->
-[04.10.2026 22:13] @FarmBrainrots_bot: <div id="menuScreen" class="screen">
+
+<div id="menuScreen">
 
     <div class="bottom-menu">
 
@@ -254,7 +192,7 @@
 
 <!-- ПРОФІЛЬ -->
 
-<div id="profileScreen" class="screen">
+<div id="profileScreen">
 
     <div class="profile-box">
 
@@ -283,79 +221,41 @@
 
 <script>
 
-    /* ПЕРЕМИКАННЯ ЕКРАНІВ */
-
-    const startScreen =
-        document.getElementById("startScreen");
+    /* ЕКРАНИ */
 
     const menuScreen =
         document.getElementById("menuScreen");
 
     const profileScreen =
         document.getElementById("profileScreen");
-
-
-    const startButton =
-        document.getElementById("startButton");
-
-    const profileButton =
+[04.10.2026 22:22] @FarmBrainrots_bot: const profileButton =
         document.getElementById("profileButton");
 
     const backButton =
         document.getElementById("backButton");
 
 
-    function showScreen(screen) {
-
-        startScreen.style.display = "none";
-        menuScreen.classList.remove("active");
-        profileScreen.classList.remove("active");
-
-        if (screen === "start") {
-
-            startScreen.style.display = "flex";
-
-        }
-
-        if (screen === "menu") {
-
-            menuScreen.classList.add("active");
-
-        }
-
-        if (screen === "profile") {
-
-            profileScreen.classList.add("active");
-
-        }
-    }
-
-
-    startButton.addEventListener(
-        "click",
-        function () {
-
-            showScreen("menu");
-
-        }
-    );
-
+    /* ПРОФІЛЬ */
 
     profileButton.addEventListener(
         "click",
         function () {
 
-            showScreen("profile");
+            menuScreen.style.display = "none";
+            profileScreen.style.display = "block";
 
         }
     );
 
 
+    /* НАЗАД */
+
     backButton.addEventListener(
         "click",
         function () {
 
-            showScreen("menu");
+            profileScreen.style.display = "none";
+            menuScreen.style.display = "block";
 
         }
     );
@@ -437,14 +337,7 @@
 
     }
 
-
-    /* ПОКАЗУЄМО СТАРТОВИЙ ЕКРАН */
-
-    showScreen("start");
-
 </script>
 
 </body>
 </html>
-
-Тут я не додавав нових функцій у Cases чи Upgrade — вони просто поки що кнопки без дії, щоб ми не вигадували їхню поведінку.

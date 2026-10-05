@@ -216,7 +216,7 @@
             border-radius: 12px;
 
             cursor: pointer;
-          -webkit-tap-highlight-color: transparent;
+           -webkit-tap-highlight-color: transparent;
         }
 
         .case-back-button:active {
@@ -433,8 +433,8 @@
         .avatar {
             width: 90px;
             height: 90px;
-            border-radius: 50%;
 
+            border-radius: 50%;
             background: #333;
 
             display: flex;
@@ -666,11 +666,11 @@
 
 
             <div class="base-item">
-                   <img
+
+                <img
                     src="easter-base.png"
                     alt="Easter Base">
-
-            </div>
+                    </div>
 
 
             <div class="base-item">
@@ -864,13 +864,14 @@
                         balance;
 
                 }
-                 /*
+
+
+                /*
                     Цю функцію потім будемо
                     використовувати, коли
                     додамо заробляння E.
                 */
-
-                function addBalance(amount) {
+                   function addBalance(amount) {
 
                     balance += amount;
 
@@ -1050,3 +1051,109 @@
 
                     const user =
                         tg.initDataUnsafe &&
+                        tg.initDataUnsafe.user;
+
+
+                    if (user) {
+
+
+                        /*
+                            ID користувача.
+                            Він використовується
+                            для ключа балансу.
+                        */
+
+                        telegramUserId =
+                            String(user.id);
+                           const username =
+                            document.getElementById(
+                                "username"
+                            );
+
+
+                        const avatar =
+                            document.getElementById(
+                                "avatar"
+                            );
+
+
+                        if (user.username) {
+
+
+                            username.textContent =
+                                "@" +
+                                user.username;
+
+
+                        } else {
+
+
+                            username.textContent =
+                                user.first_name 
+                                "Telegram User";
+
+
+                        }
+
+
+                        if (user.photo_url) {
+
+
+                            const image =
+                                document.createElement(
+                                    "img"
+                                );
+
+
+                            image.src =
+                                user.photo_url;
+
+
+                            image.alt =
+                                "Avatar";
+
+
+                            avatar.textContent =
+                                "";
+
+
+                            avatar.appendChild(
+                                image
+                            );
+
+
+                        } else {
+
+
+                            avatar.textContent =
+                                (
+                                    user.first_name 
+                                    "U"
+                                )
+                                .charAt(0)
+                                .toUpperCase();
+
+
+                        }
+
+                    }
+
+                }
+
+
+                /*
+                    Завантажуємо баланс
+                    після отримання Telegram ID.
+                */
+
+                loadBalance();
+
+
+            }
+        );
+
+    </script>
+
+
+</body>
+</html>

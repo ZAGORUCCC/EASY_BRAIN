@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Easy Brain</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -22,13 +24,20 @@
 
         body {
             overflow: hidden;
+            background: #050505;
         }
+
+
+        /* =========================
+           MAIN MENU
+        ========================= */
 
         #menuScreen {
             display: block;
             position: relative;
             width: 100%;
             height: 100vh;
+
             background:
                 radial-gradient(
                     circle at 75% 20%,
@@ -38,6 +47,7 @@
                 );
         }
 
+
         /* =========================
            CASE
         ========================= */
@@ -46,20 +56,36 @@
             position: absolute;
             left: 12px;
             top: 20px;
+
             width: 170px;
+
             z-index: 1;
-            pointer-events: none;
+
+            pointer-events: auto;
+            cursor: pointer;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .case-image {
             display: block;
+
             width: 170px;
             height: auto;
+
             object-fit: contain;
 
             filter:
-                drop-shadow(0 8px 10px rgba(0,0,0,0.65));
+                drop-shadow(
+                    0 8px 10px
+                    rgba(0,0,0,0.65)
+                );
         }
+
+        .case-card:active {
+            transform: scale(0.97);
+        }
+
 
         /* =========================
            BOTTOM MENU
@@ -67,33 +93,208 @@
 
         .bottom-menu {
             position: absolute;
+
             left: 50%;
             bottom: 35px;
+
             transform: translateX(-50%);
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             gap: 20px;
+
             width: max-content;
+
             z-index: 100;
         }
 
         .menu-button {
             border: none;
+
             background: transparent;
+
             color: white;
+
             font-size: 24px;
             font-weight: 600;
+
             padding: 8px 10px;
+
             text-decoration: none;
+
             cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0,122,255,0.35);
+
+            -webkit-tap-highlight-color:
+                rgba(0,122,255,0.35);
         }
 
         .menu-button:active {
-            background: rgba(0,122,255,0.25);
+            background:
+                rgba(0,122,255,0.25);
+
             border-radius: 10px;
         }
+
+
+        /* =========================
+           CASE SCREEN
+        ========================= */
+
+        #caseScreen {
+            display: none;
+
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 50% 25%,
+                    #3b155c 0%,
+                    #160c24 38%,
+                    #050505 78%
+                );
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        /* =========================
+           TOP HALF
+        ========================= */
+
+        .case-top {
+            position: relative;
+
+            width: 100%;
+
+            /* Верхня половина екрана */
+            height: 50vh;
+
+            min-height: 300px;
+        }
+
+
+        /* =========================
+           OPEN BUTTON
+        ========================= */
+
+        .open-case-button {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            border: none;
+
+            background: transparent;
+
+            padding: 0;
+
+            cursor: pointer;
+           -webkit-tap-highlight-color:
+                transparent;
+        }
+
+        .open-case-button img {
+            display: block;
+
+            width: 130px;
+
+            height: auto;
+        }
+
+        .open-case-button:active {
+            transform:
+                translate(-50%, -50%)
+                scale(0.94);
+        }
+
+
+        /* =========================
+           BASES
+        ========================= */
+
+        .bases-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 12px;
+
+            width: 100%;
+
+            padding:
+                10px
+                12px
+                35px;
+        }
+
+        .base-item {
+            width: 100%;
+
+            overflow: hidden;
+
+            border-radius: 12px;
+        }
+
+        .base-item img {
+            display: block;
+
+            width: 100%;
+            height: auto;
+
+            border-radius: 12px;
+        }
+
+
+        /* =========================
+           CASE BACK BUTTON
+        ========================= */
+
+        .case-back-button {
+            position: fixed;
+
+            left: 18px;
+            top: 20px;
+
+            z-index: 200;
+
+            border: none;
+
+            background:
+                rgba(0,0,0,0.35);
+
+            color: white;
+
+            font-size: 20px;
+            font-weight: 600;
+
+            padding:
+                8px
+                12px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            backdrop-filter:
+                blur(5px);
+        }
+
 
         /* =========================
            PROFILE
@@ -101,10 +302,15 @@
 
         #profileScreen {
             display: none;
+
             position: relative;
+
             width: 100%;
             height: 100vh;
-            padding: 35px 25px;
+
+            padding:
+                35px
+                25px;
 
             background:
                 radial-gradient(
@@ -119,226 +325,625 @@
 
         .profile-box {
             display: flex;
+
             align-items: center;
+
             margin-top: 30px;
         }
 
         .avatar {
             width: 90px;
             height: 90px;
+
             border-radius: 50%;
+
             background: #333;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
+
             overflow: hidden;
+
             font-size: 36px;
             font-weight: bold;
+
             flex-shrink: 0;
         }
 
         .avatar img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
         }
 
         .username {
             margin-left: 20px;
+
             font-size: 27px;
             font-weight: bold;
         }
 
         .back-button {
             display: inline-block;
+
             margin-top: 40px;
+
             color: white;
+
             font-size: 20px;
             font-weight: 600;
+
             background: transparent;
+
             border: none;
+
             padding: 0;
+
             cursor: pointer;
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- =========================
+         MAIN MENU
+    ========================== -->
+
     <div id="menuScreen">
 
-        <!-- CASE -->
-        <div class="case-card">
+
+        <!-- BASIC CASE -->
+
+        <div
+            class="case-card"
+            id="basicCase">
 
             <img
                 src="easy-brain-case.png"
                 alt="Базовий кейс"
-                class="case-image"
-            >
-               </div>
+                class="case-image">
+
+        </div>
 
 
         <!-- BOTTOM MENU -->
+
         <div class="bottom-menu">
+
 
             <button
                 type="button"
                 class="menu-button"
                 id="casesButton">
+
                 Cases
+
             </button>
+
 
             <button
                 type="button"
                 class="menu-button"
                 id="upgradeButton">
-                Upgrade
-            </button>
 
+                Upgrade
+
+            </button>
             <button
                 type="button"
                 class="menu-button"
                 id="profileButton">
+
                 Profile
+
             </button>
+
 
         </div>
 
     </div>
 
 
-    <!-- PROFILE -->
+
+    <!-- =========================
+         CASE SCREEN
+    ========================== -->
+
+    <div id="caseScreen">
+
+
+        <!-- BACK -->
+
+        <button
+            type="button"
+            id="caseBackButton"
+            class="case-back-button">
+
+            ← Назад
+
+        </button>
+
+
+
+        <!-- TOP HALF -->
+
+        <div class="case-top">
+
+
+            <!-- OPEN -->
+
+            <button
+                type="button"
+                id="openCaseButton"
+                class="open-case-button">
+
+                <img
+                    src="open-button.png"
+                    alt="Відкрити">
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- =====================
+             BASE LIST
+        ====================== -->
+
+        <div class="bases-grid">
+
+
+            <!-- TRALALELO -->
+
+            <div class="base-item">
+
+                <img
+                    src="tralalelo-base.png"
+                    alt="Tralalelo Base">
+
+            </div>
+
+
+
+            <!-- ROSE -->
+
+            <div class="base-item">
+
+                <img
+                    src="rose-base.png"
+                    alt="Rose Base">
+
+            </div>
+
+
+
+            <!-- AQUATIC -->
+
+            <div class="base-item">
+
+                <img
+                    src="aquatic-base.png"
+                    alt="Aquatic Base">
+
+            </div>
+
+
+
+            <!-- HONEY BEE -->
+
+            <div class="base-item">
+
+                <img
+                    src="honey-bee-base.png"
+                    alt="Honey Bee Base">
+
+            </div>
+
+
+
+            <!-- BUNNY BASKET -->
+
+            <div class="base-item">
+
+                <img
+                    src="bunny-basket-base.png"
+                    alt="Bunny Basket Base">
+
+            </div>
+
+
+
+            <!-- TACO -->
+
+            <div class="base-item">
+
+                <img
+                    src="taco-base.png"
+                    alt="Taco Base">
+
+            </div>
+
+
+
+            <!-- EASTER -->
+
+            <div class="base-item">
+
+                <img
+                    src="easter-base.png"
+                    alt="Easter Base">
+
+            </div>
+
+
+
+            <!-- LUCKY -->
+
+            <div class="base-item">
+
+                <img
+                    src="lucky-base.png"
+                    alt="Lucky Base">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         PROFILE
+    ========================== -->
+
     <div id="profileScreen">
+
 
         <div class="profile-box">
 
-            <div id="avatar" class="avatar">
+
+            <div
+                id="avatar"
+                class="avatar">
+
                 ?
+
             </div>
 
-            <div id="username" class="username">
+
+            <div
+                id="username"
+                class="username">
+
                 Telegram User
+
             </div>
+
 
         </div>
+
 
         <button
             type="button"
             id="backButton"
             class="back-button">
+
             ← Назад
+
         </button>
+
 
     </div>
 
 
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const menuScreen =
-                document.getElementById("menuScreen");
-
-            const profileScreen =
-                document.getElementById("profileScreen");
-
-            const profileButton =
-                document.getElementById("profileButton");
-
-            const backButton =
-                document.getElementById("backButton");
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
 
 
-            profileButton.addEventListener("click", function () {
-
-                menuScreen.style.display = "none";
-
-                profileScreen.style.display = "block";
-
-            });
+                /* =====================
+                   ELEMENTS
+                ===================== */
 
 
-            backButton.addEventListener("click", function () {
-
-                profileScreen.style.display = "none";
-
-                menuScreen.style.display = "block";
-
-            });
+                const menuScreen =
+                    document.getElementById(
+                        "menuScreen"
+                    );
 
 
-            if (
-                window.Telegram &&
-                window.Telegram.WebApp
-            ) {
-
-                const tg =
-                    window.Telegram.WebApp;
-
-                tg.ready();
-
-                tg.expand();
+                const profileScreen =
+                    document.getElementById(
+                        "profileScreen"
+                    );
 
 
-                const user =
-                    tg.initDataUnsafe &&
-                    tg.initDataUnsafe.user;
+                const caseScreen =
+                    document.getElementById(
+                        "caseScreen"
+                    );
 
 
-                if (user) {
+                const profileButton =
+                    document.getElementById(
+                        "profileButton"
+                    );
+                     const backButton =
+                    document.getElementById(
+                        "backButton"
+                    );
 
-                    const username =
-                        document.getElementById("username");
 
-                    const avatar =
-                        document.getElementById("avatar");
+                const basicCase =
+                    document.getElementById(
+                        "basicCase"
+                    );
 
 
-                    if (user.username) {
+                const caseBackButton =
+                    document.getElementById(
+                        "caseBackButton"
+                    );
 
-                        username.textContent =
-                            "@" + user.username;
 
-                    } else {
+                const openCaseButton =
+                    document.getElementById(
+                        "openCaseButton"
+                    );
 
-                        username.textContent =
-                            user.first_name ||
-                            "Telegram User";
+
+
+                /* =====================
+                   OPEN BASIC CASE
+                ===================== */
+
+
+                basicCase.addEventListener(
+                    "click",
+                    function () {
+
+
+                        menuScreen.style.display =
+                            "none";
+
+
+                        profileScreen.style.display =
+                            "none";
+
+
+                        caseScreen.style.display =
+                            "block";
+
+
+                        caseScreen.scrollTop = 0;
+
 
                     }
+                );
 
 
-                    if (user.photo_url) {
 
-                        const image =
-                            document.createElement("img");
+                /* =====================
+                   BACK FROM CASE
+                ===================== */
 
-                        image.src =
-                            user.photo_url;
 
-                        image.alt =
-                            "Avatar";
+                caseBackButton.addEventListener(
+                    "click",
+                    function () {
 
-                        avatar.textContent = "";
 
-                        avatar.appendChild(image);
+                        caseScreen.style.display =
+                            "none";
 
-                    } else {
 
-                        avatar.textContent =
-                            (user.first_name || "U")
-                            .charAt(0)
-                            .toUpperCase();
+                        menuScreen.style.display =
+                            "block";
+
+
+                    }
+                );
+
+
+
+                /* =====================
+                   OPEN BUTTON
+                   Поки без випадіння бази
+                ===================== */
+
+
+                openCaseButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        /*
+                            Тут наступним етапом
+                            зробимо відкриття кейса,
+                            анімацію та випадіння бази.
+                        */
+
+
+                    }
+                );
+
+
+
+                /* =====================
+                   PROFILE
+                ===================== */
+
+
+                profileButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        menuScreen.style.display =
+                            "none";
+
+
+                        profileScreen.style.display =
+                            "block";
+
+
+                    }
+                );
+
+
+
+                /* =====================
+                   PROFILE BACK
+                ===================== */
+
+
+                backButton.addEventListener(
+                    "click",
+                    function () {
+
+
+                        profileScreen.style.display =
+                            "none";
+
+
+                        menuScreen.style.display =
+                            "block";
+
+
+                    }
+                );
+
+
+
+                /* =====================
+                   TELEGRAM
+                ===================== */
+
+
+                if (
+                    window.Telegram &&
+                    window.Telegram.WebApp
+                ) {
+
+
+                    const tg =
+                        window.Telegram.WebApp;
+
+
+                    tg.ready();
+
+                    tg.expand();
+
+
+
+                    const user =
+                        tg.initDataUnsafe &&
+                        tg.initDataUnsafe.user;
+
+
+
+                    if (user) {
+
+
+                        const username =
+                            document.getElementById(
+                                "username"
+                            );
+
+
+                        const avatar =
+                            document.getElementById(
+                                "avatar"
+                            );
+
+
+
+                        if (user.username) {
+                         username.textContent =
+                                "@" +
+                                user.username;
+
+
+                        } else {
+
+
+                            username.textContent =
+                                user.first_name ||
+                                "Telegram User";
+
+
+                        }
+
+
+
+                        if (user.photo_url) {
+
+
+                            const image =
+                                document.createElement(
+                                    "img"
+                                );
+
+
+                            image.src =
+                                user.photo_url;
+
+
+                            image.alt =
+                                "Avatar";
+
+
+                            avatar.textContent =
+                                "";
+
+
+                            avatar.appendChild(
+                                image
+                            );
+
+
+                        } else {
+
+
+                            avatar.textContent =
+                                (
+                                    user.first_name ||
+                                    "U"
+                                )
+                                .charAt(0)
+                                .toUpperCase();
+
+
+                        }
 
                     }
 
                 }
 
             }
-
-        });
+        );
 
     </script>
+
 
 </body>
 </html>

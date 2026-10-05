@@ -60,20 +60,16 @@
 
             width: 145px;
             height: 125px;
-
-            perspective: 500px;
         }
-
-        /* КРИШКА КЕЙСУ */
 
         .case-lid {
             position: absolute;
 
             left: 13px;
-            top: 7px;
+            top: 8px;
 
             width: 119px;
-            height: 42px;
+            height: 38px;
 
             background: linear-gradient(
                 145deg,
@@ -96,13 +92,11 @@
                 inset 0 2px 5px rgba(255,255,255,0.15);
         }
 
-        /* ВНУТРІШНЯ ЧАСТИНА */
-
         .case-inside {
             position: absolute;
 
             left: 15px;
-            top: 35px;
+            top: 34px;
 
             width: 115px;
             height: 75px;
@@ -190,13 +184,11 @@
 
         .ear-left {
             left: 17px;
-
             transform: rotate(-12deg);
         }
 
         .ear-right {
             left: 32px;
-
             transform: rotate(12deg);
         }
 
@@ -213,11 +205,11 @@
 
             border-radius: 50%;
         }
-[05.10.2026 15:44] . @Brainrot_Battle: .eye-left {
+
+        .eye-left {
             left: 22px;
         }
-
-        .eye-right {
+[05.10.2026 15:51] . @Brainrot_Battle: .eye-right {
             left: 34px;
         }
 
@@ -249,8 +241,6 @@
             background: rgba(100,55,15,0.5);
         }
 
-        /* НАЗВА КЕЙСУ */
-
         .case-name {
             margin-top: 1px;
 
@@ -268,8 +258,6 @@
             text-overflow: ellipsis;
         }
 
-        /* ЦІНА */
-
         .case-price {
             display: flex;
             align-items: center;
@@ -285,6 +273,8 @@
         }
 
         .coin {
+            position: relative;
+
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -298,18 +288,12 @@
 
             color: #7b4d00;
 
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 900;
 
             box-shadow:
                 inset 0 1px 2px rgba(255,255,255,0.6),
                 0 1px 4px rgba(0,0,0,0.5);
-        }
-
-        .coin-letter {
-            position: absolute;
-            font-size: 8px;
-            font-weight: 900;
         }
 
 
@@ -435,21 +419,21 @@
 
     <div id="menuScreen">
 
-        <!-- КЕЙС -->
+        <!-- ЄДИНИЙ КЕЙС -->
 
         <div class="case-card">
 
             <div class="case-box">
 
                 <div class="case-lid"></div>
-[05.10.2026 15:44] . @Brainrot_Battle: <div class="case-inside">
+
+                <div class="case-inside">
 
                     <div class="bunny">
 
                         <div class="ear-left"></div>
                         <div class="ear-right"></div>
-
-                        <div class="bunny-head"></div>
+[05.10.2026 15:51] . @Brainrot_Battle: <div class="bunny-head"></div>
 
                         <div class="eye-left"></div>
                         <div class="eye-right"></div>
@@ -471,13 +455,11 @@
             </div>
 
             <div class="case-price">
-
                 <span>9</span>
 
                 <span class="coin">
-                    <span class="coin-letter">E</span>
+                    E
                 </span>
-
             </div>
 
         </div>
@@ -630,15 +612,15 @@
 
                         const image =
                             document.createElement("img");
-[05.10.2026 15:44] . @Brainrot_Battle: image.src =
+
+                        image.src =
                             user.photo_url;
 
                         image.alt =
                             "Avatar";
 
                         avatar.textContent = "";
-
-                        avatar.appendChild(image);
+[05.10.2026 15:51] . @Brainrot_Battle: avatar.appendChild(image);
 
                     } else {
 

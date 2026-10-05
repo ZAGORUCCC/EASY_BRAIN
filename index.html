@@ -46,80 +46,19 @@
             position: absolute;
             left: 12px;
             top: 20px;
-            width: 145px;
-            color: white;
+            width: 170px;
             z-index: 1;
             pointer-events: none;
         }
 
-        .case-box {
-            position: relative;
-            width: 145px;
-            height: 125px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .case-image {
-            width: 145px;
-            height: 125px;
+            display: block;
+            width: 170px;
+            height: auto;
             object-fit: contain;
 
             filter:
-                drop-shadow(0 8px 10px rgba(0,0,0,0.65))
-                drop-shadow(0 0 8px rgba(255,70,220,0.25));
-        }
-
-        /* =========================
-           TEXT UNDER CASE
-        ========================= */
-
-        .case-name {
-            margin-top: 1px;
-            width: 145px;
-            text-align: left;
-            font-size: 8px;
-            font-weight: 500;
-            color: rgba(255,255,255,0.8);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .case-price {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 3px;
-            font-size: 11px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .coin {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffe477,
-                    #d79b20
-                );
-
-            color: #7b4d00;
-            font-size: 8px;
-            font-weight: 900;
-
-            box-shadow:
-                inset 0 1px 2px rgba(255,255,255,0.6),
-                0 1px 4px rgba(0,0,0,0.5);
+                drop-shadow(0 8px 10px rgba(0,0,0,0.65));
         }
 
         /* =========================
@@ -159,12 +98,14 @@
         /* =========================
            PROFILE
         ========================= */
-            #profileScreen {
+
+        #profileScreen {
             display: none;
             position: relative;
             width: 100%;
             height: 100vh;
             padding: 35px 25px;
+
             background:
                 radial-gradient(
                     circle at 75% 20%,
@@ -172,6 +113,7 @@
                     #160c24 35%,
                     #050505 75%
                 );
+
             color: white;
         }
 
@@ -228,27 +170,12 @@
         <!-- CASE -->
         <div class="case-card">
 
-            <div class="case-box">
-                <img
-                    src="easy-brain-case.png"
-                    alt="Easy Brain Case"
-                    class="case-image"
-                >
-            </div>
-
-            <div class="case-name">
-                Базовий кейс
-            </div>
-
-            <div class="case-price">
-                <span>9</span>
-
-                <span class="coin">
-                    E
-                </span>
-            </div>
-
-        </div>
+            <img
+                src="easy-brain-case.png"
+                alt="Базовий кейс"
+                class="case-image"
+            >
+               </div>
 
 
         <!-- BOTTOM MENU -->
@@ -347,7 +274,8 @@
 
                 const tg =
                     window.Telegram.WebApp;
-                 tg.ready();
+
+                tg.ready();
 
                 tg.expand();
 

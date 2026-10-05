@@ -42,6 +42,277 @@
                 );
         }
 
+        /* КЕЙС */
+
+        .case-card {
+            position: absolute;
+
+            left: 12px;
+            top: 20px;
+
+            width: 145px;
+
+            color: white;
+        }
+
+        .case-box {
+            position: relative;
+
+            width: 145px;
+            height: 125px;
+
+            perspective: 500px;
+        }
+
+        /* КРИШКА КЕЙСУ */
+
+        .case-lid {
+            position: absolute;
+
+            left: 13px;
+            top: 7px;
+
+            width: 119px;
+            height: 42px;
+
+            background: linear-gradient(
+                145deg,
+                #7653a0,
+                #3d225d
+            );
+
+            border: 2px solid #9a78c0;
+
+            border-radius: 10px 10px 4px 4px;
+
+            transform:
+                rotateX(35deg)
+                rotateZ(-2deg);
+
+            transform-origin: bottom center;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.6),
+                inset 0 2px 5px rgba(255,255,255,0.15);
+        }
+
+        /* ВНУТРІШНЯ ЧАСТИНА */
+
+        .case-inside {
+            position: absolute;
+
+            left: 15px;
+            top: 35px;
+
+            width: 115px;
+            height: 75px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 35%,
+                    #9e70d1 0%,
+                    #492769 45%,
+                    #21112f 100%
+                );
+
+            border: 2px solid #76539a;
+
+            border-radius: 5px 5px 12px 12px;
+
+            box-shadow:
+                inset 0 0 18px rgba(0,0,0,0.7),
+                0 8px 15px rgba(0,0,0,0.5);
+
+            overflow: hidden;
+        }
+
+        /* BUNNY BASKET BASE */
+
+        .bunny {
+            position: absolute;
+
+            left: 50%;
+            top: 7px;
+
+            transform: translateX(-50%);
+
+            width: 58px;
+            height: 58px;
+        }
+
+        .bunny-body {
+            position: absolute;
+
+            left: 8px;
+            bottom: 0;
+
+            width: 42px;
+            height: 36px;
+
+            background: #f2e8ff;
+
+            border-radius: 45% 45% 35% 35%;
+
+            box-shadow:
+                0 0 12px rgba(240,210,255,0.8);
+        }
+
+        .bunny-head {
+            position: absolute;
+
+            left: 14px;
+            top: 9px;
+
+            width: 31px;
+            height: 30px;
+
+            background: #fff7ff;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px rgba(240,210,255,0.8);
+        }
+
+        .ear-left,
+        .ear-right {
+            position: absolute;
+
+            top: -12px;
+
+            width: 11px;
+            height: 27px;
+
+            background: #f5eaff;
+
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        .ear-left {
+            left: 17px;
+
+            transform: rotate(-12deg);
+        }
+
+        .ear-right {
+            left: 32px;
+
+            transform: rotate(12deg);
+        }
+
+        .eye-left,
+        .eye-right {
+            position: absolute;
+
+            top: 20px;
+
+            width: 4px;
+            height: 4px;
+
+            background: #24132f;
+
+            border-radius: 50%;
+        }
+[05.10.2026 15:44] . @Brainrot_Battle: .eye-left {
+            left: 22px;
+        }
+
+        .eye-right {
+            left: 34px;
+        }
+
+        .basket {
+            position: absolute;
+
+            left: 5px;
+            bottom: 2px;
+
+            width: 48px;
+            height: 20px;
+
+            background: #d49b45;
+
+            border-radius: 4px 4px 10px 10px;
+
+            border: 2px solid #f0c46c;
+        }
+
+        .basket-line {
+            position: absolute;
+
+            left: 7px;
+            right: 7px;
+            top: 6px;
+
+            height: 2px;
+
+            background: rgba(100,55,15,0.5);
+        }
+
+        /* НАЗВА КЕЙСУ */
+
+        .case-name {
+            margin-top: 1px;
+
+            width: 145px;
+
+            text-align: left;
+
+            font-size: 8px;
+            font-weight: 500;
+
+            color: rgba(255,255,255,0.8);
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ЦІНА */
+
+        .case-price {
+            display: flex;
+            align-items: center;
+
+            gap: 4px;
+
+            margin-top: 3px;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            color: white;
+        }
+
+        .coin {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 15px;
+            height: 15px;
+
+            border-radius: 50%;
+
+            background: #f0c84b;
+
+            color: #7b4d00;
+
+            font-size: 9px;
+            font-weight: 900;
+
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.6),
+                0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .coin-letter {
+            position: absolute;
+            font-size: 8px;
+            font-weight: 900;
+        }
+
+
         .bottom-menu {
             position: absolute;
 
@@ -164,6 +435,54 @@
 
     <div id="menuScreen">
 
+        <!-- КЕЙС -->
+
+        <div class="case-card">
+
+            <div class="case-box">
+
+                <div class="case-lid"></div>
+[05.10.2026 15:44] . @Brainrot_Battle: <div class="case-inside">
+
+                    <div class="bunny">
+
+                        <div class="ear-left"></div>
+                        <div class="ear-right"></div>
+
+                        <div class="bunny-head"></div>
+
+                        <div class="eye-left"></div>
+                        <div class="eye-right"></div>
+
+                        <div class="bunny-body"></div>
+
+                        <div class="basket">
+                            <div class="basket-line"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="case-name">
+                Bunny Basket Base
+            </div>
+
+            <div class="case-price">
+
+                <span>9</span>
+
+                <span class="coin">
+                    <span class="coin-letter">E</span>
+                </span>
+
+            </div>
+
+        </div>
+
+
         <div class="bottom-menu">
 
             <button
@@ -211,7 +530,8 @@
             </div>
 
         </div>
-[04.10.2026 22:51] .: <button
+
+        <button
             type="button"
             id="backButton"
             class="back-button">
@@ -310,8 +630,7 @@
 
                         const image =
                             document.createElement("img");
-
-                        image.src =
+[05.10.2026 15:44] . @Brainrot_Battle: image.src =
                             user.photo_url;
 
                         image.alt =

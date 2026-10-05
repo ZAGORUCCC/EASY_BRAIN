@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -216,7 +216,8 @@
             border-radius: 12px;
 
             cursor: pointer;
-           -webkit-tap-highlight-color: transparent;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .case-back-button:active {
@@ -435,6 +436,7 @@
             height: 90px;
 
             border-radius: 50%;
+
             background: #333;
 
             display: flex;
@@ -670,7 +672,8 @@
                 <img
                     src="easter-base.png"
                     alt="Easter Base">
-                    </div>
+
+            </div>
 
 
             <div class="base-item">
@@ -871,7 +874,8 @@
                     використовувати, коли
                     додамо заробляння E.
                 */
-                   function addBalance(amount) {
+
+                function addBalance(amount) {
 
                     balance += amount;
 
@@ -1065,7 +1069,9 @@
 
                         telegramUserId =
                             String(user.id);
-                           const username =
+
+
+                        const username =
                             document.getElementById(
                                 "username"
                             );
@@ -1089,7 +1095,7 @@
 
 
                             username.textContent =
-                                user.first_name 
+                                user.first_name ||
                                 "Telegram User";
 
 
@@ -1127,7 +1133,7 @@
 
                             avatar.textContent =
                                 (
-                                    user.first_name 
+                                    user.first_name ||
                                     "U"
                                 )
                                 .charAt(0)

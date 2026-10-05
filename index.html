@@ -53,6 +53,10 @@
             width: 145px;
 
             color: white;
+
+            z-index: 1;
+
+            pointer-events: none;
         }
 
         .case-box {
@@ -205,11 +209,11 @@
 
             border-radius: 50%;
         }
-
-        .eye-left {
+[05.10.2026 15:58] . @Brainrot_Battle: .eye-left {
             left: 22px;
         }
-[05.10.2026 15:51] . @Brainrot_Battle: .eye-right {
+
+        .eye-right {
             left: 34px;
         }
 
@@ -312,6 +316,8 @@
             gap: 20px;
 
             width: max-content;
+
+            z-index: 100;
         }
 
         .menu-button {
@@ -327,6 +333,14 @@
 
             text-decoration: none;
             cursor: pointer;
+
+            -webkit-tap-highlight-color: rgba(0, 122, 255, 0.35);
+        }
+
+        .menu-button:active {
+            background: rgba(0, 122, 255, 0.25);
+
+            border-radius: 10px;
         }
 
 
@@ -419,11 +433,10 @@
 
     <div id="menuScreen">
 
-        <!-- ЄДИНИЙ КЕЙС -->
+        <!-- КЕЙС -->
 
         <div class="case-card">
-
-            <div class="case-box">
+<div class="case-box">
 
                 <div class="case-lid"></div>
 
@@ -433,7 +446,8 @@
 
                         <div class="ear-left"></div>
                         <div class="ear-right"></div>
-[05.10.2026 15:51] . @Brainrot_Battle: <div class="bunny-head"></div>
+
+                        <div class="bunny-head"></div>
 
                         <div class="eye-left"></div>
                         <div class="eye-right"></div>
@@ -609,8 +623,7 @@
                     /* АВАТАР */
 
                     if (user.photo_url) {
-
-                        const image =
+[05.10.2026 15:58] . @Brainrot_Battle: const image =
                             document.createElement("img");
 
                         image.src =
@@ -620,7 +633,8 @@
                             "Avatar";
 
                         avatar.textContent = "";
-[05.10.2026 15:51] . @Brainrot_Battle: avatar.appendChild(image);
+
+                        avatar.appendChild(image);
 
                     } else {
 

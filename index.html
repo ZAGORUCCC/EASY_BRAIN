@@ -56,309 +56,19 @@
             position: relative;
             width: 145px;
             height: 125px;
-            perspective: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* задня частина кейса */
-        .case-back {
-            position: absolute;
-            left: 12px;
-            top: 30px;
-            width: 121px;
-            height: 76px;
-            background:
-                linear-gradient(
-                    135deg,
-                    #8c62b8 0%,
-                    #5a367d 35%,
-                    #29163d 100%
-                );
-            border: 2px solid #a77bc9;
-            border-radius: 8px 8px 12px 12px;
+        .case-image {
+            width: 145px;
+            height: 125px;
+            object-fit: contain;
 
-            box-shadow:
-                8px 10px 18px rgba(0,0,0,0.65),
-                inset 0 3px 5px rgba(255,255,255,0.18),
-                inset 0 -8px 12px rgba(0,0,0,0.35);
-
-            transform:
-                rotateX(12deg)
-                rotateY(-8deg);
-        }
-
-        /* внутрішня частина */
-        .case-inside {
-            position: absolute;
-            left: 18px;
-            top: 38px;
-            width: 109px;
-            height: 68px;
-
-            background:
-                radial-gradient(
-                    circle at 50% 30%,
-                    #b783e5 0%,
-                    #62388b 42%,
-                    #241331 100%
-                );
-
-            border: 2px solid #8d62b1;
-            border-radius: 6px 6px 11px 11px;
-
-            box-shadow:
-                inset 0 0 20px rgba(0,0,0,0.75),
-                inset 0 4px 8px rgba(255,255,255,0.12),
-                5px 8px 15px rgba(0,0,0,0.45);
-
-            overflow: hidden;
-
-            transform:
-                rotateX(10deg)
-                rotateY(-6deg);
-        }
-
-        /* передній край */
-        .case-front {
-            position: absolute;
-            left: 14px;
-            top: 91px;
-            width: 117px;
-            height: 18px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #6f4694,
-                    #3b2255
-                );
-
-            border: 2px solid #8f68af;
-            border-radius: 3px 3px 10px 10px;
-
-            box-shadow:
-                5px 8px 12px rgba(0,0,0,0.6),
-                inset 0 2px 4px rgba(255,255,255,0.12);
-
-            transform:
-                rotateX(-8deg)
-                rotateY(-6deg);
-        }
-
-        /* кришка */
-        .case-lid {
-            position: absolute;
-            left: 9px;
-            top: 8px;
-            width: 123px;
-            height: 43px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #9c72c7 0%,
-                    #65418c 35%,
-                    #352047 75%,
-                    #21132c 100%
-                );
-
-            border: 2px solid #b18ad2;
-            border-radius: 11px 11px 5px 5px;
-             box-shadow:
-                7px 8px 17px rgba(0,0,0,0.7),
-                inset 0 3px 6px rgba(255,255,255,0.22),
-                inset 0 -5px 8px rgba(0,0,0,0.3);
-
-            transform:
-                rotateX(42deg)
-                rotateZ(-4deg);
-
-            transform-origin: bottom center;
-        }
-
-        /* блиск на кришці */
-        .case-lid::after {
-            content: "";
-            position: absolute;
-            left: 12px;
-            top: 6px;
-            width: 70px;
-            height: 5px;
-
-            background: rgba(255,255,255,0.18);
-            border-radius: 50%;
-
-            transform: rotate(-3deg);
-        }
-
-        /* декоративний замок */
-        .case-lock {
-            position: absolute;
-            left: 63px;
-            top: 46px;
-            width: 18px;
-            height: 14px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #f4d879,
-                    #b77b18
-                );
-
-            border: 1px solid #ffe8a1;
-            border-radius: 3px;
-
-            box-shadow:
-                0 2px 5px rgba(0,0,0,0.6),
-                inset 0 1px 2px rgba(255,255,255,0.7);
-
-            z-index: 5;
-        }
-
-        .case-lock::after {
-            content: "";
-            position: absolute;
-            left: 6px;
-            top: 3px;
-            width: 5px;
-            height: 6px;
-
-            border: 2px solid #76500d;
-            border-bottom: none;
-            border-radius: 5px 5px 0 0;
-        }
-
-        /* =========================
-           BUNNY
-        ========================= */
-
-        .bunny {
-            position: absolute;
-            left: 50%;
-            top: 7px;
-            transform: translateX(-50%);
-            width: 58px;
-            height: 58px;
-        }
-
-        .bunny-body {
-            position: absolute;
-            left: 8px;
-            bottom: 0;
-            width: 42px;
-            height: 36px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #e2d5ed
-                );
-
-            border-radius: 45% 45% 35% 35%;
-
-            box-shadow:
-                0 0 12px rgba(240,210,255,0.8),
-                inset 0 2px 4px rgba(255,255,255,0.8);
-        }
-
-        .bunny-head {
-            position: absolute;
-            left: 14px;
-            top: 9px;
-            width: 31px;
-            height: 30px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #eee2f5
-                );
-
-            border-radius: 50%;
-
-            box-shadow:
-                0 0 10px rgba(240,210,255,0.8),
-                inset 0 2px 4px rgba(255,255,255,0.8);
-        }
-
-        .ear-left,
-        .ear-right {
-            position: absolute;
-            top: -12px;
-            width: 11px;
-            height: 27px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #e7d8f0,
-                    #fffaff
-                );
-
-            border-radius: 50% 50% 40% 40%;
-
-            box-shadow:
-                inset 1px 0 2px rgba(255,255,255,0.8);
-        }
-
-        .ear-left {
-            left: 17px;
-            transform: rotate(-12deg);
-        }
-
-        .ear-right {
-            left: 32px;
-            transform: rotate(12deg);
-        }
-
-        .eye-left,
-        .eye-right {
-            position: absolute;
-            top: 20px;
-            width: 4px;
-            height: 4px;
-            background: #24132f;
-            border-radius: 50%;
-        }
-
-        .eye-left {
-            left: 22px;
-        }
-
-        .eye-right {
-            left: 34px;
-        }
-
-        .basket {
-            position: absolute;
-            left: 5px;
-            bottom: 2px;
-            width: 48px;
-            height: 20px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #f0bd63,
-                    #b66e20
-                );
-             border-radius: 4px 4px 10px 10px;
-            border: 2px solid #f0c46c;
-
-            box-shadow:
-                inset 0 2px 3px rgba(255,255,255,0.35),
-                0 2px 4px rgba(0,0,0,0.4);
-        }
-
-        .basket-line {
-            position: absolute;
-            left: 7px;
-            right: 7px;
-            top: 6px;
-            height: 2px;
-            background: rgba(100,55,15,0.5);
+            filter:
+                drop-shadow(0 8px 10px rgba(0,0,0,0.65))
+                drop-shadow(0 0 8px rgba(255,70,220,0.25));
         }
 
         /* =========================
@@ -438,19 +148,18 @@
             padding: 8px 10px;
             text-decoration: none;
             cursor: pointer;
-            -webkit-tap-highlight-color: rgba(0, 122, 255, 0.35);
+            -webkit-tap-highlight-color: rgba(0,122,255,0.35);
         }
 
         .menu-button:active {
-            background: rgba(0, 122, 255, 0.25);
+            background: rgba(0,122,255,0.25);
             border-radius: 10px;
         }
 
         /* =========================
            PROFILE
         ========================= */
-
-        #profileScreen {
+            #profileScreen {
             display: none;
             position: relative;
             width: 100%;
@@ -497,7 +206,8 @@
             font-size: 27px;
             font-weight: bold;
         }
-            .back-button {
+
+        .back-button {
             display: inline-block;
             margin-top: 40px;
             color: white;
@@ -515,40 +225,15 @@
 
     <div id="menuScreen">
 
+        <!-- CASE -->
         <div class="case-card">
 
             <div class="case-box">
-
-                <div class="case-back"></div>
-
-                <div class="case-inside">
-
-                    <div class="bunny">
-
-                        <div class="ear-left"></div>
-                        <div class="ear-right"></div>
-
-                        <div class="bunny-head"></div>
-
-                        <div class="eye-left"></div>
-                        <div class="eye-right"></div>
-
-                        <div class="bunny-body"></div>
-
-                        <div class="basket">
-                            <div class="basket-line"></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="case-lid"></div>
-
-                <div class="case-lock"></div>
-
-                <div class="case-front"></div>
-
+                <img
+                    src="easy-brain-case.png"
+                    alt="Easy Brain Case"
+                    class="case-image"
+                >
             </div>
 
             <div class="case-name">
@@ -566,6 +251,7 @@
         </div>
 
 
+        <!-- BOTTOM MENU -->
         <div class="bottom-menu">
 
             <button
@@ -594,6 +280,7 @@
     </div>
 
 
+    <!-- PROFILE -->
     <div id="profileScreen">
 
         <div class="profile-box">
@@ -660,8 +347,7 @@
 
                 const tg =
                     window.Telegram.WebApp;
-
-                tg.ready();
+                 tg.ready();
 
                 tg.expand();
 
@@ -686,7 +372,8 @@
                             "@" + user.username;
 
                     } else {
-                            username.textContent =
+
+                        username.textContent =
                             user.first_name ||
                             "Telegram User";
 

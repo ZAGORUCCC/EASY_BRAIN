@@ -24,15 +24,11 @@
             overflow: hidden;
         }
 
-        /* МЕНЮ */
-
         #menuScreen {
             display: block;
             position: relative;
-
             width: 100%;
             height: 100vh;
-
             background:
                 radial-gradient(
                     circle at 75% 20%,
@@ -42,55 +38,33 @@
                 );
         }
 
-        /* КЕЙС */
-
         .case-card {
             position: absolute;
-
             left: 12px;
             top: 20px;
-
             width: 145px;
-
             color: white;
-
             z-index: 1;
-
             pointer-events: none;
         }
 
         .case-box {
             position: relative;
-
             width: 145px;
             height: 125px;
         }
 
         .case-lid {
             position: absolute;
-
             left: 13px;
             top: 8px;
-
             width: 119px;
             height: 38px;
-
-            background: linear-gradient(
-                145deg,
-                #7653a0,
-                #3d225d
-            );
-
+            background: linear-gradient(145deg,#7653a0,#3d225d);
             border: 2px solid #9a78c0;
-
             border-radius: 10px 10px 4px 4px;
-
-            transform:
-                rotateX(35deg)
-                rotateZ(-2deg);
-
+            transform: rotateX(35deg) rotateZ(-2deg);
             transform-origin: bottom center;
-
             box-shadow:
                 0 5px 15px rgba(0, 0, 0, 0.6),
                 inset 0 2px 5px rgba(255,255,255,0.15);
@@ -98,13 +72,10 @@
 
         .case-inside {
             position: absolute;
-
             left: 15px;
             top: 34px;
-
             width: 115px;
             height: 75px;
-
             background:
                 radial-gradient(
                     circle at 50% 35%,
@@ -112,77 +83,52 @@
                     #492769 45%,
                     #21112f 100%
                 );
-
             border: 2px solid #76539a;
-
             border-radius: 5px 5px 12px 12px;
-
             box-shadow:
                 inset 0 0 18px rgba(0,0,0,0.7),
                 0 8px 15px rgba(0,0,0,0.5);
-
             overflow: hidden;
         }
 
-        /* BUNNY BASKET BASE */
-
         .bunny {
             position: absolute;
-
             left: 50%;
             top: 7px;
-
             transform: translateX(-50%);
-
             width: 58px;
             height: 58px;
         }
 
         .bunny-body {
             position: absolute;
-
             left: 8px;
             bottom: 0;
-
             width: 42px;
             height: 36px;
-
             background: #f2e8ff;
-
             border-radius: 45% 45% 35% 35%;
-
-            box-shadow:
-                0 0 12px rgba(240,210,255,0.8);
+            box-shadow: 0 0 12px rgba(240,210,255,0.8);
         }
 
         .bunny-head {
             position: absolute;
-
             left: 14px;
             top: 9px;
-
             width: 31px;
             height: 30px;
-
             background: #fff7ff;
-
             border-radius: 50%;
-
-            box-shadow:
-                0 0 10px rgba(240,210,255,0.8);
+            box-shadow: 0 0 10px rgba(240,210,255,0.8);
         }
 
         .ear-left,
         .ear-right {
             position: absolute;
-
             top: -12px;
-
             width: 11px;
             height: 27px;
-
             background: #f5eaff;
-
             border-radius: 50% 50% 40% 40%;
         }
 
@@ -199,64 +145,47 @@
         .eye-left,
         .eye-right {
             position: absolute;
-
             top: 20px;
-
             width: 4px;
             height: 4px;
-
             background: #24132f;
-
             border-radius: 50%;
         }
-[05.10.2026 15:58] . @Brainrot_Battle: .eye-left {
+
+        .eye-left {
             left: 22px;
         }
 
         .eye-right {
             left: 34px;
         }
-
-        .basket {
+            .basket {
             position: absolute;
-
             left: 5px;
             bottom: 2px;
-
             width: 48px;
             height: 20px;
-
             background: #d49b45;
-
             border-radius: 4px 4px 10px 10px;
-
             border: 2px solid #f0c46c;
         }
 
         .basket-line {
             position: absolute;
-
             left: 7px;
             right: 7px;
             top: 6px;
-
             height: 2px;
-
             background: rgba(100,55,15,0.5);
         }
 
         .case-name {
             margin-top: 1px;
-
             width: 145px;
-
             text-align: left;
-
             font-size: 8px;
             font-weight: 500;
-
             color: rgba(255,255,255,0.8);
-
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -265,96 +194,66 @@
         .case-price {
             display: flex;
             align-items: center;
-
             gap: 4px;
-
             margin-top: 3px;
-
             font-size: 11px;
             font-weight: 600;
-
             color: white;
         }
 
         .coin {
             position: relative;
-
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             width: 15px;
             height: 15px;
-
             border-radius: 50%;
-
             background: #f0c84b;
-
             color: #7b4d00;
-
             font-size: 8px;
             font-weight: 900;
-
             box-shadow:
                 inset 0 1px 2px rgba(255,255,255,0.6),
                 0 1px 4px rgba(0,0,0,0.5);
         }
 
-
         .bottom-menu {
             position: absolute;
-
             left: 50%;
             bottom: 35px;
-
             transform: translateX(-50%);
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             gap: 20px;
-
             width: max-content;
-
             z-index: 100;
         }
 
         .menu-button {
             border: none;
             background: transparent;
-
             color: white;
-
             font-size: 24px;
             font-weight: 600;
-
             padding: 8px 10px;
-
             text-decoration: none;
             cursor: pointer;
-
             -webkit-tap-highlight-color: rgba(0, 122, 255, 0.35);
         }
 
         .menu-button:active {
             background: rgba(0, 122, 255, 0.25);
-
             border-radius: 10px;
         }
-
-
-        /* ПРОФІЛЬ */
 
         #profileScreen {
             display: none;
             position: relative;
-
             width: 100%;
             height: 100vh;
-
             padding: 35px 25px;
-
             background:
                 radial-gradient(
                     circle at 75% 20%,
@@ -362,66 +261,50 @@
                     #160c24 35%,
                     #050505 75%
                 );
-
             color: white;
         }
 
         .profile-box {
             display: flex;
             align-items: center;
-
             margin-top: 30px;
         }
 
         .avatar {
             width: 90px;
             height: 90px;
-
             border-radius: 50%;
-
             background: #333;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             overflow: hidden;
-
             font-size: 36px;
             font-weight: bold;
-
             flex-shrink: 0;
         }
 
         .avatar img {
             width: 100%;
             height: 100%;
-
             object-fit: cover;
         }
 
         .username {
             margin-left: 20px;
-
             font-size: 27px;
             font-weight: bold;
         }
 
         .back-button {
             display: inline-block;
-
             margin-top: 40px;
-
             color: white;
-
             font-size: 20px;
             font-weight: 600;
-
             background: transparent;
             border: none;
-
             padding: 0;
-
             cursor: pointer;
         }
     </style>
@@ -429,22 +312,18 @@
 
 <body>
 
-    <!-- МЕНЮ -->
-
     <div id="menuScreen">
 
-        <!-- КЕЙС -->
-
         <div class="case-card">
-<div class="case-box">
+
+            <div class="case-box">
 
                 <div class="case-lid"></div>
 
                 <div class="case-inside">
 
                     <div class="bunny">
-
-                        <div class="ear-left"></div>
+                     <div class="ear-left"></div>
                         <div class="ear-right"></div>
 
                         <div class="bunny-head"></div>
@@ -478,7 +357,6 @@
 
         </div>
 
-
         <div class="bottom-menu">
 
             <button
@@ -507,21 +385,15 @@
     </div>
 
 
-    <!-- ПРОФІЛЬ -->
-
     <div id="profileScreen">
 
         <div class="profile-box">
 
-            <div
-                id="avatar"
-                class="avatar">
+            <div id="avatar" class="avatar">
                 ?
             </div>
 
-            <div
-                id="username"
-                class="username">
+            <div id="username" class="username">
                 Telegram User
             </div>
 
@@ -541,8 +413,6 @@
 
         document.addEventListener("DOMContentLoaded", function () {
 
-            /* ЕЛЕМЕНТИ */
-
             const menuScreen =
                 document.getElementById("menuScreen");
 
@@ -556,27 +426,23 @@
                 document.getElementById("backButton");
 
 
-            /* ВІДКРИТИ ПРОФІЛЬ */
-
             profileButton.addEventListener("click", function () {
 
                 menuScreen.style.display = "none";
+
                 profileScreen.style.display = "block";
 
             });
 
 
-            /* ПОВЕРНУТИСЯ В МЕНЮ */
-
             backButton.addEventListener("click", function () {
 
                 profileScreen.style.display = "none";
+
                 menuScreen.style.display = "block";
 
             });
 
-
-            /* TELEGRAM */
 
             if (
                 window.Telegram &&
@@ -587,6 +453,7 @@
                     window.Telegram.WebApp;
 
                 tg.ready();
+
                 tg.expand();
 
 
@@ -604,8 +471,6 @@
                         document.getElementById("avatar");
 
 
-                    /* USERNAME */
-
                     if (user.username) {
 
                         username.textContent =
@@ -620,10 +485,9 @@
                     }
 
 
-                    /* АВАТАР */
-
                     if (user.photo_url) {
-[05.10.2026 15:58] . @Brainrot_Battle: const image =
+
+                        const image =
                             document.createElement("img");
 
                         image.src =
@@ -637,8 +501,7 @@
                         avatar.appendChild(image);
 
                     } else {
-
-                        avatar.textContent =
+[05.10.2026 16:11] . @Brainrot_Battle: avatar.textContent =
                             (user.first_name || "U")
                             .charAt(0)
                             .toUpperCase();

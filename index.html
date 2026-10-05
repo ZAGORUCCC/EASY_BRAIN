@@ -1,8 +1,11 @@
-<!DOCTYPE html> 
+ <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Easy Brain</title>
 
@@ -14,17 +17,21 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
+
             width: 100%;
             height: 100%;
+
             font-family: Arial, sans-serif;
+
+            background: #050505;
         }
 
         body {
             overflow: hidden;
-            background: #050505;
         }
 
 
@@ -34,7 +41,9 @@
 
         #menuScreen {
             display: block;
+
             position: relative;
+
             width: 100%;
             height: 100vh;
 
@@ -49,11 +58,12 @@
 
 
         /* =========================
-           CASE
+           BASIC CASE
         ========================= */
 
         .case-card {
             position: absolute;
+
             left: 12px;
             top: 20px;
 
@@ -61,10 +71,13 @@
 
             z-index: 1;
 
-            pointer-events: auto;
             cursor: pointer;
 
             -webkit-tap-highlight-color: transparent;
+        }
+
+        .case-card:active {
+            transform: scale(0.97);
         }
 
         .case-image {
@@ -78,12 +91,8 @@
             filter:
                 drop-shadow(
                     0 8px 10px
-                    rgba(0,0,0,0.65)
+                    rgba(0, 0, 0, 0.65)
                 );
-        }
-
-        .case-card:active {
-            transform: scale(0.97);
         }
 
 
@@ -100,6 +109,7 @@
             transform: translateX(-50%);
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
@@ -122,17 +132,15 @@
 
             padding: 8px 10px;
 
-            text-decoration: none;
-
             cursor: pointer;
 
             -webkit-tap-highlight-color:
-                rgba(0,122,255,0.35);
+                rgba(0, 122, 255, 0.35);
         }
 
         .menu-button:active {
             background:
-                rgba(0,122,255,0.25);
+                rgba(0, 122, 255, 0.25);
 
             border-radius: 10px;
         }
@@ -154,9 +162,9 @@
 
             background:
                 radial-gradient(
-                    circle at 50% 25%,
+                    circle at 50% 15%,
                     #3b155c 0%,
-                    #160c24 38%,
+                    #160c24 35%,
                     #050505 78%
                 );
 
@@ -164,23 +172,154 @@
             overflow-x: hidden;
 
             overscroll-behavior: contain;
+
             -webkit-overflow-scrolling: touch;
         }
 
 
         /* =========================
-           TOP HALF
+           CASE HEADER
         ========================= */
 
-        .case-top {
+        .case-header {
             position: relative;
 
             width: 100%;
+            height: 90px;
+        }
 
-            /* Верхня половина екрана */
-            height: 50vh;
 
-            min-height: 300px;
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .case-back-button {
+            position: absolute;
+
+            left: 16px;
+            top: 18px;
+
+            z-index: 20;
+
+            border: none;
+
+            background:
+                rgba(0, 0, 0, 0.32);
+
+            color: white;
+
+            font-size: 19px;
+            font-weight: 600;
+
+            padding: 10px 14px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .case-back-button:active {
+            transform: scale(0.96);
+        }
+
+
+        /* =========================
+           BALANCE
+        ========================= */
+
+        .balance-box {
+            position: absolute;
+
+            right: 16px;
+            top: 18px;
+
+            min-width: 105px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            padding: 0 15px;
+
+            background:
+                rgba(10, 7, 18, 0.82);
+
+            border:
+                1px solid
+                rgba(150, 70, 255, 0.65);
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 0 14px
+                rgba(120, 30, 255, 0.18);
+
+            font-size: 21px;
+            font-weight: 700;
+
+            color: white;
+        }
+
+        .balance-coin {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffe96a,
+                    #ffb300
+                );
+
+            color: #17100a;
+
+            font-size: 20px;
+            font-weight: 900;
+
+            box-shadow:
+                inset 0 0 0 2px
+                rgba(255, 255, 255, 0.25);
+        }
+
+        #balanceAmount {
+            min-width: 18px;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           OPEN AREA
+        ========================= */
+
+        .open-area {
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            /*
+               Маленький проміжок після header.
+               Кнопка тепер знаходиться прямо
+               над першим рядом баз.
+            */
+
+            padding-top: 4px;
+            padding-bottom: 12px;
         }
 
 
@@ -189,42 +328,37 @@
         ========================= */
 
         .open-case-button {
-            position: absolute;
-
-            left: 50%;
-            top: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
             border: none;
+
+            outline: none;
 
             background: transparent;
 
             padding: 0;
 
+            margin: 0;
+
             cursor: pointer;
-           -webkit-tap-highlight-color:
-                transparent;
+
+            -webkit-tap-highlight-color: transparent;
         }
 
         .open-case-button img {
             display: block;
 
-            width: 130px;
-
+            width: 150px;
             height: auto;
+
+            object-fit: contain;
         }
 
         .open-case-button:active {
-            transform:
-                translate(-50%, -50%)
-                scale(0.94);
+            transform: scale(0.94);
         }
 
 
         /* =========================
-           BASES
+           BASE GRID
         ========================= */
 
         .bases-grid {
@@ -238,9 +372,9 @@
             width: 100%;
 
             padding:
-                10px
+                0
                 12px
-                35px;
+                30px;
         }
 
         .base-item {
@@ -258,41 +392,6 @@
             height: auto;
 
             border-radius: 12px;
-        }
-
-
-        /* =========================
-           CASE BACK BUTTON
-        ========================= */
-
-        .case-back-button {
-            position: fixed;
-
-            left: 18px;
-            top: 20px;
-
-            z-index: 200;
-
-            border: none;
-
-            background:
-                rgba(0,0,0,0.35);
-
-            color: white;
-
-            font-size: 20px;
-            font-weight: 600;
-
-            padding:
-                8px
-                12px;
-
-            border-radius: 10px;
-
-            cursor: pointer;
-
-            backdrop-filter:
-                blur(5px);
         }
 
 
@@ -334,7 +433,6 @@
         .avatar {
             width: 90px;
             height: 90px;
-
             border-radius: 50%;
 
             background: #333;
@@ -386,7 +484,6 @@
         }
 
     </style>
-
 </head>
 
 
@@ -395,7 +492,7 @@
 
     <!-- =========================
          MAIN MENU
-    ========================== -->
+    ========================= -->
 
     <div id="menuScreen">
 
@@ -418,34 +515,26 @@
 
         <div class="bottom-menu">
 
-
             <button
                 type="button"
                 class="menu-button"
                 id="casesButton">
-
                 Cases
-
             </button>
-
 
             <button
                 type="button"
                 class="menu-button"
                 id="upgradeButton">
-
                 Upgrade
-
             </button>
+
             <button
                 type="button"
                 class="menu-button"
                 id="profileButton">
-
                 Profile
-
             </button>
-
 
         </div>
 
@@ -455,30 +544,51 @@
 
     <!-- =========================
          CASE SCREEN
-    ========================== -->
+    ========================= -->
 
     <div id="caseScreen">
 
 
-        <!-- BACK -->
+        <!-- HEADER -->
 
-        <button
-            type="button"
-            id="caseBackButton"
-            class="case-back-button">
-
-            ← Назад
-
-        </button>
+        <div class="case-header">
 
 
+            <!-- BACK -->
 
-        <!-- TOP HALF -->
+            <button
+                type="button"
+                id="caseBackButton"
+                class="case-back-button">
 
-        <div class="case-top">
+                ← Назад
+
+            </button>
 
 
-            <!-- OPEN -->
+            <!-- BALANCE -->
+
+            <div
+                class="balance-box"
+                id="balanceBox">
+
+                <div class="balance-coin">
+                    E
+                </div>
+
+                <span id="balanceAmount">
+                    0
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- OPEN BUTTON -->
+
+        <div class="open-area">
 
             <button
                 type="button"
@@ -491,19 +601,15 @@
 
             </button>
 
-
         </div>
 
 
-
-        <!-- =====================
-             BASE LIST
-        ====================== -->
+        <!-- =========================
+             BASES
+        ========================= -->
 
         <div class="bases-grid">
 
-
-            <!-- TRALALELO -->
 
             <div class="base-item">
 
@@ -514,9 +620,6 @@
             </div>
 
 
-
-            <!-- ROSE -->
-
             <div class="base-item">
 
                 <img
@@ -525,9 +628,6 @@
 
             </div>
 
-
-
-            <!-- AQUATIC -->
 
             <div class="base-item">
 
@@ -538,9 +638,6 @@
             </div>
 
 
-
-            <!-- HONEY BEE -->
-
             <div class="base-item">
 
                 <img
@@ -549,9 +646,6 @@
 
             </div>
 
-
-
-            <!-- BUNNY BASKET -->
 
             <div class="base-item">
 
@@ -562,9 +656,6 @@
             </div>
 
 
-
-            <!-- TACO -->
-
             <div class="base-item">
 
                 <img
@@ -574,20 +665,13 @@
             </div>
 
 
-
-            <!-- EASTER -->
-
             <div class="base-item">
-
-                <img
+                   <img
                     src="easter-base.png"
                     alt="Easter Base">
 
             </div>
 
-
-
-            <!-- LUCKY -->
 
             <div class="base-item">
 
@@ -606,7 +690,7 @@
 
     <!-- =========================
          PROFILE
-    ========================== -->
+    ========================= -->
 
     <div id="profileScreen">
 
@@ -651,7 +735,7 @@
 
     <!-- =========================
          JAVASCRIPT
-    ========================== -->
+    ========================= -->
 
     <script>
 
@@ -664,58 +748,169 @@
                    ELEMENTS
                 ===================== */
 
-
                 const menuScreen =
                     document.getElementById(
                         "menuScreen"
                     );
-
 
                 const profileScreen =
                     document.getElementById(
                         "profileScreen"
                     );
 
-
                 const caseScreen =
                     document.getElementById(
                         "caseScreen"
                     );
 
-
                 const profileButton =
                     document.getElementById(
                         "profileButton"
                     );
-                     const backButton =
+
+                const backButton =
                     document.getElementById(
                         "backButton"
                     );
-
 
                 const basicCase =
                     document.getElementById(
                         "basicCase"
                     );
 
-
                 const caseBackButton =
                     document.getElementById(
                         "caseBackButton"
                     );
-
 
                 const openCaseButton =
                     document.getElementById(
                         "openCaseButton"
                     );
 
+                const balanceAmount =
+                    document.getElementById(
+                        "balanceAmount"
+                    );
 
 
                 /* =====================
-                   OPEN BASIC CASE
+                   USER BALANCE
                 ===================== */
 
+                let telegramUserId =
+                    "guest";
+
+                let balance =
+                    0;
+
+
+                function getBalanceKey() {
+
+                    return (
+                        "easyBrainBalance_" +
+                        telegramUserId
+                    );
+
+                }
+
+
+                function loadBalance() {
+
+                    const savedBalance =
+                        localStorage.getItem(
+                            getBalanceKey()
+                        );
+
+
+                    if (savedBalance !== null) {
+
+                        const parsedBalance =
+                            Number(savedBalance);
+
+
+                        if (
+                            !Number.isNaN(
+                                parsedBalance
+                            )
+                        ) {
+
+                            balance =
+                                parsedBalance;
+
+                        }
+
+                    }
+
+
+                    updateBalanceDisplay();
+
+                }
+
+
+                function saveBalance() {
+
+                    localStorage.setItem(
+                        getBalanceKey(),
+                        String(balance)
+                    );
+
+                }
+
+
+                function updateBalanceDisplay() {
+
+                    balanceAmount.textContent =
+                        balance;
+
+                }
+                 /*
+                    Цю функцію потім будемо
+                    використовувати, коли
+                    додамо заробляння E.
+                */
+
+                function addBalance(amount) {
+
+                    balance += amount;
+
+                    saveBalance();
+
+                    updateBalanceDisplay();
+
+                }
+
+
+                /*
+                    А цю — коли E потрібно
+                    буде витрачати.
+                */
+
+                function removeBalance(amount) {
+
+                    if (balance < amount) {
+
+                        return false;
+
+                    }
+
+
+                    balance -= amount;
+
+                    saveBalance();
+
+                    updateBalanceDisplay();
+
+
+                    return true;
+
+                }
+
+
+
+                /* =====================
+                   BASIC CASE CLICK
+                ===================== */
 
                 basicCase.addEventListener(
                     "click",
@@ -734,7 +929,8 @@
                             "block";
 
 
-                        caseScreen.scrollTop = 0;
+                        caseScreen.scrollTop =
+                            0;
 
 
                     }
@@ -743,9 +939,8 @@
 
 
                 /* =====================
-                   BACK FROM CASE
+                   CASE BACK
                 ===================== */
-
 
                 caseBackButton.addEventListener(
                     "click",
@@ -766,10 +961,8 @@
 
 
                 /* =====================
-                   OPEN BUTTON
-                   Поки без випадіння бази
+                   OPEN CASE
                 ===================== */
-
 
                 openCaseButton.addEventListener(
                     "click",
@@ -777,9 +970,9 @@
 
 
                         /*
-                            Тут наступним етапом
-                            зробимо відкриття кейса,
-                            анімацію та випадіння бази.
+                            Тут наступним кроком
+                            додамо справжнє
+                            відкриття кейса.
                         */
 
 
@@ -792,13 +985,16 @@
                    PROFILE
                 ===================== */
 
-
                 profileButton.addEventListener(
                     "click",
                     function () {
 
 
                         menuScreen.style.display =
+                            "none";
+
+
+                        caseScreen.style.display =
                             "none";
 
 
@@ -814,7 +1010,6 @@
                 /* =====================
                    PROFILE BACK
                 ===================== */
-
 
                 backButton.addEventListener(
                     "click",
@@ -838,7 +1033,6 @@
                    TELEGRAM
                 ===================== */
 
-
                 if (
                     window.Telegram &&
                     window.Telegram.WebApp
@@ -854,96 +1048,5 @@
                     tg.expand();
 
 
-
                     const user =
                         tg.initDataUnsafe &&
-                        tg.initDataUnsafe.user;
-
-
-
-                    if (user) {
-
-
-                        const username =
-                            document.getElementById(
-                                "username"
-                            );
-
-
-                        const avatar =
-                            document.getElementById(
-                                "avatar"
-                            );
-
-
-
-                        if (user.username) {
-                         username.textContent =
-                                "@" +
-                                user.username;
-
-
-                        } else {
-
-
-                            username.textContent =
-                                user.first_name ||
-                                "Telegram User";
-
-
-                        }
-
-
-
-                        if (user.photo_url) {
-
-
-                            const image =
-                                document.createElement(
-                                    "img"
-                                );
-
-
-                            image.src =
-                                user.photo_url;
-
-
-                            image.alt =
-                                "Avatar";
-
-
-                            avatar.textContent =
-                                "";
-
-
-                            avatar.appendChild(
-                                image
-                            );
-
-
-                        } else {
-
-
-                            avatar.textContent =
-                                (
-                                    user.first_name ||
-                                    "U"
-                                )
-                                .charAt(0)
-                                .toUpperCase();
-
-
-                        }
-
-                    }
-
-                }
-
-            }
-        );
-
-    </script>
-
-
-</body>
-</html>

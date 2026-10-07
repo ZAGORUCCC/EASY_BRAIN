@@ -457,12 +457,35 @@
             object-fit: cover;
         }
 
-        .username {
-            margin-left: 20px;
 
+        /* =========================
+           PROFILE NAME + ID
+        ========================= */
+
+        .profile-user-info {
+            margin-left: 20px;
+        }
+
+        .username {
             font-size: 27px;
             font-weight: bold;
         }
+
+        .easy-brain-id {
+            margin-top: 7px;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.65
+                );
+        }
+
 
         .back-button {
             display: inline-block;
@@ -492,7 +515,6 @@
 
     <!-- =========================
          GLOBAL BALANCE
-         ТЕПЕР ВІН ЗАВЖДИ ВИДИМИЙ
     ========================= -->
 
     <div
@@ -623,8 +645,6 @@
         <div class="bases-grid">
 
 
-            <!-- TRALALELO -->
-
             <div class="base-item">
 
                 <img
@@ -633,8 +653,6 @@
 
             </div>
 
-
-            <!-- ROSE -->
 
             <div class="base-item">
 
@@ -645,8 +663,6 @@
             </div>
 
 
-            <!-- AQUATIC -->
-
             <div class="base-item">
 
                 <img
@@ -655,8 +671,6 @@
 
             </div>
 
-
-            <!-- HONEY BEE -->
 
             <div class="base-item">
 
@@ -667,8 +681,6 @@
             </div>
 
 
-            <!-- BUNNY BASKET -->
-
             <div class="base-item">
 
                 <img
@@ -677,8 +689,6 @@
 
             </div>
 
-
-            <!-- TACO -->
 
             <div class="base-item">
 
@@ -689,8 +699,6 @@
             </div>
 
 
-            <!-- EASTER -->
-
             <div class="base-item">
 
                 <img
@@ -699,8 +707,6 @@
 
             </div>
 
-
-            <!-- LUCKY -->
 
             <div class="base-item">
 
@@ -736,11 +742,24 @@
             </div>
 
 
-            <div
-                id="username"
-                class="username">
+            <div class="profile-user-info">
 
-                Telegram User
+                <div
+                    id="username"
+                    class="username">
+
+                    Telegram User
+
+                </div>
+
+
+                <div
+                    id="easyBrainId"
+                    class="easy-brain-id">
+
+                    ID: -------
+
+                </div>
 
             </div>
 
@@ -831,14 +850,184 @@
                     );
 
 
+                const easyBrainId =
+                    document.getElementById(
+                        "easyBrainId"
+                    );
+
+
 
                 /* =====================
-                   USER BALANCE
+                   TELEGRAM USER
                 ===================== */
 
                 let telegramUserId =
                     "guest";
 
+
+
+                /* =====================
+                   EASY BRAIN USER ID
+                ===================== */
+
+                function generateEasyBrainId() {
+
+                    const letters =
+                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+                    const numbers =
+                        "0123456789";
+
+
+                    let characters =
+                        [];
+
+
+                    /*
+                        Рівно 4 випадкові
+                        англійські літери.
+                    */
+
+                    for (
+                        let i = 0;
+                        i < 4;
+                        i++
+                    ) {
+
+                        const randomLetter =
+                            letters[
+                                Math.floor(
+                                    Math.random() *
+                                    letters.length
+                                )
+                            ];
+
+
+                        characters.push(
+                            randomLetter
+                        );
+
+                    }
+
+
+                    /*
+                        Рівно 3 випадкові цифри.
+                    */
+
+                    for (
+                        let i = 0;
+                        i < 3;
+                        i++
+                    ) {
+
+                        const randomNumber =
+                            numbers[
+                                Math.floor(
+                                    Math.random() *
+                                    numbers.length
+                                )
+                            ];
+
+
+                        characters.push(
+                            randomNumber
+                        );
+
+                    }
+
+
+                    /*
+                        Перемішуємо всі
+                        7 символів між собою.
+                    */
+
+                    for (
+                        let i =
+                            characters.length - 1;
+                        i > 0;
+                        i--
+                    ) {
+
+                        const j =
+                            Math.floor(
+                                Math.random() *
+                                (i + 1)
+                            );
+
+
+                        const temp =
+                            characters[i];
+
+
+                        characters[i] =
+                            characters[j];
+
+
+                        characters[j] =
+                            temp;
+
+                    }
+
+
+                    return characters.join("");
+
+                }
+
+
+
+                function getEasyBrainIdKey() {
+
+                    return (
+                        "easyBrainUserId_" +
+                        telegramUserId
+                    );
+
+                }
+
+
+
+                function loadEasyBrainId() {
+
+                    const key =
+                        getEasyBrainIdKey();
+
+
+                    let savedId =
+                        localStorage.getItem(
+                            key
+                        );
+
+
+                    /*
+                        Якщо ID ще немає,
+                        користувач зайшов уперше.
+                    */
+
+                    if (!savedId) {
+
+                        savedId =
+                            generateEasyBrainId();
+
+
+                        localStorage.setItem(
+                            key,
+                            savedId
+                        );
+
+                    }
+
+
+                    easyBrainId.textContent =
+                        "ID: " +
+                        savedId;
+
+                }
+
+
+
+                /* =====================
+                   USER BALANCE
+                ===================== */
 
                 let balance =
                     0;
@@ -910,12 +1099,6 @@
 
 
 
-                /*
-                    Цю функцію потім будемо
-                    використовувати, коли
-                    додамо заробляння E.
-                */
-
                 function addBalance(amount) {
 
                     balance += amount;
@@ -927,11 +1110,6 @@
                 }
 
 
-
-                /*
-                    А цю — коли E потрібно
-                    буде витрачати.
-                */
 
                 function removeBalance(amount) {
 
@@ -1017,8 +1195,7 @@
 
 
                         /*
-                            Тут наступним кроком
-                            додамо справжнє
+                            Тут пізніше додамо
                             відкриття кейса.
                         */
 
@@ -1110,9 +1287,9 @@
 
 
                         /*
-                            ID користувача.
-                            Він використовується
-                            для ключа балансу.
+                            Справжній Telegram ID
+                            використовуємо тільки
+                            всередині програми.
                         */
 
                         telegramUserId =
@@ -1200,11 +1377,14 @@
 
 
                 /*
-                    Завантажуємо баланс
-                    після отримання Telegram ID.
+                    Спочатку отримали Telegram ID,
+                    а тепер завантажуємо
+                    баланс та Easy Brain ID.
                 */
 
                 loadBalance();
+
+                loadEasyBrainId();
 
 
             }

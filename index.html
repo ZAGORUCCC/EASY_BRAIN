@@ -363,20 +363,18 @@
 
 
         /*
-           Затемнення по краях.
-           Через нього база плавно
-           з'являється справа і
-           зникає зліва.
+           Плавне затемнення картинки
+           біля лівого та правого краю.
         */
 
-        .base-showcase::before {
+        .base-showcase::after {
             content: "";
 
             position: absolute;
 
             inset: 0;
 
-            z-index: 10;
+            z-index: 50;
 
             pointer-events: none;
 
@@ -386,35 +384,37 @@
 
                     rgba(12, 8, 18, 1) 0%,
 
-                    rgba(12, 8, 18, 0.88) 5%,
+                    rgba(12, 8, 18, 0.72) 7%,
 
-                    rgba(12, 8, 18, 0) 23%,
+                    rgba(12, 8, 18, 0) 22%,
 
-                    rgba(12, 8, 18, 0) 77%,
+                    rgba(12, 8, 18, 0) 78%,
 
-                    rgba(12, 8, 18, 0.88) 95%,
+                    rgba(12, 8, 18, 0.72) 93%,
 
                     rgba(12, 8, 18, 1) 100%
                 );
         }
 
 
+        /* =========================
+           MOVING BASE
+        ========================= */
+
         .moving-base {
             position: absolute;
 
             top: 50%;
-            left: 0;
+            left: 100%;
 
             width: 175px;
             height: 205px;
 
             object-fit: contain;
 
-            opacity: 0;
-
             transform:
                 translate(
-                    calc(100vw + 190px),
+                    0,
                     -50%
                 );
 
@@ -424,18 +424,15 @@
                     rgba(0, 0, 0, 0.45)
                 );
 
+            animation:
+                moveBaseAcross
+                5s
+                linear
+                forwards;
+
             will-change:
                 transform,
                 opacity;
-        }
-
-
-        .moving-base.run {
-            animation:
-                moveBaseAcross
-                4.8s
-                linear
-                forwards;
         }
 
 
@@ -444,30 +441,31 @@
             0% {
                 transform:
                     translate(
-                        calc(100vw + 190px),
+                        0,
                         -50%
                     );
 
                 opacity: 0;
             }
 
-            10% {
+            8% {
                 opacity: 1;
             }
 
-            85% {
+            88% {
                 opacity: 1;
             }
 
             100% {
                 transform:
                     translate(
-                        -240px,
+                        calc(-100vw - 400px),
                         -50%
                     );
 
                 opacity: 0;
             }
+
         }
 
 
@@ -483,7 +481,6 @@
             background: transparent;
 
             padding: 0;
-
             margin: 0;
 
             cursor: pointer;
@@ -708,8 +705,6 @@
     <div id="menuScreen">
 
 
-        <!-- BASIC CASE -->
-
         <div
             class="case-card"
             id="basicCase">
@@ -721,8 +716,6 @@
 
         </div>
 
-
-        <!-- BOTTOM MENU -->
 
         <div class="bottom-menu">
 
@@ -768,8 +761,6 @@
     <div id="caseScreen">
 
 
-        <!-- HEADER -->
-
         <div class="case-header">
 
             <button
@@ -792,21 +783,11 @@
         <div class="open-area">
 
 
-            <!--
-                ВІКНО З РУХОМОЮ
-                ВИПАДКОВОЮ БАЗОЮ
-            -->
+            <!-- RANDOM BASE WINDOW -->
 
             <div
                 class="base-showcase"
                 id="baseShowcase">
-
-                <img
-                    id="movingBase"
-                    class="moving-base"
-                    src=""
-                    alt="Random Base">
-
             </div>
 
 
@@ -1046,9 +1027,9 @@
                     );
 
 
-                const movingBase =
+                const baseShowcase =
                     document.getElementById(
-                        "movingBase"
+                        "baseShowcase"
                     );
 
 
@@ -1092,9 +1073,13 @@
                    RANDOM SHOWCASE
                 ===================== */
 
-                let showcaseTimer = null;
+                let showcaseTimer =
+                    null;
 
-                let lastBaseIndex = -1;
+
+                let lastBaseIndex =
+                    -1;
+
 
 
                 function getRandomBaseImage() {
@@ -1107,8 +1092,9 @@
 
 
                     /*
-                       Не показуємо ту саму
-                       базу два рази підряд.
+                       Не повторюємо одну
+                       і ту саму базу
+                       два рази підряд.
                     */
 
                     if (
@@ -1137,27 +1123,53 @@
 
 
 
-                function playRandomBase() {
+                function createMovingBase() {
 
-                    movingBase.classList.remove(
-                        "run"
+
+                    /*
+                       Для КОЖНОЇ бази створюємо
+                       окрему картинку.
+
+                       Тому наступна база
+                       більше не обриває
+                       попередню.
+                    */
+
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    image.className =
+                        "moving-base";
+
+
+                    image.src =
+                        getRandomBaseImage();
+
+
+                    image.alt =
+                        "Random Base";
+
+
+                    baseShowcase.appendChild(
+                        image
                     );
 
 
                     /*
-                       Даємо браузеру застосувати
-                       видалення анімації.
+                       Після повного проходження
+                       прибираємо картинку.
                     */
 
-                    void movingBase.offsetWidth;
+                    image.addEventListener(
+                        "animationend",
+                        function () {
 
+                            image.remove();
 
-                    movingBase.src =
-                        getRandomBaseImage();
-
-
-                    movingBase.classList.add(
-                        "run"
+                        }
                     );
 
                 }
@@ -1166,22 +1178,30 @@
 
                 function startBaseShowcase() {
 
+
                     stopBaseShowcase();
 
 
-                    playRandomBase();
+                    /*
+                       Перша база з'являється
+                       одразу.
+                    */
+
+                    createMovingBase();
 
 
                     /*
-                       Нова випадкова база
-                       запускається приблизно
-                       кожні 2.2 секунди.
+                       Потім запускаємо
+                       наступні бази.
+
+                       Кожна попередня продовжує
+                       свою власну анімацію.
                     */
 
                     showcaseTimer =
                         setInterval(
-                            playRandomBase,
-                            2200
+                            createMovingBase,
+                            1400
                         );
 
                 }
@@ -1190,11 +1210,15 @@
 
                 function stopBaseShowcase() {
 
-                    if (showcaseTimer !== null) {
+
+                    if (
+                        showcaseTimer !== null
+                    ) {
 
                         clearInterval(
                             showcaseTimer
                         );
+
 
                         showcaseTimer =
                             null;
@@ -1202,9 +1226,13 @@
                     }
 
 
-                    movingBase.classList.remove(
-                        "run"
-                    );
+                    /*
+                       При виході з кейса
+                       очищаємо рухомі картинки.
+                    */
+
+                    baseShowcase.innerHTML =
+                        "";
 
                 }
 
@@ -1378,10 +1406,14 @@
                         );
 
 
-                    if (savedBalance !== null) {
+                    if (
+                        savedBalance !== null
+                    ) {
 
                         const parsedBalance =
-                            Number(savedBalance);
+                            Number(
+                                savedBalance
+                            );
 
 
                         if (
@@ -1438,7 +1470,9 @@
 
                 function removeBalance(amount) {
 
-                    if (balance < amount) {
+                    if (
+                        balance < amount
+                    ) {
 
                         return false;
 
@@ -1484,8 +1518,8 @@
 
 
                         /*
-                           Коли заходимо в кейс,
-                           запускаємо рух баз.
+                           Запускаємо нескінченну
+                           стрічку баз.
                         */
 
                         startBaseShowcase();
@@ -1531,8 +1565,9 @@
 
 
                         /*
-                           Справжнє відкриття кейса
-                           поки не змінюємо.
+                           Справжнє відкриття
+                           кейса поки
+                           не змінюємо.
                         */
 
 
@@ -1626,7 +1661,9 @@
 
 
                         telegramUserId =
-                            String(user.id);
+                            String(
+                                user.id
+                            );
 
 
 
@@ -1643,7 +1680,9 @@
 
 
 
-                        if (user.username) {
+                        if (
+                            user.username
+                        ) {
 
 
                             username.textContent =
@@ -1663,7 +1702,9 @@
 
 
 
-                        if (user.photo_url) {
+                        if (
+                            user.photo_url
+                        ) {
 
 
                             const image =

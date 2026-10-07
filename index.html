@@ -230,10 +230,12 @@
         ========================= */
 
         .balance-box {
-            position: absolute;
+            position: fixed;
 
             right: 16px;
             top: 18px;
+
+            z-index: 1000;
 
             min-width: 105px;
             height: 48px;
@@ -264,6 +266,8 @@
             font-weight: 700;
 
             color: white;
+
+            backdrop-filter: blur(5px);
         }
 
         .balance-coin {
@@ -312,12 +316,6 @@
 
             align-items: center;
             justify-content: center;
-
-            /*
-               Маленький проміжок після header.
-               Кнопка тепер знаходиться прямо
-               над першим рядом баз.
-            */
 
             padding-top: 4px;
             padding-bottom: 12px;
@@ -493,6 +491,27 @@
 
 
     <!-- =========================
+         GLOBAL BALANCE
+         ТЕПЕР ВІН ЗАВЖДИ ВИДИМИЙ
+    ========================= -->
+
+    <div
+        class="balance-box"
+        id="balanceBox">
+
+        <div class="balance-coin">
+            E
+        </div>
+
+        <span id="balanceAmount">
+            0
+        </span>
+
+    </div>
+
+
+
+    <!-- =========================
          MAIN MENU
     ========================= -->
 
@@ -521,21 +540,29 @@
                 type="button"
                 class="menu-button"
                 id="casesButton">
+
                 Cases
+
             </button>
+
 
             <button
                 type="button"
                 class="menu-button"
                 id="upgradeButton">
+
                 Upgrade
+
             </button>
+
 
             <button
                 type="button"
                 class="menu-button"
                 id="profileButton">
+
                 Profile
+
             </button>
 
         </div>
@@ -568,23 +595,6 @@
             </button>
 
 
-            <!-- BALANCE -->
-
-            <div
-                class="balance-box"
-                id="balanceBox">
-
-                <div class="balance-coin">
-                    E
-                </div>
-
-                <span id="balanceAmount">
-                    0
-                </span>
-
-            </div>
-
-
         </div>
 
 
@@ -613,6 +623,8 @@
         <div class="bases-grid">
 
 
+            <!-- TRALALELO -->
+
             <div class="base-item">
 
                 <img
@@ -621,6 +633,8 @@
 
             </div>
 
+
+            <!-- ROSE -->
 
             <div class="base-item">
 
@@ -631,6 +645,8 @@
             </div>
 
 
+            <!-- AQUATIC -->
+
             <div class="base-item">
 
                 <img
@@ -639,6 +655,8 @@
 
             </div>
 
+
+            <!-- HONEY BEE -->
 
             <div class="base-item">
 
@@ -649,6 +667,8 @@
             </div>
 
 
+            <!-- BUNNY BASKET -->
+
             <div class="base-item">
 
                 <img
@@ -657,6 +677,8 @@
 
             </div>
 
+
+            <!-- TACO -->
 
             <div class="base-item">
 
@@ -667,6 +689,8 @@
             </div>
 
 
+            <!-- EASTER -->
+
             <div class="base-item">
 
                 <img
@@ -675,6 +699,8 @@
 
             </div>
 
+
+            <!-- LUCKY -->
 
             <div class="base-item">
 
@@ -756,45 +782,54 @@
                         "menuScreen"
                     );
 
+
                 const profileScreen =
                     document.getElementById(
                         "profileScreen"
                     );
+
 
                 const caseScreen =
                     document.getElementById(
                         "caseScreen"
                     );
 
+
                 const profileButton =
                     document.getElementById(
                         "profileButton"
                     );
+
 
                 const backButton =
                     document.getElementById(
                         "backButton"
                     );
 
+
                 const basicCase =
                     document.getElementById(
                         "basicCase"
                     );
+
 
                 const caseBackButton =
                     document.getElementById(
                         "caseBackButton"
                     );
 
+
                 const openCaseButton =
                     document.getElementById(
                         "openCaseButton"
                     );
 
+
                 const balanceAmount =
                     document.getElementById(
                         "balanceAmount"
                     );
+
 
 
                 /* =====================
@@ -804,8 +839,10 @@
                 let telegramUserId =
                     "guest";
 
+
                 let balance =
                     0;
+
 
 
                 function getBalanceKey() {
@@ -816,6 +853,7 @@
                     );
 
                 }
+
 
 
                 function loadBalance() {
@@ -851,6 +889,7 @@
                 }
 
 
+
                 function saveBalance() {
 
                     localStorage.setItem(
@@ -861,12 +900,14 @@
                 }
 
 
+
                 function updateBalanceDisplay() {
 
                     balanceAmount.textContent =
                         balance;
 
                 }
+
 
 
                 /*
@@ -884,6 +925,7 @@
                     updateBalanceDisplay();
 
                 }
+
 
 
                 /*
@@ -1025,6 +1067,10 @@
                             "none";
 
 
+                        caseScreen.style.display =
+                            "none";
+
+
                         menuScreen.style.display =
                             "block";
 
@@ -1053,9 +1099,11 @@
                     tg.expand();
 
 
+
                     const user =
                         tg.initDataUnsafe &&
                         tg.initDataUnsafe.user;
+
 
 
                     if (user) {
@@ -1071,6 +1119,7 @@
                             String(user.id);
 
 
+
                         const username =
                             document.getElementById(
                                 "username"
@@ -1081,6 +1130,7 @@
                             document.getElementById(
                                 "avatar"
                             );
+
 
 
                         if (user.username) {
@@ -1100,6 +1150,7 @@
 
 
                         }
+
 
 
                         if (user.photo_url) {
@@ -1145,6 +1196,7 @@
                     }
 
                 }
+
 
 
                 /*

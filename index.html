@@ -21,9 +21,12 @@
         body {
             margin: 0;
             padding: 0;
+
             width: 100%;
             height: 100%;
+
             font-family: Arial, sans-serif;
+
             background: #050505;
         }
 
@@ -38,7 +41,9 @@
 
         #menuScreen {
             display: block;
+
             position: relative;
+
             width: 100%;
             height: 100vh;
 
@@ -58,11 +63,16 @@
 
         .case-card {
             position: absolute;
+
             left: 12px;
             top: 20px;
+
             width: 170px;
+
             z-index: 1;
+
             cursor: pointer;
+
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -72,8 +82,10 @@
 
         .case-image {
             display: block;
+
             width: 170px;
             height: auto;
+
             object-fit: contain;
 
             filter:
@@ -90,12 +102,14 @@
 
         .bottom-menu {
             position: absolute;
+
             left: 50%;
             bottom: 35px;
 
             transform: translateX(-50%);
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
@@ -108,7 +122,9 @@
 
         .menu-button {
             border: none;
+
             background: transparent;
+
             color: white;
 
             font-size: 24px;
@@ -136,6 +152,7 @@
 
         #caseScreen {
             display: none;
+
             position: relative;
 
             width: 100%;
@@ -166,6 +183,7 @@
 
         .case-header {
             position: relative;
+
             width: 100%;
             height: 90px;
         }
@@ -282,36 +300,174 @@
 
         #balanceAmount {
             min-width: 18px;
+
             text-align: center;
         }
 
 
         /* =========================
            OPEN AREA
-           НОВЕ РОЗТАШУВАННЯ
         ========================= */
 
         .open-area {
             width: 100%;
 
-            /*
-              Великий простір над кнопкою.
-              Сюди потім зможемо додати
-              сам кейс, рулетку тощо.
-            */
             height: 62vh;
             min-height: 430px;
 
             display: flex;
+            flex-direction: column;
 
-            /*
-              Кнопка опускається
-              в нижню частину цієї зони.
-            */
-            align-items: flex-end;
-            justify-content: center;
+            align-items: center;
+            justify-content: flex-end;
 
             padding: 0 0 22px 0;
+        }
+
+
+        /* =========================
+           RANDOM BASE WINDOW
+        ========================= */
+
+        .base-showcase {
+            position: relative;
+
+            width: calc(100% - 24px);
+            max-width: 620px;
+
+            height: 235px;
+
+            margin-bottom: 20px;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(42, 19, 67, 0.88),
+                    rgba(12, 8, 18, 0.94)
+                );
+
+            border:
+                1px solid
+                rgba(161, 82, 255, 0.35);
+
+            box-shadow:
+                inset 0 0 35px
+                rgba(107, 34, 174, 0.15),
+                0 8px 28px
+                rgba(0, 0, 0, 0.35);
+        }
+
+
+        /*
+           Затемнення по краях.
+           Через нього база плавно
+           з'являється справа і
+           зникає зліва.
+        */
+
+        .base-showcase::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 10;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    90deg,
+
+                    rgba(12, 8, 18, 1) 0%,
+
+                    rgba(12, 8, 18, 0.88) 5%,
+
+                    rgba(12, 8, 18, 0) 23%,
+
+                    rgba(12, 8, 18, 0) 77%,
+
+                    rgba(12, 8, 18, 0.88) 95%,
+
+                    rgba(12, 8, 18, 1) 100%
+                );
+        }
+
+
+        .moving-base {
+            position: absolute;
+
+            top: 50%;
+            left: 0;
+
+            width: 175px;
+            height: 205px;
+
+            object-fit: contain;
+
+            opacity: 0;
+
+            transform:
+                translate(
+                    calc(100vw + 190px),
+                    -50%
+                );
+
+            filter:
+                drop-shadow(
+                    0 10px 14px
+                    rgba(0, 0, 0, 0.45)
+                );
+
+            will-change:
+                transform,
+                opacity;
+        }
+
+
+        .moving-base.run {
+            animation:
+                moveBaseAcross
+                4.8s
+                linear
+                forwards;
+        }
+
+
+        @keyframes moveBaseAcross {
+
+            0% {
+                transform:
+                    translate(
+                        calc(100vw + 190px),
+                        -50%
+                    );
+
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translate(
+                        -240px,
+                        -50%
+                    );
+
+                opacity: 0;
+            }
         }
 
 
@@ -321,11 +477,13 @@
 
         .open-case-button {
             border: none;
+
             outline: none;
 
             background: transparent;
 
             padding: 0;
+
             margin: 0;
 
             cursor: pointer;
@@ -369,7 +527,9 @@
 
         .base-item {
             width: 100%;
+
             overflow: hidden;
+
             border-radius: 12px;
         }
 
@@ -442,6 +602,7 @@
         .avatar img {
             width: 100%;
             height: 100%;
+
             object-fit: cover;
         }
 
@@ -456,6 +617,7 @@
 
         .username {
             font-size: 27px;
+
             font-weight: bold;
         }
 
@@ -473,6 +635,7 @@
                     0.65
                 );
         }
+
 
         .back-button {
             display: inline-block;
@@ -493,6 +656,24 @@
             cursor: pointer;
         }
 
+
+        /* =========================
+           SMALL PHONES
+        ========================= */
+
+        @media (max-width: 430px) {
+
+            .base-showcase {
+                height: 215px;
+            }
+
+            .moving-base {
+                width: 160px;
+                height: 190px;
+            }
+
+        }
+
     </style>
 </head>
 
@@ -500,7 +681,9 @@
 <body>
 
 
-    <!-- GLOBAL BALANCE -->
+    <!-- =========================
+         GLOBAL BALANCE
+    ========================= -->
 
     <div
         class="balance-box"
@@ -525,6 +708,8 @@
     <div id="menuScreen">
 
 
+        <!-- BASIC CASE -->
+
         <div
             class="case-card"
             id="basicCase">
@@ -536,6 +721,8 @@
 
         </div>
 
+
+        <!-- BOTTOM MENU -->
 
         <div class="bottom-menu">
 
@@ -581,6 +768,8 @@
     <div id="caseScreen">
 
 
+        <!-- HEADER -->
+
         <div class="case-header">
 
             <button
@@ -596,12 +785,33 @@
 
 
 
-        <!--
-             ВЕЛИКА ЗОНА КЕЙСА
-             Кнопка тепер знаходиться внизу
-        -->
+        <!-- =========================
+             CASE OPEN AREA
+        ========================= -->
 
         <div class="open-area">
+
+
+            <!--
+                ВІКНО З РУХОМОЮ
+                ВИПАДКОВОЮ БАЗОЮ
+            -->
+
+            <div
+                class="base-showcase"
+                id="baseShowcase">
+
+                <img
+                    id="movingBase"
+                    class="moving-base"
+                    src=""
+                    alt="Random Base">
+
+            </div>
+
+
+
+            <!-- OPEN BUTTON -->
 
             <button
                 type="button"
@@ -772,6 +982,10 @@
             function () {
 
 
+                /* =====================
+                   ELEMENTS
+                ===================== */
+
                 const menuScreen =
                     document.getElementById(
                         "menuScreen"
@@ -832,6 +1046,12 @@
                     );
 
 
+                const movingBase =
+                    document.getElementById(
+                        "movingBase"
+                    );
+
+
 
                 /* =====================
                    TELEGRAM USER
@@ -839,6 +1059,154 @@
 
                 let telegramUserId =
                     "guest";
+
+
+
+                /* =====================
+                   CLEAN BASE IMAGES
+                ===================== */
+
+                const cleanBaseImages = [
+
+                    "tralalelo-base-clean.png",
+
+                    "rose-base-clean.png",
+
+                    "aquatic-base-clean.png",
+
+                    "honey-bee-base-clean.png",
+
+                    "bunny-basket-base-clean.png",
+
+                    "taco-base-clean.png",
+
+                    "easter-base-clean.png",
+
+                    "lucky-base-clean.png"
+
+                ];
+
+
+
+                /* =====================
+                   RANDOM SHOWCASE
+                ===================== */
+
+                let showcaseTimer = null;
+
+                let lastBaseIndex = -1;
+
+
+                function getRandomBaseImage() {
+
+                    let randomIndex =
+                        Math.floor(
+                            Math.random() *
+                            cleanBaseImages.length
+                        );
+
+
+                    /*
+                       Не показуємо ту саму
+                       базу два рази підряд.
+                    */
+
+                    if (
+                        cleanBaseImages.length > 1 &&
+                        randomIndex === lastBaseIndex
+                    ) {
+
+                        randomIndex =
+                            (
+                                randomIndex + 1
+                            ) %
+                            cleanBaseImages.length;
+
+                    }
+
+
+                    lastBaseIndex =
+                        randomIndex;
+
+
+                    return cleanBaseImages[
+                        randomIndex
+                    ];
+
+                }
+
+
+
+                function playRandomBase() {
+
+                    movingBase.classList.remove(
+                        "run"
+                    );
+
+
+                    /*
+                       Даємо браузеру застосувати
+                       видалення анімації.
+                    */
+
+                    void movingBase.offsetWidth;
+
+
+                    movingBase.src =
+                        getRandomBaseImage();
+
+
+                    movingBase.classList.add(
+                        "run"
+                    );
+
+                }
+
+
+
+                function startBaseShowcase() {
+
+                    stopBaseShowcase();
+
+
+                    playRandomBase();
+
+
+                    /*
+                       Нова випадкова база
+                       запускається приблизно
+                       кожні 2.2 секунди.
+                    */
+
+                    showcaseTimer =
+                        setInterval(
+                            playRandomBase,
+                            2200
+                        );
+
+                }
+
+
+
+                function stopBaseShowcase() {
+
+                    if (showcaseTimer !== null) {
+
+                        clearInterval(
+                            showcaseTimer
+                        );
+
+                        showcaseTimer =
+                            null;
+
+                    }
+
+
+                    movingBase.classList.remove(
+                        "run"
+                    );
+
+                }
 
 
 
@@ -902,11 +1270,6 @@
 
                     }
 
-
-                    /*
-                       Перемішуємо літери
-                       та цифри між собою
-                    */
 
                     for (
                         let i =
@@ -1103,6 +1466,7 @@
                     "click",
                     function () {
 
+
                         menuScreen.style.display =
                             "none";
 
@@ -1118,6 +1482,15 @@
                         caseScreen.scrollTop =
                             0;
 
+
+                        /*
+                           Коли заходимо в кейс,
+                           запускаємо рух баз.
+                        */
+
+                        startBaseShowcase();
+
+
                     }
                 );
 
@@ -1131,12 +1504,17 @@
                     "click",
                     function () {
 
+
+                        stopBaseShowcase();
+
+
                         caseScreen.style.display =
                             "none";
 
 
                         menuScreen.style.display =
                             "block";
+
 
                     }
                 );
@@ -1151,10 +1529,12 @@
                     "click",
                     function () {
 
+
                         /*
-                          Тут пізніше додамо
-                          справжнє відкриття кейса.
+                           Справжнє відкриття кейса
+                           поки не змінюємо.
                         */
+
 
                     }
                 );
@@ -1169,6 +1549,10 @@
                     "click",
                     function () {
 
+
+                        stopBaseShowcase();
+
+
                         menuScreen.style.display =
                             "none";
 
@@ -1179,6 +1563,7 @@
 
                         profileScreen.style.display =
                             "block";
+
 
                     }
                 );
@@ -1193,6 +1578,7 @@
                     "click",
                     function () {
 
+
                         profileScreen.style.display =
                             "none";
 
@@ -1203,6 +1589,7 @@
 
                         menuScreen.style.display =
                             "block";
+
 
                     }
                 );
@@ -1258,15 +1645,19 @@
 
                         if (user.username) {
 
+
                             username.textContent =
                                 "@" +
                                 user.username;
 
+
                         } else {
+
 
                             username.textContent =
                                 user.first_name ||
                                 "Telegram User";
+
 
                         }
 
@@ -1309,6 +1700,7 @@
                                 .charAt(0)
                                 .toUpperCase();
 
+
                         }
 
                     }
@@ -1316,10 +1708,10 @@
                 }
 
 
-                /*
-                   Завантажуємо баланс
-                   та Easy Brain ID
-                */
+
+                /* =====================
+                   LOAD USER DATA
+                ===================== */
 
                 loadBalance();
 

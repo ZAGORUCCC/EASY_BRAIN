@@ -362,10 +362,9 @@
         }
 
 
-        /*
-           Плавне затемнення картинки
-           біля лівого та правого краю.
-        */
+        /* =========================
+           EDGE DARKENING
+        ========================= */
 
         .base-showcase::after {
             content: "";
@@ -374,7 +373,7 @@
 
             inset: 0;
 
-            z-index: 50;
+            z-index: 40;
 
             pointer-events: none;
 
@@ -393,6 +392,98 @@
                     rgba(12, 8, 18, 0.72) 93%,
 
                     rgba(12, 8, 18, 1) 100%
+                );
+        }
+
+
+        /* =========================
+           EASY BRAIN CENTER POINTER
+        ========================= */
+
+        .center-pointer {
+            position: absolute;
+
+            left: 50%;
+            top: 0;
+
+            width: 4px;
+            height: 100%;
+
+            transform: translateX(-50%);
+
+            z-index: 100;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff 0%,
+                    #bca4ff 22%,
+                    #8a5cff 50%,
+                    #65c7ff 78%,
+                    #ffffff 100%
+                );
+
+            box-shadow:
+                0 0 5px rgba(255,255,255,.95),
+                0 0 12px rgba(130,88,255,.95),
+                0 0 22px rgba(70,160,255,.60);
+        }
+
+
+        /* TOP ARROW */
+
+        .center-pointer::before {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            top: 0;
+
+            transform: translateX(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+
+            border-top: 24px solid #ffffff;
+
+            filter:
+                drop-shadow(
+                    0 4px 5px
+                    rgba(126, 92, 255, 0.85)
+                );
+        }
+
+
+        /* BOTTOM ARROW */
+
+        .center-pointer::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            bottom: 0;
+
+            transform: translateX(-50%);
+
+            width: 0;
+            height: 0;
+
+            border-left: 18px solid transparent;
+            border-right: 18px solid transparent;
+
+            border-bottom: 24px solid #ffffff;
+
+            filter:
+                drop-shadow(
+                    0 -4px 5px
+                    rgba(85, 164, 255, 0.85)
                 );
         }
 
@@ -475,7 +566,6 @@
 
         .open-case-button {
             border: none;
-
             outline: none;
 
             background: transparent;
@@ -669,6 +759,22 @@
                 height: 190px;
             }
 
+            .center-pointer {
+                width: 3px;
+            }
+
+            .center-pointer::before {
+                border-left-width: 15px;
+                border-right-width: 15px;
+                border-top-width: 21px;
+            }
+
+            .center-pointer::after {
+                border-left-width: 15px;
+                border-right-width: 15px;
+                border-bottom-width: 21px;
+            }
+
         }
 
     </style>
@@ -678,9 +784,7 @@
 <body>
 
 
-    <!-- =========================
-         GLOBAL BALANCE
-    ========================= -->
+    <!-- GLOBAL BALANCE -->
 
     <div
         class="balance-box"
@@ -788,6 +892,18 @@
             <div
                 class="base-showcase"
                 id="baseShowcase">
+
+
+                <!--
+                    НЕРУХОМИЙ ПОКАЖЧИК.
+                    Бази рухаються під ним.
+                -->
+
+                <div
+                    class="center-pointer">
+                </div>
+
+
             </div>
 
 
@@ -1091,12 +1207,6 @@
                         );
 
 
-                    /*
-                       Не повторюємо одну
-                       і ту саму базу
-                       два рази підряд.
-                    */
-
                     if (
                         cleanBaseImages.length > 1 &&
                         randomIndex === lastBaseIndex
@@ -1126,15 +1236,6 @@
                 function createMovingBase() {
 
 
-                    /*
-                       Для КОЖНОЇ бази створюємо
-                       окрему картинку.
-
-                       Тому наступна база
-                       більше не обриває
-                       попередню.
-                    */
-
                     const image =
                         document.createElement(
                             "img"
@@ -1153,15 +1254,18 @@
                         "Random Base";
 
 
+                    /*
+                       Додаємо базу у вікно.
+
+                       Стрілка має z-index 100,
+                       тому завжди буде
+                       поверх рухомих баз.
+                    */
+
                     baseShowcase.appendChild(
                         image
                     );
 
-
-                    /*
-                       Після повного проходження
-                       прибираємо картинку.
-                    */
 
                     image.addEventListener(
                         "animationend",
@@ -1182,21 +1286,8 @@
                     stopBaseShowcase();
 
 
-                    /*
-                       Перша база з'являється
-                       одразу.
-                    */
-
                     createMovingBase();
 
-
-                    /*
-                       Потім запускаємо
-                       наступні бази.
-
-                       Кожна попередня продовжує
-                       свою власну анімацію.
-                    */
 
                     showcaseTimer =
                         setInterval(
@@ -1227,12 +1318,25 @@
 
 
                     /*
-                       При виході з кейса
-                       очищаємо рухомі картинки.
+                       Видаляємо ТІЛЬКИ
+                       рухомі бази.
+
+                       Стрілку НЕ видаляємо.
                     */
 
-                    baseShowcase.innerHTML =
-                        "";
+                    const movingBases =
+                        baseShowcase.querySelectorAll(
+                            ".moving-base"
+                        );
+
+
+                    movingBases.forEach(
+                        function (base) {
+
+                            base.remove();
+
+                        }
+                    );
 
                 }
 
@@ -1517,11 +1621,6 @@
                             0;
 
 
-                        /*
-                           Запускаємо нескінченну
-                           стрічку баз.
-                        */
-
                         startBaseShowcase();
 
 
@@ -1565,9 +1664,15 @@
 
 
                         /*
-                           Справжнє відкриття
-                           кейса поки
-                           не змінюємо.
+                           Пізніше тут зробимо:
+
+                           1. Натискання "Відкрити".
+                           2. Справжню рулетку.
+                           3. Поступове гальмування.
+                           4. Визначення бази,
+                              яка зупинилась
+                              точно під стрілкою.
+                           5. Видачу цієї бази.
                         */
 
 

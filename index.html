@@ -21,12 +21,9 @@
         body {
             margin: 0;
             padding: 0;
-
             width: 100%;
             height: 100%;
-
             font-family: Arial, sans-serif;
-
             background: #050505;
         }
 
@@ -41,9 +38,7 @@
 
         #menuScreen {
             display: block;
-
             position: relative;
-
             width: 100%;
             height: 100vh;
 
@@ -63,16 +58,11 @@
 
         .case-card {
             position: absolute;
-
             left: 12px;
             top: 20px;
-
             width: 170px;
-
             z-index: 1;
-
             cursor: pointer;
-
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -82,10 +72,8 @@
 
         .case-image {
             display: block;
-
             width: 170px;
             height: auto;
-
             object-fit: contain;
 
             filter:
@@ -102,14 +90,12 @@
 
         .bottom-menu {
             position: absolute;
-
             left: 50%;
             bottom: 35px;
 
             transform: translateX(-50%);
 
             display: flex;
-
             align-items: center;
             justify-content: center;
 
@@ -122,9 +108,7 @@
 
         .menu-button {
             border: none;
-
             background: transparent;
-
             color: white;
 
             font-size: 24px;
@@ -152,7 +136,6 @@
 
         #caseScreen {
             display: none;
-
             position: relative;
 
             width: 100%;
@@ -183,7 +166,6 @@
 
         .case-header {
             position: relative;
-
             width: 100%;
             height: 90px;
         }
@@ -300,25 +282,36 @@
 
         #balanceAmount {
             min-width: 18px;
-
             text-align: center;
         }
 
 
         /* =========================
            OPEN AREA
+           НОВЕ РОЗТАШУВАННЯ
         ========================= */
 
         .open-area {
             width: 100%;
 
+            /*
+              Великий простір над кнопкою.
+              Сюди потім зможемо додати
+              сам кейс, рулетку тощо.
+            */
+            height: 62vh;
+            min-height: 430px;
+
             display: flex;
 
-            align-items: center;
+            /*
+              Кнопка опускається
+              в нижню частину цієї зони.
+            */
+            align-items: flex-end;
             justify-content: center;
 
-            padding-top: 4px;
-            padding-bottom: 12px;
+            padding: 0 0 22px 0;
         }
 
 
@@ -328,13 +321,11 @@
 
         .open-case-button {
             border: none;
-
             outline: none;
 
             background: transparent;
 
             padding: 0;
-
             margin: 0;
 
             cursor: pointer;
@@ -378,9 +369,7 @@
 
         .base-item {
             width: 100%;
-
             overflow: hidden;
-
             border-radius: 12px;
         }
 
@@ -453,7 +442,6 @@
         .avatar img {
             width: 100%;
             height: 100%;
-
             object-fit: cover;
         }
 
@@ -486,7 +474,6 @@
                 );
         }
 
-
         .back-button {
             display: inline-block;
 
@@ -513,9 +500,7 @@
 <body>
 
 
-    <!-- =========================
-         GLOBAL BALANCE
-    ========================= -->
+    <!-- GLOBAL BALANCE -->
 
     <div
         class="balance-box"
@@ -540,8 +525,6 @@
     <div id="menuScreen">
 
 
-        <!-- BASIC CASE -->
-
         <div
             class="case-card"
             id="basicCase">
@@ -553,8 +536,6 @@
 
         </div>
 
-
-        <!-- BOTTOM MENU -->
 
         <div class="bottom-menu">
 
@@ -600,12 +581,7 @@
     <div id="caseScreen">
 
 
-        <!-- HEADER -->
-
         <div class="case-header">
-
-
-            <!-- BACK -->
 
             <button
                 type="button"
@@ -616,11 +592,14 @@
 
             </button>
 
-
         </div>
 
 
-        <!-- OPEN BUTTON -->
+
+        <!--
+             ВЕЛИКА ЗОНА КЕЙСА
+             Кнопка тепер знаходиться внизу
+        -->
 
         <div class="open-area">
 
@@ -636,6 +615,7 @@
             </button>
 
         </div>
+
 
 
         <!-- =========================
@@ -792,10 +772,6 @@
             function () {
 
 
-                /* =====================
-                   ELEMENTS
-                ===================== */
-
                 const menuScreen =
                     document.getElementById(
                         "menuScreen"
@@ -883,11 +859,6 @@
                         [];
 
 
-                    /*
-                        Рівно 4 випадкові
-                        англійські літери.
-                    */
-
                     for (
                         let i = 0;
                         i < 4;
@@ -909,10 +880,6 @@
 
                     }
 
-
-                    /*
-                        Рівно 3 випадкові цифри.
-                    */
 
                     for (
                         let i = 0;
@@ -937,8 +904,8 @@
 
 
                     /*
-                        Перемішуємо всі
-                        7 символів між собою.
+                       Перемішуємо літери
+                       та цифри між собою
                     */
 
                     for (
@@ -997,11 +964,6 @@
                             key
                         );
 
-
-                    /*
-                        Якщо ID ще немає,
-                        користувач зайшов уперше.
-                    */
 
                     if (!savedId) {
 
@@ -1141,7 +1103,6 @@
                     "click",
                     function () {
 
-
                         menuScreen.style.display =
                             "none";
 
@@ -1157,7 +1118,6 @@
                         caseScreen.scrollTop =
                             0;
 
-
                     }
                 );
 
@@ -1171,14 +1131,12 @@
                     "click",
                     function () {
 
-
                         caseScreen.style.display =
                             "none";
 
 
                         menuScreen.style.display =
                             "block";
-
 
                     }
                 );
@@ -1193,12 +1151,10 @@
                     "click",
                     function () {
 
-
                         /*
-                            Тут пізніше додамо
-                            відкриття кейса.
+                          Тут пізніше додамо
+                          справжнє відкриття кейса.
                         */
-
 
                     }
                 );
@@ -1213,7 +1169,6 @@
                     "click",
                     function () {
 
-
                         menuScreen.style.display =
                             "none";
 
@@ -1224,7 +1179,6 @@
 
                         profileScreen.style.display =
                             "block";
-
 
                     }
                 );
@@ -1239,7 +1193,6 @@
                     "click",
                     function () {
 
-
                         profileScreen.style.display =
                             "none";
 
@@ -1250,7 +1203,6 @@
 
                         menuScreen.style.display =
                             "block";
-
 
                     }
                 );
@@ -1286,12 +1238,6 @@
                     if (user) {
 
 
-                        /*
-                            Справжній Telegram ID
-                            використовуємо тільки
-                            всередині програми.
-                        */
-
                         telegramUserId =
                             String(user.id);
 
@@ -1312,19 +1258,15 @@
 
                         if (user.username) {
 
-
                             username.textContent =
                                 "@" +
                                 user.username;
 
-
                         } else {
-
 
                             username.textContent =
                                 user.first_name ||
                                 "Telegram User";
-
 
                         }
 
@@ -1367,7 +1309,6 @@
                                 .charAt(0)
                                 .toUpperCase();
 
-
                         }
 
                     }
@@ -1375,11 +1316,9 @@
                 }
 
 
-
                 /*
-                    Спочатку отримали Telegram ID,
-                    а тепер завантажуємо
-                    баланс та Easy Brain ID.
+                   Завантажуємо баланс
+                   та Easy Brain ID
                 */
 
                 loadBalance();

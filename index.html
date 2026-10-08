@@ -707,6 +707,25 @@
 
         }
 
+
+        /* EASY BRAIN ADMIN PANEL */
+        #adminOrb { display:none; position:fixed; left:calc(50% - 23px); top:78px; width:46px; height:46px; z-index:3000; border-radius:50%; border:1px solid #8751d5; background:#09070e; color:#bb74ff; box-shadow:0 0 15px #7c39d870; align-items:center; justify-content:center; cursor:grab; touch-action:none; user-select:none; -webkit-user-select:none; padding:0; }
+        #adminOrb svg { width:26px; height:26px; pointer-events:none; filter:drop-shadow(0 0 5px #ad62ff); }
+        #adminOrb.dragging { cursor:grabbing; }
+        #adminOverlay { display:none; position:fixed; inset:0; z-index:4000; background:rgba(0,0,0,.64); align-items:center; justify-content:center; padding:16px; }
+        #adminOverlay.visible { display:flex; }
+        .admin-panel { width:min(92vw,510px); max-height:90dvh; overflow-y:auto; background:#09080e; color:#f4edff; border:1px solid #7231a8; border-radius:19px; box-shadow:0 15px 55px #000b, 0 0 25px #6d21aa40; padding:22px; }
+        .admin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:26px; }
+        .admin-head h2 { margin:0; font-size:26px; color:#e3c6ff; }
+        #adminClose { width:39px; height:39px; border:0; border-radius:10px; background:#df1735; color:white; font-size:28px; font-weight:800; cursor:pointer; }
+        .admin-panel label { display:block; font-size:16px; font-weight:700; margin:17px 0 8px; }
+        .admin-panel input { width:100%; padding:15px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:17px; outline:none; }
+        .admin-panel input:focus { border-color:#c184ff; }
+        .admin-bottom { display:flex; justify-content:flex-end; margin-top:25px; }
+        #adminStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
+        #adminStart:disabled { opacity:.55; cursor:wait; }
+        #adminMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
+
     </style>
 </head>
 
@@ -1000,6 +1019,25 @@
 
 
 
+
+    <!-- Адмінпанель: кнопку показуємо лише після перевірки на сервері -->
+    <button id="adminOrb" type="button" aria-label="Відкрити адмінпанель" title="Адмінпанель">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.7 13h6.4L10.6 22 19.3 10.7h-6.4L13.4 2Z"/></svg>
+    </button>
+    <div id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+      <section class="admin-panel">
+        <div class="admin-head"><h2 id="adminTitle">Адмінпанель</h2><button id="adminClose" type="button" aria-label="Закрити">×</button></div>
+        <form id="adminForm">
+          <label for="adminTargetId">Введіть Easy Brain ID гравця</label>
+          <input id="adminTargetId" type="text" maxlength="7" placeholder="Наприклад, XO6M1Q0" autocapitalize="characters" autocomplete="off" required pattern="[A-Z0-9]{7}">
+          <label for="adminCoins">Кількість E-коїнів для додавання</label>
+          <input id="adminCoins" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 100" required>
+          <div class="admin-bottom"><button id="adminStart" type="submit">Старт</button></div>
+          <div id="adminMessage" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+    </div>
+
     <!-- Налаштування Firebase: заповнити лише публічні значення з Firebase Console. -->
     <script>
       window.EASY_BRAIN_CONFIG = {
@@ -1185,7 +1223,77 @@
           idLabel.textContent = "ID: помилка підключення";
         }
       }
+
+      // ADMIN: Telegram initData надсилається серверу для перевірки прав.
+      const adminOrb = $("adminOrb"), adminOverlay = $("adminOverlay");
+      const adminForm = $("adminForm"), adminMessage = $("adminMessage");
+      let adminAuthorized = false;
+      const adminApi = path => cfg.workerUrl.replace(/\/$/, "") + path;
+      async function adminRequest(path, extra = {}) {
+        const response = await fetch(adminApi(path), {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ initData: tg.initData, ...extra })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || "Помилка сервера: " + response.status);
+        return result;
+      }
+      async function checkAdmin() {
+        if (!tg?.initData) return;
+        try {
+          const status = await adminRequest("/admin/status");
+          adminAuthorized = status.admin === true;
+          adminOrb.style.display = adminAuthorized ? "flex" : "none";
+        } catch (err) { console.warn("Admin access:", err.message); }
+      }
+      function closeAdmin() { adminOverlay.classList.remove("visible"); }
+      $("adminClose").addEventListener("click", closeAdmin);
+      adminOverlay.addEventListener("click", e => { if (e.target === adminOverlay) closeAdmin(); });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeAdmin(); });
+      let drag = null;
+      adminOrb.addEventListener("pointerdown", e => {
+        if (!adminAuthorized) return;
+        drag = { x:e.clientX, y:e.clientY, left:adminOrb.offsetLeft, top:adminOrb.offsetTop, moved:false };
+        adminOrb.setPointerCapture(e.pointerId);
+      });
+      adminOrb.addEventListener("pointermove", e => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (Math.hypot(dx, dy) > 7) drag.moved = true;
+        if (!drag.moved) return;
+        adminOrb.classList.add("dragging");
+        const x = Math.max(0, Math.min(window.innerWidth - adminOrb.offsetWidth, drag.left + dx));
+        const y = Math.max(0, Math.min(window.innerHeight - adminOrb.offsetHeight, drag.top + dy));
+        adminOrb.style.left = x + "px";
+        adminOrb.style.top = y + "px";
+      });
+      adminOrb.addEventListener("pointerup", () => {
+        if (!drag) return;
+        const moved = drag.moved; drag = null;
+        adminOrb.classList.remove("dragging");
+        if (!moved && adminAuthorized) { adminMessage.textContent = ""; adminOverlay.classList.add("visible"); }
+      });
+      adminOrb.addEventListener("pointercancel", () => { drag = null; adminOrb.classList.remove("dragging"); });
+      adminForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!adminAuthorized) return;
+        const targetId = $("adminTargetId").value.trim().toUpperCase();
+        const amount = Number($("adminCoins").value);
+        if (!/^[A-Z0-9]{7}$/.test(targetId) || !Number.isSafeInteger(amount) || amount < 1 || amount > 1000000) {
+          adminMessage.textContent = "Перевір ID (7 символів) і кількість (1–1 000 000).";
+          return;
+        }
+        const button = $("adminStart"); button.disabled = true;
+        adminMessage.textContent = "Нарахування...";
+        try {
+          const result = await adminRequest("/admin/add-coins", { targetId, amount });
+          adminMessage.textContent = `Готово! Додано ${amount} E. Новий баланс: ${result.balance} E.`;
+        } catch (err) { adminMessage.textContent = "Помилка: " + err.message; }
+        finally { button.disabled = false; }
+      });
+
       connectFirebase();
+      checkAdmin();
     </script>
 </body>
 </html>

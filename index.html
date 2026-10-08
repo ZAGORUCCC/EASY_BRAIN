@@ -368,33 +368,40 @@
 
         .base-showcase::after {
             content: "";
-
             position: absolute;
-
             inset: 0;
-
             z-index: 40;
-
             pointer-events: none;
-
-            background:
-                linear-gradient(
-                    90deg,
-
-                    rgba(12, 8, 18, 1) 0%,
-
-                    rgba(12, 8, 18, 0.72) 7%,
-
-                    rgba(12, 8, 18, 0) 22%,
-
-                    rgba(12, 8, 18, 0) 78%,
-
-                    rgba(12, 8, 18, 0.72) 93%,
-
-                    rgba(12, 8, 18, 1) 100%
-                );
+            background: linear-gradient(90deg,
+                rgba(8, 5, 14, 1) 0%,
+                rgba(8, 5, 14, .98) 12%,
+                rgba(8, 5, 14, .76) 22%,
+                rgba(8, 5, 14, 0) 38%,
+                rgba(8, 5, 14, 0) 62%,
+                rgba(8, 5, 14, .76) 78%,
+                rgba(8, 5, 14, .98) 88%,
+                rgba(8, 5, 14, 1) 100%);
         }
 
+        /* Безперервна стрічка: сусідні бази без CSS-проміжків. */
+        .base-track {
+            position: absolute;
+            inset: 0 auto 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: max-content;
+            height: 100%;
+            will-change: transform;
+        }
+        .base-track img {
+            display: block;
+            flex: 0 0 160px;
+            width: 160px;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,.4));
+        }
 
         /* =========================
            EASY BRAIN CENTER POINTER
@@ -485,78 +492,6 @@
                     0 -4px 5px
                     rgba(85, 164, 255, 0.85)
                 );
-        }
-
-
-        /* =========================
-           MOVING BASE
-        ========================= */
-
-        .moving-base {
-            position: absolute;
-
-            top: 50%;
-            left: 100%;
-
-            width: 175px;
-            height: 205px;
-
-            object-fit: contain;
-
-            transform:
-                translate(
-                    0,
-                    -50%
-                );
-
-            filter:
-                drop-shadow(
-                    0 10px 14px
-                    rgba(0, 0, 0, 0.45)
-                );
-
-            animation:
-                moveBaseAcross
-                5s
-                linear
-                forwards;
-
-            will-change:
-                transform,
-                opacity;
-        }
-
-
-        @keyframes moveBaseAcross {
-
-            0% {
-                transform:
-                    translate(
-                        0,
-                        -50%
-                    );
-
-                opacity: 0;
-            }
-
-            8% {
-                opacity: 1;
-            }
-
-            88% {
-                opacity: 1;
-            }
-
-            100% {
-                transform:
-                    translate(
-                        calc(-100vw - 400px),
-                        -50%
-                    );
-
-                opacity: 0;
-            }
-
         }
 
 
@@ -754,11 +689,6 @@
                 height: 215px;
             }
 
-            .moving-base {
-                width: 160px;
-                height: 190px;
-            }
-
             .center-pointer {
                 width: 3px;
             }
@@ -898,6 +828,8 @@
                     НЕРУХОМИЙ ПОКАЖЧИК.
                     Бази рухаються під ним.
                 -->
+
+                <div class="base-track" id="baseTrack"></div>
 
                 <div
                     class="center-pointer">
@@ -1068,807 +1000,192 @@
 
 
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
-
+    <!-- Налаштування Firebase: заповнити лише публічні значення з Firebase Console. -->
     <script>
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-
-                /* =====================
-                   ELEMENTS
-                ===================== */
-
-                const menuScreen =
-                    document.getElementById(
-                        "menuScreen"
-                    );
-
-
-                const profileScreen =
-                    document.getElementById(
-                        "profileScreen"
-                    );
-
-
-                const caseScreen =
-                    document.getElementById(
-                        "caseScreen"
-                    );
-
-
-                const profileButton =
-                    document.getElementById(
-                        "profileButton"
-                    );
-
-
-                const backButton =
-                    document.getElementById(
-                        "backButton"
-                    );
-
-
-                const basicCase =
-                    document.getElementById(
-                        "basicCase"
-                    );
-
-
-                const caseBackButton =
-                    document.getElementById(
-                        "caseBackButton"
-                    );
-
-
-                const openCaseButton =
-                    document.getElementById(
-                        "openCaseButton"
-                    );
-
-
-                const balanceAmount =
-                    document.getElementById(
-                        "balanceAmount"
-                    );
-
-
-                const easyBrainId =
-                    document.getElementById(
-                        "easyBrainId"
-                    );
-
-
-                const baseShowcase =
-                    document.getElementById(
-                        "baseShowcase"
-                    );
-
-
-
-                /* =====================
-                   TELEGRAM USER
-                ===================== */
-
-                let telegramUserId =
-                    "guest";
-
-
-
-                /* =====================
-                   CLEAN BASE IMAGES
-                ===================== */
-
-                const cleanBaseImages = [
-
-                    "tralalelo-base-clean.png",
-
-                    "rose-base-clean.png",
-
-                    "aquatic-base-clean.png",
-
-                    "honey-bee-base-clean.png",
-
-                    "bunny-basket-base-clean.png",
-
-                    "taco-base-clean.png",
-
-                    "easter-base-clean.png",
-
-                    "lucky-base-clean.png"
-
-                ];
-
-
-
-                /* =====================
-                   RANDOM SHOWCASE
-                ===================== */
-
-                let showcaseTimer =
-                    null;
-
-
-                let lastBaseIndex =
-                    -1;
-
-
-
-                function getRandomBaseImage() {
-
-                    let randomIndex =
-                        Math.floor(
-                            Math.random() *
-                            cleanBaseImages.length
-                        );
-
-
-                    if (
-                        cleanBaseImages.length > 1 &&
-                        randomIndex === lastBaseIndex
-                    ) {
-
-                        randomIndex =
-                            (
-                                randomIndex + 1
-                            ) %
-                            cleanBaseImages.length;
-
-                    }
-
-
-                    lastBaseIndex =
-                        randomIndex;
-
-
-                    return cleanBaseImages[
-                        randomIndex
-                    ];
-
-                }
-
-
-
-                function createMovingBase() {
-
-
-                    const image =
-                        document.createElement(
-                            "img"
-                        );
-
-
-                    image.className =
-                        "moving-base";
-
-
-                    image.src =
-                        getRandomBaseImage();
-
-
-                    image.alt =
-                        "Random Base";
-
-
-                    /*
-                       Додаємо базу у вікно.
-
-                       Стрілка має z-index 100,
-                       тому завжди буде
-                       поверх рухомих баз.
-                    */
-
-                    baseShowcase.appendChild(
-                        image
-                    );
-
-
-                    image.addEventListener(
-                        "animationend",
-                        function () {
-
-                            image.remove();
-
-                        }
-                    );
-
-                }
-
-
-
-                function startBaseShowcase() {
-
-
-                    stopBaseShowcase();
-
-
-                    createMovingBase();
-
-
-                    showcaseTimer =
-                        setInterval(
-                            createMovingBase,
-                            1400
-                        );
-
-                }
-
-
-
-                function stopBaseShowcase() {
-
-
-                    if (
-                        showcaseTimer !== null
-                    ) {
-
-                        clearInterval(
-                            showcaseTimer
-                        );
-
-
-                        showcaseTimer =
-                            null;
-
-                    }
-
-
-                    /*
-                       Видаляємо ТІЛЬКИ
-                       рухомі бази.
-
-                       Стрілку НЕ видаляємо.
-                    */
-
-                    const movingBases =
-                        baseShowcase.querySelectorAll(
-                            ".moving-base"
-                        );
-
-
-                    movingBases.forEach(
-                        function (base) {
-
-                            base.remove();
-
-                        }
-                    );
-
-                }
-
-
-
-                /* =====================
-                   EASY BRAIN USER ID
-                ===================== */
-
-                function generateEasyBrainId() {
-
-                    const letters =
-                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-                    const numbers =
-                        "0123456789";
-
-
-                    let characters =
-                        [];
-
-
-                    for (
-                        let i = 0;
-                        i < 4;
-                        i++
-                    ) {
-
-                        const randomLetter =
-                            letters[
-                                Math.floor(
-                                    Math.random() *
-                                    letters.length
-                                )
-                            ];
-
-
-                        characters.push(
-                            randomLetter
-                        );
-
-                    }
-
-
-                    for (
-                        let i = 0;
-                        i < 3;
-                        i++
-                    ) {
-
-                        const randomNumber =
-                            numbers[
-                                Math.floor(
-                                    Math.random() *
-                                    numbers.length
-                                )
-                            ];
-
-
-                        characters.push(
-                            randomNumber
-                        );
-
-                    }
-
-
-                    for (
-                        let i =
-                            characters.length - 1;
-                        i > 0;
-                        i--
-                    ) {
-
-                        const j =
-                            Math.floor(
-                                Math.random() *
-                                (i + 1)
-                            );
-
-
-                        const temp =
-                            characters[i];
-
-
-                        characters[i] =
-                            characters[j];
-
-
-                        characters[j] =
-                            temp;
-
-                    }
-
-
-                    return characters.join("");
-
-                }
-
-
-
-                function getEasyBrainIdKey() {
-
-                    return (
-                        "easyBrainUserId_" +
-                        telegramUserId
-                    );
-
-                }
-
-
-
-                function loadEasyBrainId() {
-
-                    const key =
-                        getEasyBrainIdKey();
-
-
-                    let savedId =
-                        localStorage.getItem(
-                            key
-                        );
-
-
-                    if (!savedId) {
-
-                        savedId =
-                            generateEasyBrainId();
-
-
-                        localStorage.setItem(
-                            key,
-                            savedId
-                        );
-
-                    }
-
-
-                    easyBrainId.textContent =
-                        "ID: " +
-                        savedId;
-
-                }
-
-
-
-                /* =====================
-                   USER BALANCE
-                ===================== */
-
-                let balance =
-                    0;
-
-
-
-                function getBalanceKey() {
-
-                    return (
-                        "easyBrainBalance_" +
-                        telegramUserId
-                    );
-
-                }
-
-
-
-                function loadBalance() {
-
-                    const savedBalance =
-                        localStorage.getItem(
-                            getBalanceKey()
-                        );
-
-
-                    if (
-                        savedBalance !== null
-                    ) {
-
-                        const parsedBalance =
-                            Number(
-                                savedBalance
-                            );
-
-
-                        if (
-                            !Number.isNaN(
-                                parsedBalance
-                            )
-                        ) {
-
-                            balance =
-                                parsedBalance;
-
-                        }
-
-                    }
-
-
-                    updateBalanceDisplay();
-
-                }
-
-
-
-                function saveBalance() {
-
-                    localStorage.setItem(
-                        getBalanceKey(),
-                        String(balance)
-                    );
-
-                }
-
-
-
-                function updateBalanceDisplay() {
-
-                    balanceAmount.textContent =
-                        balance;
-
-                }
-
-
-
-                function addBalance(amount) {
-
-                    balance += amount;
-
-                    saveBalance();
-
-                    updateBalanceDisplay();
-
-                }
-
-
-
-                function removeBalance(amount) {
-
-                    if (
-                        balance < amount
-                    ) {
-
-                        return false;
-
-                    }
-
-
-                    balance -= amount;
-
-                    saveBalance();
-
-                    updateBalanceDisplay();
-
-
-                    return true;
-
-                }
-
-
-
-                /* =====================
-                   BASIC CASE CLICK
-                ===================== */
-
-                basicCase.addEventListener(
-                    "click",
-                    function () {
-
-
-                        menuScreen.style.display =
-                            "none";
-
-
-                        profileScreen.style.display =
-                            "none";
-
-
-                        caseScreen.style.display =
-                            "block";
-
-
-                        caseScreen.scrollTop =
-                            0;
-
-
-                        startBaseShowcase();
-
-
-                    }
-                );
-
-
-
-                /* =====================
-                   CASE BACK
-                ===================== */
-
-                caseBackButton.addEventListener(
-                    "click",
-                    function () {
-
-
-                        stopBaseShowcase();
-
-
-                        caseScreen.style.display =
-                            "none";
-
-
-                        menuScreen.style.display =
-                            "block";
-
-
-                    }
-                );
-
-
-
-                /* =====================
-                   OPEN CASE
-                ===================== */
-
-                openCaseButton.addEventListener(
-                    "click",
-                    function () {
-
-
-                        /*
-                           Пізніше тут зробимо:
-
-                           1. Натискання "Відкрити".
-                           2. Справжню рулетку.
-                           3. Поступове гальмування.
-                           4. Визначення бази,
-                              яка зупинилась
-                              точно під стрілкою.
-                           5. Видачу цієї бази.
-                        */
-
-
-                    }
-                );
-
-
-
-                /* =====================
-                   PROFILE
-                ===================== */
-
-                profileButton.addEventListener(
-                    "click",
-                    function () {
-
-
-                        stopBaseShowcase();
-
-
-                        menuScreen.style.display =
-                            "none";
-
-
-                        caseScreen.style.display =
-                            "none";
-
-
-                        profileScreen.style.display =
-                            "block";
-
-
-                    }
-                );
-
-
-
-                /* =====================
-                   PROFILE BACK
-                ===================== */
-
-                backButton.addEventListener(
-                    "click",
-                    function () {
-
-
-                        profileScreen.style.display =
-                            "none";
-
-
-                        caseScreen.style.display =
-                            "none";
-
-
-                        menuScreen.style.display =
-                            "block";
-
-
-                    }
-                );
-
-
-
-                /* =====================
-                   TELEGRAM
-                ===================== */
-
-                if (
-                    window.Telegram &&
-                    window.Telegram.WebApp
-                ) {
-
-
-                    const tg =
-                        window.Telegram.WebApp;
-
-
-                    tg.ready();
-
-                    tg.expand();
-
-
-
-                    const user =
-                        tg.initDataUnsafe &&
-                        tg.initDataUnsafe.user;
-
-
-
-                    if (user) {
-
-
-                        telegramUserId =
-                            String(
-                                user.id
-                            );
-
-
-
-                        const username =
-                            document.getElementById(
-                                "username"
-                            );
-
-
-                        const avatar =
-                            document.getElementById(
-                                "avatar"
-                            );
-
-
-
-                        if (
-                            user.username
-                        ) {
-
-
-                            username.textContent =
-                                "@" +
-                                user.username;
-
-
-                        } else {
-
-
-                            username.textContent =
-                                user.first_name ||
-                                "Telegram User";
-
-
-                        }
-
-
-
-                        if (
-                            user.photo_url
-                        ) {
-
-
-                            const image =
-                                document.createElement(
-                                    "img"
-                                );
-
-
-                            image.src =
-                                user.photo_url;
-
-
-                            image.alt =
-                                "Avatar";
-
-
-                            avatar.textContent =
-                                "";
-
-
-                            avatar.appendChild(
-                                image
-                            );
-
-
-                        } else {
-
-
-                            avatar.textContent =
-                                (
-                                    user.first_name ||
-                                    "U"
-                                )
-                                .charAt(0)
-                                .toUpperCase();
-
-
-                        }
-
-                    }
-
-                }
-
-
-
-                /* =====================
-                   LOAD USER DATA
-                ===================== */
-
-                loadBalance();
-
-                loadEasyBrainId();
-
-
-            }
-        );
-
+      window.EASY_BRAIN_CONFIG = {
+        workerUrl: "PASTE_YOUR_WORKER_URL_HERE",
+        firebase: {
+          apiKey: "PASTE_FIREBASE_API_KEY",
+          authDomain: "PASTE_FIREBASE_AUTH_DOMAIN",
+          projectId: "PASTE_FIREBASE_PROJECT_ID",
+          appId: "PASTE_FIREBASE_APP_ID"
+        }
+      };
     </script>
 
+    <script type="module">
+      const $ = id => document.getElementById(id);
+      const menu = $("menuScreen"), profile = $("profileScreen"), casePage = $("caseScreen");
+      const showcase = $("baseShowcase"), track = $("baseTrack");
+      const idLabel = $("easyBrainId"), balanceLabel = $("balanceAmount");
+      const cfg = window.EASY_BRAIN_CONFIG;
 
+      const images = [
+        "tralalelo-base-clean.png", "rose-base-clean.png",
+        "aquatic-base-clean.png", "honey-bee-base-clean.png",
+        "bunny-basket-base-clean.png", "taco-base-clean.png",
+        "easter-base-clean.png", "lucky-base-clean.png"
+      ];
+      images.forEach(src => { const img = new Image(); img.src = src; });
+      let previous = -1;
+      function nextImage() {
+        let index = Math.floor(Math.random() * images.length);
+        if (index === previous) index = (index + 1) % images.length;
+        previous = index;
+        return images[index];
+      }
+
+      // Кожен елемент займає рівно 160px. Наступний починається одразу за ним.
+      const ITEM_WIDTH = 160;
+      const SPEED = 95; // пікселів за секунду
+      let animationFrame = null, lastFrame = 0, offset = 0;
+      function addImage() {
+        const image = document.createElement("img");
+        image.src = nextImage();
+        image.alt = "Base";
+        image.draggable = false;
+        track.appendChild(image);
+      }
+      function fillTrack() {
+        const required = Math.ceil(showcase.clientWidth / ITEM_WIDTH) + 3;
+        while (track.children.length < required) addImage();
+      }
+      function frame(time) {
+        if (lastFrame) offset += SPEED * Math.min((time - lastFrame) / 1000, .05);
+        lastFrame = time;
+        while (offset >= ITEM_WIDTH) {
+          offset -= ITEM_WIDTH;
+          track.firstElementChild?.remove();
+          addImage();
+        }
+        fillTrack();
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        animationFrame = requestAnimationFrame(frame);
+      }
+      function startShowcase() {
+        stopShowcase();
+        offset = 0;
+        track.style.transform = "translate3d(0,0,0)";
+        fillTrack();
+        animationFrame = requestAnimationFrame(frame);
+      }
+      function stopShowcase() {
+        if (animationFrame !== null) cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+        lastFrame = 0;
+        track.replaceChildren();
+      }
+
+      $("basicCase").addEventListener("click", () => {
+        menu.style.display = "none";
+        profile.style.display = "none";
+        casePage.style.display = "block";
+        casePage.scrollTop = 0;
+        startShowcase();
+      });
+      $("caseBackButton").addEventListener("click", () => {
+        stopShowcase();
+        casePage.style.display = "none";
+        menu.style.display = "block";
+      });
+      $("profileButton").addEventListener("click", () => {
+        stopShowcase();
+        menu.style.display = "none";
+        casePage.style.display = "none";
+        profile.style.display = "block";
+      });
+      $("backButton").addEventListener("click", () => {
+        profile.style.display = "none";
+        menu.style.display = "block";
+      });
+      // Кнопка відкриття поки не витрачає E та не видає призи.
+      $("openCaseButton").addEventListener("click", () => {});
+
+      const tg = window.Telegram?.WebApp;
+      tg?.ready();
+      tg?.expand();
+      const tgUser = tg?.initDataUnsafe?.user;
+      if (tgUser) {
+        $("username").textContent = tgUser.username
+          ? "@" + tgUser.username : (tgUser.first_name || "Telegram User");
+        if (tgUser.photo_url) {
+          const avatarImage = document.createElement("img");
+          avatarImage.src = tgUser.photo_url;
+          avatarImage.alt = "Avatar";
+          $("avatar").replaceChildren(avatarImage);
+        } else {
+          $("avatar").textContent = (tgUser.first_name || "U")[0].toUpperCase();
+        }
+      }
+
+      // Постійний 7-символьний ID з Firebase UID. Без старих localStorage ID.
+      // Колізії для короткого ID теоретично можливі; для суворої унікальності
+      // потрібна окрема серверна реєстрація з перевіркою зайнятості.
+      async function makeEasyBrainId(uid) {
+        const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(uid)));
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", digits = "0123456789";
+        return letters[hash[0] % 26] + letters[hash[1] % 26] +
+          digits[hash[2] % 10] + letters[hash[3] % 26] +
+          digits[hash[4] % 10] + letters[hash[5] % 26] + digits[hash[6] % 10];
+      }
+
+      async function connectFirebase() {
+        idLabel.textContent = "ID: підключення...";
+        balanceLabel.textContent = "0";
+        if (!tg?.initData || !tgUser) {
+          idLabel.textContent = "ID: відкрийте через Telegram";
+          return;
+        }
+        if (cfg.workerUrl.includes("PASTE_") ||
+            Object.values(cfg.firebase).some(value => !value || value.includes("PASTE_"))) {
+          idLabel.textContent = "ID: налаштуйте Firebase";
+          return;
+        }
+        try {
+          const [{ initializeApp }, auth, firestore] = await Promise.all([
+            import("https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js"),
+            import("https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js"),
+            import("https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js")
+          ]);
+          const app = initializeApp(cfg.firebase);
+          const response = await fetch(cfg.workerUrl.replace(/\/$/, "") + "/auth/telegram", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ initData: tg.initData })
+          });
+          if (!response.ok) throw new Error("Telegram API: " + response.status);
+          const result = await response.json();
+          if (!result.verified || !result.customToken) throw new Error("Немає Firebase token");
+          const credential = await auth.signInWithCustomToken(auth.getAuth(app), result.customToken);
+          const uid = credential.user.uid;
+          const db = firestore.getFirestore(app);
+          const userDoc = firestore.doc(db, "players", uid);
+          const snapshot = await firestore.getDoc(userDoc);
+          if (!snapshot.exists()) {
+            // Перший вхід: 0 E. Правила Firestore мають забороняти клієнту
+            // змінювати баланс після створення документа.
+            await firestore.setDoc(userDoc, {
+              easyBrainId: await makeEasyBrainId(uid),
+              balance: 0,
+              inventory: [],
+              createdAt: firestore.serverTimestamp()
+            });
+          }
+          firestore.onSnapshot(userDoc, snap => {
+            if (!snap.exists()) return;
+            const data = snap.data();
+            idLabel.textContent = "ID: " + (data.easyBrainId || "-------");
+            balanceLabel.textContent = String(data.balance ?? 0);
+          }, error => {
+            console.error("Firestore:", error);
+            idLabel.textContent = "ID: помилка доступу";
+          });
+        } catch (error) {
+          console.error("Easy Brain login:", error);
+          idLabel.textContent = "ID: помилка підключення";
+        }
+      }
+      connectFirebase();
+    </script>
 </body>
 </html>

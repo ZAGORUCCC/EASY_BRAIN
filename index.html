@@ -570,6 +570,7 @@
         ========================= */
 
         #profileScreen {
+            overflow-y: auto;
             display: none;
 
             position: relative;
@@ -708,6 +709,22 @@
         }
 
 
+        /* CASE OPENING + INVENTORY */
+        .case-actions { display:flex; flex-direction:column; align-items:center; gap:7px; width:100%; }
+        .case-cost { color:#bba7d0; font-size:13px; font-weight:700; }
+        .case-error { min-height:17px; color:#ff566b; font-size:13px; font-weight:700; text-align:center; }
+        .case-result { min-height:22px; color:#e9d6ff; font-size:15px; font-weight:700; text-align:center; }
+        .case-sell, .inventory-sell { border:0; border-radius:10px; padding:10px 22px; background:#d82041; color:white; font-weight:800; cursor:pointer; }
+        .case-sell:disabled, .inventory-sell:disabled { opacity:.5; cursor:wait; }
+        .open-case-button:disabled { opacity:.55; cursor:wait; }
+        .inventory-section { margin-top:26px; padding-bottom:90px; }
+        .inventory-section h3 { margin:0 0 14px; font-size:21px; }
+        .inventory-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .inventory-card { background:#140e20; border:1px solid #643c8a; border-radius:14px; padding:9px; text-align:center; }
+        .inventory-card img { width:100%; height:135px; object-fit:contain; }
+        .inventory-card strong { display:block; font-size:14px; margin:6px 0 9px; }
+        .inventory-sell { font-size:13px; padding:9px 12px; }
+        .inventory-status { color:#bba7d0; font-size:13px; margin:10px 0; }
         /* EASY BRAIN ADMIN PANEL */
         #adminOrb { display:none; position:fixed; left:calc(50% - 23px); top:78px; width:46px; height:46px; z-index:3000; border-radius:50%; border:1px solid #8751d5; background:#09070e; color:#bb74ff; box-shadow:0 0 15px #7c39d870; align-items:center; justify-content:center; cursor:grab; touch-action:none; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; padding:0; }
         #adminOrb svg { width:26px; height:26px; pointer-events:none; filter:drop-shadow(0 0 5px #ad62ff); }
@@ -871,6 +888,12 @@
                     alt="Відкрити">
 
             </button>
+            <div class="case-actions">
+              <div class="case-cost">Вартість відкриття: 9 E</div>
+              <div id="caseError" class="case-error" role="status"></div>
+              <div id="caseResult" class="case-result" aria-live="polite"></div>
+              <button type="button" id="caseSell" class="case-sell" style="display:none">Продати</button>
+            </div>
 
         </div>
 
@@ -1013,7 +1036,11 @@
             ← Назад
 
         </button>
-
+        <section class="inventory-section" aria-label="Інвентар">
+          <h3>Мій інвентар</h3>
+          <div id="inventoryStatus" class="inventory-status">Завантаження...</div>
+          <div id="inventoryGrid" class="inventory-grid"></div>
+        </section>
 
     </div>
 
@@ -1121,10 +1148,10 @@
         profile.style.display = "none";
         casePage.style.display = "block";
         casePage.scrollTop = 0;
-        startShowcase();
+        if (!spinning) startShowcase();
       });
       $("caseBackButton").addEventListener("click", () => {
-        stopShowcase();
+        if (!spinning) stopShowcase();
         casePage.style.display = "none";
         menu.style.display = "block";
       });
@@ -1138,8 +1165,99 @@
         profile.style.display = "none";
         menu.style.display = "block";
       });
-      // Кнопка відкриття поки не витрачає E та не видає призи.
-      $("openCaseButton").addEventListener("click", () => {});
+      // Відкриття/продаж виконує лише сервер; клієнт тільки анімує результат.
+      const BASES = {
+        tralalelo: {name:"Tralalelo Base", price:30, image:"tralalelo-base-clean.png", weight:5},
+        rose: {name:"Rose Base", price:26, image:"rose-base-clean.png", weight:10},
+        aquatic: {name:"Aquatic Base", price:19, image:"aquatic-base-clean.png", weight:20},
+        honey_bee: {name:"Honey Bee Base", price:16, image:"honey-bee-base-clean.png", weight:30},
+        bunny_basket: {name:"Bunny Basket Base", price:12, image:"bunny-basket-base-clean.png", weight:50},
+        taco: {name:"Taco Base", price:9, image:"taco-base-clean.png", weight:55},
+        easter: {name:"Easter Base", price:7, image:"easter-base-clean.png", weight:65},
+        lucky: {name:"Lucky Base", price:5, image:"lucky-base-clean.png", weight:75}
+      };
+      const baseKeys = Object.keys(BASES);
+      let currentBalance = 0, spinning = false, wonItem = null, inventoryItems = [];
+      let inventoryReady = false;
+      const caseError = $("caseError"), caseResult = $("caseResult"), caseSell = $("caseSell");
+      const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+      function renderInventory() {
+        const grid = $("inventoryGrid"), status = $("inventoryStatus");
+        grid.replaceChildren();
+        status.textContent = !inventoryReady ? "Завантаження..." : inventoryItems.length ? `Баз у колекції: ${inventoryItems.length}` : "Тут з’являться виграні бази";
+        for (const item of inventoryItems) {
+          const base = BASES[item.baseId];
+          if (!base) continue;
+          const card = document.createElement("article"); card.className = "inventory-card";
+          const img = document.createElement("img"); img.src = base.image; img.alt = base.name;
+          const title = document.createElement("strong"); title.textContent = base.name;
+          const sell = document.createElement("button"); sell.className = "inventory-sell";
+          sell.textContent = `Продати — ${base.price} E`;
+          sell.addEventListener("click", () => sellItem(item.id, sell));
+          card.append(img, title, sell); grid.append(card);
+        }
+      }
+      async function gameRequest(path, payload={}) {
+        if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
+        const res = await fetch(cfg.workerUrl.replace(/\/$/, "") + path, {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({initData:tg.initData,...payload})
+        });
+        const data = await res.json().catch(()=>({}));
+        if (!res.ok) {
+          if (res.status === 402 || data.code === "INSUFFICIENT_BALANCE") throw new Error("Недостатньо балансу");
+          throw new Error(data.error || `Помилка сервера (${res.status})`);
+        }
+        return data;
+      }
+      async function sellItem(itemId, button) {
+        if (!itemId || button.disabled) return;
+        button.disabled = true;
+        try {
+          const result = await gameRequest("/case/sell", {itemId});
+          if (wonItem?.id === itemId) { wonItem = null; caseSell.style.display="none"; }
+          caseResult.textContent = `Продано! +${result.price} E`;
+        } catch (error) { caseError.textContent = error.message; }
+        finally { button.disabled = false; }
+      }
+      caseSell.addEventListener("click", () => { if (wonItem) sellItem(wonItem.id, caseSell); });
+      async function animateWin(baseId) {
+        stopShowcase();
+        const winner = BASES[baseId];
+        const winIndex = 38, total = 45;
+        for (let i=0; i<total; i++) {
+          const key = i===winIndex ? baseId : baseKeys[Math.floor(Math.random()*baseKeys.length)];
+          const img = document.createElement("img"); img.src=BASES[key].image;
+          img.alt=BASES[key].name; img.draggable=false; track.append(img);
+        }
+        track.style.transition="none";
+        track.style.transform="translate3d(0,0,0)";
+        // Примусово застосувати початковий стан перед плавною анімацією.
+        void track.offsetWidth;
+        const finalX = showcase.clientWidth/2 - (winIndex + .5)*ITEM_WIDTH;
+        track.style.transition="transform 6200ms cubic-bezier(.09,.67,.11,1)";
+        track.style.transform=`translate3d(${finalX}px,0,0)`;
+        await sleep(6300);
+        caseResult.textContent = `Випало: ${winner.name}!`;
+      }
+      $("openCaseButton").addEventListener("click", async () => {
+        if (spinning) return;
+        caseError.textContent=""; caseResult.textContent="";
+        if (currentBalance < 9) { caseError.textContent="Недостатньо балансу"; return; }
+        spinning=true; $("openCaseButton").disabled=true; caseSell.style.display="none"; wonItem=null;
+        try {
+          // Сервер атомарно знімає 9 E, визначає приз та зберігає його в інвентарі.
+          const result = await gameRequest("/case/open");
+          if (!BASES[result.baseId] || !result.itemId) throw new Error("Некоректна відповідь сервера");
+          wonItem={id:result.itemId, baseId:result.baseId};
+          await animateWin(result.baseId);
+          caseSell.textContent=`Продати — ${BASES[result.baseId].price} E`;
+          caseSell.style.display="inline-block";
+        } catch (error) {
+          caseError.textContent=error.message;
+          if (casePage.style.display !== "none") startShowcase();
+        } finally { spinning=false; $("openCaseButton").disabled=false; }
+      });
 
       const tg = window.Telegram?.WebApp;
       tg?.ready();
@@ -1209,11 +1327,17 @@
               balance: 0
             });
           }
+          const itemsCollection = firestore.collection(db, "users", uid, "items");
+          firestore.onSnapshot(itemsCollection, snap => {
+            inventoryItems = snap.docs.map(d => ({id:d.id, ...d.data()}));
+            inventoryReady = true; renderInventory();
+          }, err => { console.error("Inventory:",err); $("inventoryStatus").textContent="Помилка завантаження інвентарю"; });
           firestore.onSnapshot(userDoc, snap => {
             if (!snap.exists()) return;
             const data = snap.data();
             idLabel.textContent = "ID: " + (data.easyBrainId || "-------");
-            balanceLabel.textContent = String(data.balance ?? 0);
+            currentBalance = Number(data.balance ?? 0);
+            balanceLabel.textContent = String(currentBalance);
           }, error => {
             console.error("Firestore:", error);
             idLabel.textContent = "ID: помилка доступу";

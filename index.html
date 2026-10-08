@@ -1003,12 +1003,14 @@
     <!-- Налаштування Firebase: заповнити лише публічні значення з Firebase Console. -->
     <script>
       window.EASY_BRAIN_CONFIG = {
-        workerUrl: "PASTE_YOUR_WORKER_URL_HERE",
+        workerUrl: "https://easy-brain-api.m-zahorui7.workers.dev",
         firebase: {
-          apiKey: "PASTE_FIREBASE_API_KEY",
-          authDomain: "PASTE_FIREBASE_AUTH_DOMAIN",
-          projectId: "PASTE_FIREBASE_PROJECT_ID",
-          appId: "PASTE_FIREBASE_APP_ID"
+          apiKey: "AIzaSyBcknkOZkPYWAYOOtMDRATY6uwosIbIBjc",
+          authDomain: "easy-brain-6d4f9.firebaseapp.com",
+          projectId: "easy-brain-6d4f9",
+          storageBucket: "easy-brain-6d4f9.firebasestorage.app",
+          messagingSenderId: "656285514139",
+          appId: "1:656285514139:web:68ccd78028b018635f893e"
         }
       };
     </script>
@@ -1159,16 +1161,14 @@
           const credential = await auth.signInWithCustomToken(auth.getAuth(app), result.customToken);
           const uid = credential.user.uid;
           const db = firestore.getFirestore(app);
-          const userDoc = firestore.doc(db, "players", uid);
+          const userDoc = firestore.doc(db, "users", uid);
           const snapshot = await firestore.getDoc(userDoc);
           if (!snapshot.exists()) {
             // Перший вхід: 0 E. Правила Firestore мають забороняти клієнту
             // змінювати баланс після створення документа.
             await firestore.setDoc(userDoc, {
               easyBrainId: await makeEasyBrainId(uid),
-              balance: 0,
-              inventory: [],
-              createdAt: firestore.serverTimestamp()
+              balance: 0
             });
           }
           firestore.onSnapshot(userDoc, snap => {

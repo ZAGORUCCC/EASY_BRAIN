@@ -1511,9 +1511,30 @@
       $("upgradeOwnTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="own";upgradeRender();}});
       $("upgradeWishTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="wish";upgradeRender();}});
       function upgradeAnimate(won,chanceBps) {
-        // The ring stays still. Only the top arrow revolves around its center.
-        // Green is centered at 6 o'clock (180 degrees); red at 12 o'clock.
-        const destination = won ? 180 : 0;
+        // The server has already decided the result. Choose a RANDOM stopping
+        // angle inside the corresponding stationary colored sector.
+        // The green arc is centered at 180deg (bottom), red is the rest.
+        const halfAngle = chanceBps * 360 / 10000 / 2;
+        const greenStart = 180 - halfAngle;
+        const greenEnd = 180 + halfAngle;
+        // Keep the pointer away from the dividing lines to avoid ambiguity.
+        const margin = Math.min(4, halfAngle / 3);
+        const random = () => {
+          const bytes = new Uint32Array(1);
+          crypto.getRandomValues(bytes);
+          return bytes[0] / 4294967296;
+        };
+        let destination;
+        if (won) {
+          destination = greenStart + margin + random() * (greenEnd - greenStart - 2 * margin);
+        } else {
+          const redLeftEnd = greenStart - margin;
+          const redRightStart = greenEnd + margin;
+          const leftLength = redLeftEnd;
+          const rightLength = 360 - redRightStart;
+          const point = random() * (leftLength + rightLength);
+          destination = point < leftLength ? point : redRightStart + point - leftLength;
+        }
         const normalized = ((upgradeRotation % 360) + 360) % 360;
         const delta = (destination - normalized + 360) % 360;
         upgradeRotation += 360 * 6 + delta;

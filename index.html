@@ -1228,10 +1228,11 @@
         profile.style.display = "none";
         casePage.style.display = "block";
         casePage.scrollTop = 0;
-        if (!spinning) { clearMultiRows(); startShowcase(); }
+        if (!spinning) { resetCasePresentation(); startShowcase(); }
       });
       $("caseBackButton").addEventListener("click", () => {
         if (spinning) return;
+        resetCasePresentation();
         stopShowcase();
         casePage.style.display = "none";
         menu.style.display = "block";
@@ -1341,6 +1342,16 @@
         multiRows.replaceChildren();
         multiRows.style.display="none";
         document.querySelector(".open-area").classList.remove("multi-opening");
+      }
+      // Clear ONLY the previous opening's temporary UI. Won items stay in Firestore
+      // and remain available in the profile inventory until the player sells them.
+      function resetCasePresentation() {
+        clearMultiRows();
+        multiPrizes.replaceChildren();
+        caseSell.style.display = "none";
+        wonItem = null;
+        caseResult.textContent = "";
+        caseError.textContent = "";
       }
       function createMultiReel() {
         const windowEl=document.createElement("div"); windowEl.className="base-showcase";

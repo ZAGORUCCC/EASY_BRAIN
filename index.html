@@ -772,6 +772,22 @@
         .upgrade-item span{font-size:12px;color:#dfc6fa;font-weight:800}
         .upgrade-empty{text-align:center;grid-column:1/-1;color:#cbb4dd;padding:25px 6px}
         @media(min-width:600px){.upgrade-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+        /* MULTI CASE: the original idle showcase stays unchanged. */
+        .case-count-picker{display:flex;justify-content:center;gap:12px;margin:8px auto 2px;width:min(85%,330px)}
+        .case-count-choice{flex:1;min-height:53px;border-radius:15px;border:2px solid #35303f;background:#17121f;color:white;font-size:27px;font-weight:900;cursor:pointer}
+        .case-count-choice.active{border-color:#9259ff;background:#2c1a4b;box-shadow:0 0 15px #864bff75}
+        #multiCaseRows{display:none;width:100%;align-items:center;flex-direction:column;gap:8px;margin-bottom:12px}
+        #multiCaseRows .base-showcase{height:clamp(115px,19vh,165px);margin-bottom:0}
+        #multiCaseRows .base-track img{height:100%}
+        #multiCaseRows .center-pointer::before{border-left-width:12px;border-right-width:12px;border-top-width:17px}
+        #multiCaseRows .center-pointer::after{border-left-width:12px;border-right-width:12px;border-bottom-width:17px}
+        .open-area.multi-opening{height:auto;min-height:0;padding-top:12px}
+        .open-area.multi-opening #baseShowcase{display:none}
+        .multi-prizes{display:flex;flex-direction:column;gap:8px;width:min(94%,500px)}
+        .multi-prize{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #7741aa;border-radius:11px;padding:8px 10px;background:#160d25;color:#f3e6ff;font-size:13px;font-weight:700}
+        .multi-prize button{border:0;border-radius:8px;padding:8px;background:#cf2449;color:white;font-weight:800;white-space:nowrap}
+        .multi-prize button:disabled{opacity:.5}
     </style>
 </head>
 
@@ -882,6 +898,8 @@
         <div class="open-area">
 
 
+            <div id="multiCaseRows" aria-label="Одночасні рулетки"></div>
+
             <!-- RANDOM BASE WINDOW -->
 
             <div
@@ -917,11 +935,17 @@
                     alt="Відкрити">
 
             </button>
+            <div class="case-count-picker" role="group" aria-label="Кількість кейсів">
+              <button type="button" class="case-count-choice active" data-case-count="1" aria-pressed="true">1</button>
+              <button type="button" class="case-count-choice" data-case-count="2" aria-pressed="false">2</button>
+              <button type="button" class="case-count-choice" data-case-count="3" aria-pressed="false">3</button>
+            </div>
             <div class="case-actions">
-              <div class="case-cost">Вартість відкриття: 9 E</div>
+              <div id="caseCostLabel" class="case-cost">Вартість відкриття: 9 E</div>
               <div id="caseError" class="case-error" role="status"></div>
               <div id="caseResult" class="case-result" aria-live="polite"></div>
               <button type="button" id="caseSell" class="case-sell" style="display:none">Продати</button>
+              <div id="multiCasePrizes" class="multi-prizes"></div>
             </div>
 
         </div>
@@ -1204,10 +1228,11 @@
         profile.style.display = "none";
         casePage.style.display = "block";
         casePage.scrollTop = 0;
-        if (!spinning) startShowcase();
+        if (!spinning) { clearMultiRows(); startShowcase(); }
       });
       $("caseBackButton").addEventListener("click", () => {
-        if (!spinning) stopShowcase();
+        if (spinning) return;
+        stopShowcase();
         casePage.style.display = "none";
         menu.style.display = "block";
       });
@@ -1296,23 +1321,108 @@
         await sleep(6300);
         caseResult.textContent = `Випало: ${winner.name}!`;
       }
+      // Multi-opening: picker only changes the price; extra reels appear on Open.
+      let selectedCaseCount = 1;
+      const multiRows = $("multiCaseRows"), multiPrizes = $("multiCasePrizes");
+      const caseCountButtons = [...document.querySelectorAll("[data-case-count]")];
+      function setCaseCount(count) {
+        if (spinning) return;
+        selectedCaseCount = count;
+        caseCountButtons.forEach(button => {
+          const active = Number(button.dataset.caseCount) === count;
+          button.classList.toggle("active",active);
+          button.setAttribute("aria-pressed",String(active));
+        });
+        $("caseCostLabel").textContent = `Вартість відкриття: ${count * 9} E`;
+      }
+      caseCountButtons.forEach(button => button.addEventListener("click", () => setCaseCount(Number(button.dataset.caseCount))));
+
+      function clearMultiRows() {
+        multiRows.replaceChildren();
+        multiRows.style.display="none";
+        document.querySelector(".open-area").classList.remove("multi-opening");
+      }
+      function createMultiReel() {
+        const windowEl=document.createElement("div"); windowEl.className="base-showcase";
+        const reel=document.createElement("div"); reel.className="base-track";
+        const pointer=document.createElement("div"); pointer.className="center-pointer";
+        windowEl.append(reel,pointer);
+        return {windowEl,reel};
+      }
+      function animateMultiReel(entry, baseId) {
+        const {windowEl,reel}=entry;
+        const winIndex=38,total=45;
+        for(let i=0;i<total;i++) {
+          const key=i===winIndex ? baseId : baseKeys[Math.floor(Math.random()*baseKeys.length)];
+          const img=document.createElement("img");img.src=BASES[key].image;img.alt=BASES[key].name;img.draggable=false;reel.append(img);
+        }
+        reel.style.transition="none";
+        reel.style.transform="translate3d(0,0,0)";
+        void reel.offsetWidth;
+        const finalX=windowEl.clientWidth/2-(winIndex+.5)*ITEM_WIDTH;
+        reel.style.transition="transform 6200ms cubic-bezier(.09,.67,.11,1)";
+        reel.style.transform=`translate3d(${finalX}px,0,0)`;
+      }
+      function showMultiPrizes(items) {
+        multiPrizes.replaceChildren();
+        for (const item of items) {
+          const base=BASES[item.baseId];
+          const row=document.createElement("div");row.className="multi-prize";
+          const name=document.createElement("span");name.textContent=`Випало: ${base.name}`;
+          const button=document.createElement("button");button.type="button";
+          button.textContent=`Продати — ${base.price} E`;
+          button.addEventListener("click",async()=>{
+            if(button.disabled) return;
+            button.disabled=true;
+            try {
+              const result=await gameRequest("/case/sell",{itemId:item.itemId});
+              name.textContent=`Продано: ${base.name} (+${result.price} E)`;
+              button.remove();
+            } catch(err) { caseError.textContent=err.message;button.disabled=false; }
+          });
+          row.append(name,button);multiPrizes.append(row);
+        }
+      }
       $("openCaseButton").addEventListener("click", async () => {
         if (spinning) return;
-        caseError.textContent=""; caseResult.textContent="";
-        if (currentBalance < 9) { caseError.textContent="Недостатньо балансу"; return; }
-        spinning=true; $("openCaseButton").disabled=true; caseSell.style.display="none"; wonItem=null;
+        const count=selectedCaseCount;
+        caseError.textContent="";caseResult.textContent="";
+        if (currentBalance < count*9) {caseError.textContent="Недостатньо балансу";return;}
+        spinning=true;$("openCaseButton").disabled=true;caseSell.style.display="none";wonItem=null;
+        caseCountButtons.forEach(b=>b.disabled=true);
+        multiPrizes.replaceChildren();
         try {
-          // Сервер атомарно знімає 9 E, визначає приз та зберігає його в інвентарі.
-          const result = await gameRequest("/case/open");
-          if (!BASES[result.baseId] || !result.itemId) throw new Error("Некоректна відповідь сервера");
-          wonItem={id:result.itemId, baseId:result.baseId};
-          await animateWin(result.baseId);
-          caseSell.textContent=`Продати — ${BASES[result.baseId].price} E`;
-          caseSell.style.display="inline-block";
-        } catch (error) {
+          // Server commits all prizes and the total cost in one transaction.
+          const result=await gameRequest("/case/open",{count});
+          const items=Array.isArray(result.items) ? result.items : [{baseId:result.baseId,itemId:result.itemId}];
+          if(items.length!==count || items.some(item=>!BASES[item.baseId]||!item.itemId)) throw new Error("Некоректна відповідь сервера");
+          if(count===1) {
+            clearMultiRows();
+            wonItem={id:items[0].itemId,baseId:items[0].baseId};
+            await animateWin(items[0].baseId);
+            caseSell.textContent=`Продати — ${BASES[items[0].baseId].price} E`;
+            caseSell.style.display="inline-block";
+          } else {
+            stopShowcase();
+            clearMultiRows();
+            document.querySelector(".open-area").classList.add("multi-opening");
+            multiRows.style.display="flex";
+            // Order is top-to-bottom: the original first prize goes at the bottom.
+            const entries=items.map(()=>createMultiReel());
+            entries.slice().reverse().forEach(entry=>multiRows.append(entry.windowEl));
+            entries.forEach((entry,i)=>animateMultiReel(entry,items[i].baseId));
+            await sleep(6300);
+            caseResult.textContent=`Відкрито ${count} кейси!`;
+            showMultiPrizes(items);
+          }
+        } catch(error) {
           caseError.textContent=error.message;
-          if (casePage.style.display !== "none") startShowcase();
-        } finally { spinning=false; $("openCaseButton").disabled=false; }
+          clearMultiRows();
+          if(casePage.style.display!=="none") startShowcase();
+        } finally {
+          spinning=false;$("openCaseButton").disabled=false;
+          caseCountButtons.forEach(b=>b.disabled=false);
+        }
       });
 
       const tg = window.Telegram?.WebApp;

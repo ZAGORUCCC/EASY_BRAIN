@@ -749,9 +749,9 @@
         .upgrade-back{position:absolute;top:20px;left:16px;background:#1c102b;border:1px solid #8145bb;border-radius:12px;color:white;padding:11px 16px;font-weight:800;font-size:17px}
         .upgrade-heading{text-align:center;font-size:26px;font-weight:900;letter-spacing:1px;color:#eee0ff;text-shadow:0 0 18px #974cff}
         .upgrade-wheel-wrap{position:relative;width:min(74vw,292px);aspect-ratio:1;margin:16px auto 19px}
-        .upgrade-wheel{width:100%;height:100%;border-radius:50%;border:8px solid #2b173f;box-shadow:0 0 0 3px #9b56dc,0 0 32px #7133c655,inset 0 0 16px #000a;background:conic-gradient(#22cb68 0deg var(--green-angle,0deg),#e33c50 var(--green-angle,0deg) 360deg);position:relative;transform:rotate(0deg)}
-        .upgrade-wheel::after{content:'E';position:absolute;inset:36%;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1a1027,#3b1957);border:3px solid #aa68ed;color:#ead1ff;font-size:32px;font-weight:900;box-shadow:0 0 15px #0008}
-        .upgrade-pointer{position:absolute;z-index:3;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:17px solid transparent;border-right:17px solid transparent;border-top:34px solid #fff;filter:drop-shadow(0 0 7px #c69bff)}
+        .upgrade-wheel{width:100%;height:100%;border-radius:50%;border:5px solid #2b173f;box-shadow:0 0 0 2px #9b56dc,0 0 32px #7133c655,inset 0 0 16px #000a;background:conic-gradient(from 0deg,#e33c50 0deg var(--green-start,180deg),#22cb68 var(--green-start,180deg) var(--green-end,180deg),#e33c50 var(--green-end,180deg) 360deg);position:relative}
+        .upgrade-wheel::after{content:'E';position:absolute;inset:12px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle,#1a1027,#120a20);border:2px solid #342044;color:#ead1ff;font-size:32px;font-weight:900;box-shadow:0 0 15px #0008}
+        .upgrade-pointer{position:absolute;z-index:3;inset:0;transform:rotate(0deg);pointer-events:none}.upgrade-pointer::before{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:29px solid #fff;filter:drop-shadow(0 0 7px #c69bff)}
         .upgrade-percent{text-align:center;font-size:18px;font-weight:800;color:#79f0a5;min-height:25px}
         .upgrade-slots{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin:17px auto}
         .upgrade-slot{min-width:0;min-height:177px;padding:12px 8px;border:1px solid #7e48b1;border-radius:16px;background:linear-gradient(150deg,#261237,#0e0a16);text-align:center;box-shadow:0 5px 18px #0005}
@@ -1408,7 +1408,7 @@
 
 
       // UPGRADE: the server owns the actual result and inventory mutation.
-      const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel");
+      const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel"), upgradePointer = document.querySelector("#upgradeScreen .upgrade-pointer");
       let upgradeSource = null, upgradeTarget = null, upgradeTab = "own";
       let upgradeBusy = false, upgradeAllowed = [], upgradeRequestNumber = 0;
       let upgradeRotation = 0;
@@ -1430,13 +1430,18 @@
         return source && target && target.price > source.price
           ? Math.floor(source.price * 10000 / target.price) : 0;
       }
+      function upgradeSetSector(chanceBps) {
+        const halfAngle = chanceBps * 360 / 10000 / 2;
+        upgradeWheel.style.setProperty("--green-start", `${180-halfAngle}deg`);
+        upgradeWheel.style.setProperty("--green-end", `${180+halfAngle}deg`);
+      }
       function upgradeDisplay() {
         const own = inventoryItems.find(i => i.id === upgradeSource);
         upgradeSlot("upgradeSourceSlot",own?.baseId);
         upgradeSlot("upgradeTargetSlot",upgradeTarget);
         const chance = upgradeChance();
         const valid = chance > 0 && chance <= 7500 && upgradeAllowed.some(x=>x.id===upgradeTarget);
-        upgradeWheel.style.setProperty("--green-angle", `${valid ? chance*360/10000 : 0}deg`);
+        upgradeSetSector(valid ? chance : 0);
         upgradePercent.textContent = valid ? `Шанс успіху: ${(chance/100).toLocaleString("uk-UA",{maximumFractionDigits:2})}%` : (own ? "Вибери бажану базу" : "Вибери свою базу");
         $("upgradePlay").disabled = !valid || upgradeBusy || !inventoryReady;
       }
@@ -1506,15 +1511,14 @@
       $("upgradeOwnTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="own";upgradeRender();}});
       $("upgradeWishTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="wish";upgradeRender();}});
       function upgradeAnimate(won,chanceBps) {
-        // Fixed pointer at 12 o'clock; stop in the sector chosen by the server.
-        const green=chanceBps*360/10000;
-        const destination = won ? green/2 : green+(360-green)/2;
-        const normalized=((upgradeRotation%360)+360)%360;
-        const desired=((360-destination)%360+360)%360;
-        const delta=(desired-normalized+360)%360;
-        upgradeRotation += 360*6+delta;
-        upgradeWheel.style.transition="transform 5100ms cubic-bezier(.12,.72,.12,1)";
-        upgradeWheel.style.transform=`rotate(${upgradeRotation}deg)`;
+        // The ring stays still. Only the top arrow revolves around its center.
+        // Green is centered at 6 o'clock (180 degrees); red at 12 o'clock.
+        const destination = won ? 180 : 0;
+        const normalized = ((upgradeRotation % 360) + 360) % 360;
+        const delta = (destination - normalized + 360) % 360;
+        upgradeRotation += 360 * 6 + delta;
+        upgradePointer.style.transition = "transform 5100ms cubic-bezier(.12,.72,.12,1)";
+        upgradePointer.style.transform = `rotate(${upgradeRotation}deg)`;
         return sleep(5250);
       }
       $("upgradePlay").addEventListener("click",async()=>{
@@ -1527,7 +1531,7 @@
         try {
           const result=await gameRequest("/upgrade/play",{itemId,targetBaseId});
           if (result.success!==true || typeof result.won!=="boolean" || !Number.isInteger(result.chanceBps)) throw new Error("Некоректна відповідь сервера");
-          upgradeWheel.style.setProperty("--green-angle",`${result.chanceBps*360/10000}deg`);
+          upgradeSetSector(result.chanceBps);
           upgradeMessage.textContent="Колесо крутиться...";
           await upgradeAnimate(result.won,result.chanceBps);
           upgradeMessage.textContent=result.won ? `УСПІХ! Отримано ${BASES[targetBaseId]?.name || "базу"}! 💚` : "Не вдалося. Поставлену базу втрачено.";

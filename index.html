@@ -743,6 +743,35 @@
         #adminStart:disabled { opacity:.55; cursor:wait; }
         #adminMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
 
+
+        /* UPGRADE SCREEN — isolated from case roulette */
+        #upgradeScreen{display:none;position:relative;width:100%;height:100dvh;overflow-y:auto;color:#f5efff;background:radial-gradient(circle at 50% 12%,#411663 0%,#170c29 42%,#050505 85%);padding:86px 14px 38px;overscroll-behavior:contain}
+        .upgrade-back{position:absolute;top:20px;left:16px;background:#1c102b;border:1px solid #8145bb;border-radius:12px;color:white;padding:11px 16px;font-weight:800;font-size:17px}
+        .upgrade-heading{text-align:center;font-size:26px;font-weight:900;letter-spacing:1px;color:#eee0ff;text-shadow:0 0 18px #974cff}
+        .upgrade-wheel-wrap{position:relative;width:min(74vw,292px);aspect-ratio:1;margin:16px auto 19px}
+        .upgrade-wheel{width:100%;height:100%;border-radius:50%;border:8px solid #2b173f;box-shadow:0 0 0 3px #9b56dc,0 0 32px #7133c655,inset 0 0 16px #000a;background:conic-gradient(#22cb68 0deg var(--green-angle,0deg),#e33c50 var(--green-angle,0deg) 360deg);position:relative;transform:rotate(0deg)}
+        .upgrade-wheel::after{content:'E';position:absolute;inset:36%;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1a1027,#3b1957);border:3px solid #aa68ed;color:#ead1ff;font-size:32px;font-weight:900;box-shadow:0 0 15px #0008}
+        .upgrade-pointer{position:absolute;z-index:3;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:17px solid transparent;border-right:17px solid transparent;border-top:34px solid #fff;filter:drop-shadow(0 0 7px #c69bff)}
+        .upgrade-percent{text-align:center;font-size:18px;font-weight:800;color:#79f0a5;min-height:25px}
+        .upgrade-slots{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin:17px auto}
+        .upgrade-slot{min-width:0;min-height:177px;padding:12px 8px;border:1px solid #7e48b1;border-radius:16px;background:linear-gradient(150deg,#261237,#0e0a16);text-align:center;box-shadow:0 5px 18px #0005}
+        .upgrade-slot-title{font-size:13px;color:#cdb4eb;font-weight:800;margin-bottom:8px}
+        .upgrade-slot img{width:100%;height:105px;object-fit:contain;filter:drop-shadow(0 5px 7px #0008)}
+        .upgrade-slot-name{font-size:12px;font-weight:800;min-height:30px}
+        .upgrade-action{display:block;width:min(100%,340px);margin:14px auto 8px;padding:15px;border:0;border-radius:14px;background:linear-gradient(180deg,#36e276,#098c3f);color:white;font-size:19px;font-weight:900;box-shadow:0 6px 22px #0aa74a55}
+        .upgrade-action:disabled{opacity:.45;filter:grayscale(.7);cursor:not-allowed}
+        .upgrade-message{min-height:30px;text-align:center;color:#e7d6fa;font-size:14px;font-weight:700;margin:10px auto;max-width:450px}
+        .upgrade-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px auto 12px;max-width:560px}
+        .upgrade-tab{background:#1a1028;border:1px solid #693b94;color:#d6c2ec;padding:13px 5px;border-radius:12px;font-weight:800;font-size:14px}
+        .upgrade-tab.active{background:#6325a0;border-color:#d4a2ff;color:white}
+        .upgrade-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;max-width:560px;margin:auto}
+        .upgrade-item{min-width:0;position:relative;border:2px solid #604080;border-radius:12px;background:#150e20;padding:8px 4px;color:white;text-align:center;cursor:pointer}
+        .upgrade-item.selected{border-color:#3aff88;background:#123a25;box-shadow:0 0 13px #22f57577}
+        .upgrade-item img{width:100%;height:90px;object-fit:contain}
+        .upgrade-item strong{display:block;font-size:11px;line-height:1.25;min-height:27px}
+        .upgrade-item span{font-size:12px;color:#dfc6fa;font-weight:800}
+        .upgrade-empty{text-align:center;grid-column:1/-1;color:#cbb4dd;padding:25px 6px}
+        @media(min-width:600px){.upgrade-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
     </style>
 </head>
 
@@ -1047,6 +1076,29 @@
 
 
 
+
+    <!-- UPGRADE: separate screen, case opening remains unchanged -->
+    <section id="upgradeScreen" aria-label="Покращення баз">
+      <button type="button" id="upgradeBack" class="upgrade-back">← Назад</button>
+      <div class="upgrade-heading">UPGRADE</div>
+      <div class="upgrade-wheel-wrap">
+        <div id="upgradeWheel" class="upgrade-wheel"></div>
+        <div class="upgrade-pointer"></div>
+      </div>
+      <div id="upgradePercent" class="upgrade-percent">Вибери свою базу</div>
+      <div class="upgrade-slots">
+        <div class="upgrade-slot"><div class="upgrade-slot-title">Твій вклад</div><div id="upgradeSourceSlot" class="upgrade-slot-name">Вибери предмет</div></div>
+        <div class="upgrade-slot"><div class="upgrade-slot-title">Бажаний предмет</div><div id="upgradeTargetSlot" class="upgrade-slot-name">Вибери базу</div></div>
+      </div>
+      <button id="upgradePlay" class="upgrade-action" type="button" disabled>ПРОКАЧАТИ</button>
+      <div id="upgradeMessage" class="upgrade-message" role="status" aria-live="polite"></div>
+      <div class="upgrade-tabs">
+        <button type="button" class="upgrade-tab active" id="upgradeOwnTab">Мої предмети</button>
+        <button type="button" class="upgrade-tab" id="upgradeWishTab">Бажані предмети</button>
+      </div>
+      <div id="upgradeList" class="upgrade-list"></div>
+    </section>
+
     <!-- Адмінпанель: кнопку показуємо лише після перевірки на сервері -->
     <button id="adminOrb" type="button" aria-label="Відкрити адмінпанель" title="Адмінпанель">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.7 13h6.4L10.6 22 19.3 10.7h-6.4L13.4 2Z"/></svg>
@@ -1335,6 +1387,8 @@
           firestore.onSnapshot(itemsCollection, snap => {
             inventoryItems = snap.docs.map(d => ({id:d.id, ...d.data()}));
             inventoryReady = true; renderInventory();
+             if (upgradeSource && !inventoryItems.some(i=>i.id===upgradeSource) && !upgradeBusy) {upgradeSource=null;upgradeTarget=null;upgradeAllowed=[];++upgradeRequestNumber;}
+             if (!upgradeBusy) {upgradeDisplay();upgradeRender();}
           }, err => { console.error("Inventory:",err); $("inventoryStatus").textContent="Помилка завантаження інвентарю"; });
           firestore.onSnapshot(userDoc, snap => {
             if (!snap.exists()) return;
@@ -1351,6 +1405,136 @@
           idLabel.textContent = "ID: помилка підключення";
         }
       }
+
+
+      // UPGRADE: the server owns the actual result and inventory mutation.
+      const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel");
+      let upgradeSource = null, upgradeTarget = null, upgradeTab = "own";
+      let upgradeBusy = false, upgradeAllowed = [], upgradeRequestNumber = 0;
+      let upgradeRotation = 0;
+      const upgradeMessage = $("upgradeMessage");
+      const upgradePercent = $("upgradePercent");
+      function upgradeSlot(id, baseId) {
+        const slot = $(id); slot.replaceChildren();
+        const base = BASES[baseId];
+        if (!base) { slot.textContent = "Вибери предмет"; return; }
+        const img = document.createElement("img"); img.src = base.image; img.alt = base.name;
+        const label = document.createElement("div"); label.className = "upgrade-slot-name";
+        label.textContent = `${base.name} · ${base.price} E`;
+        slot.append(img,label);
+      }
+      function upgradeChance() {
+        if (!upgradeSource || !upgradeTarget) return 0;
+        const own = inventoryItems.find(i => i.id === upgradeSource);
+        const source = BASES[own?.baseId], target = BASES[upgradeTarget];
+        return source && target && target.price > source.price
+          ? Math.floor(source.price * 10000 / target.price) : 0;
+      }
+      function upgradeDisplay() {
+        const own = inventoryItems.find(i => i.id === upgradeSource);
+        upgradeSlot("upgradeSourceSlot",own?.baseId);
+        upgradeSlot("upgradeTargetSlot",upgradeTarget);
+        const chance = upgradeChance();
+        const valid = chance > 0 && chance <= 7500 && upgradeAllowed.some(x=>x.id===upgradeTarget);
+        upgradeWheel.style.setProperty("--green-angle", `${valid ? chance*360/10000 : 0}deg`);
+        upgradePercent.textContent = valid ? `Шанс успіху: ${(chance/100).toLocaleString("uk-UA",{maximumFractionDigits:2})}%` : (own ? "Вибери бажану базу" : "Вибери свою базу");
+        $("upgradePlay").disabled = !valid || upgradeBusy || !inventoryReady;
+      }
+      async function upgradeLoadOptions() {
+        const requestId = ++upgradeRequestNumber;
+        upgradeAllowed = [];
+        if (!upgradeSource) { upgradeDisplay(); upgradeRender(); return; }
+        const own = inventoryItems.find(i=>i.id===upgradeSource);
+        if (!own) { upgradeSource=null; upgradeTarget=null; upgradeDisplay(); upgradeRender(); return; }
+        try {
+          const data = await gameRequest("/upgrade/options",{sourceBaseId:own.baseId});
+          if (requestId !== upgradeRequestNumber) return;
+          upgradeAllowed = Array.isArray(data.targets) ? data.targets : [];
+          if (!upgradeAllowed.some(x=>x.id===upgradeTarget)) upgradeTarget=null;
+        } catch(err) { if (requestId===upgradeRequestNumber) upgradeMessage.textContent=err.message; }
+        if (requestId === upgradeRequestNumber) { upgradeDisplay(); upgradeRender(); }
+      }
+      function upgradeRender() {
+        const list = $("upgradeList"); list.replaceChildren();
+        $("upgradeOwnTab").classList.toggle("active",upgradeTab==="own");
+        $("upgradeWishTab").classList.toggle("active",upgradeTab==="wish");
+        let entries = upgradeTab==="own"
+          ? inventoryItems.filter(i=>BASES[i.baseId]).map(i=>({itemId:i.id,baseId:i.baseId}))
+          : (upgradeSource ? upgradeAllowed.map(b=>({baseId:b.id})) : baseKeys.map(baseId=>({baseId})));
+        if (!entries.length) {
+          const empty=document.createElement("div"); empty.className="upgrade-empty";
+          empty.textContent=upgradeTab==="own" ? (inventoryReady?"У тебе поки немає баз":"Завантаження інвентарю...") : "Немає доступних баз для покращення";
+          list.append(empty); return;
+        }
+        for (const entry of entries) {
+          const base=BASES[entry.baseId];
+          const button=document.createElement("button"); button.type="button";
+          button.className="upgrade-item";
+          if (upgradeTab==="own" ? upgradeSource===entry.itemId : upgradeTarget===entry.baseId) button.classList.add("selected");
+          button.disabled=upgradeBusy;
+          const img=document.createElement("img"); img.src=base.image; img.alt=base.name;
+          const name=document.createElement("strong"); name.textContent=base.name;
+          const price=document.createElement("span"); price.textContent=`${base.price} E`;
+          button.append(img,name,price);
+          button.addEventListener("click",()=>{
+            if (upgradeBusy) return;
+            upgradeMessage.textContent="";
+            if (upgradeTab==="own") {
+              upgradeSource=entry.itemId; upgradeTarget=null; upgradeTab="wish";
+              upgradeDisplay(); upgradeRender(); upgradeLoadOptions();
+            } else {
+              if (upgradeSource && !upgradeAllowed.some(x=>x.id===entry.baseId)) return;
+              upgradeTarget=entry.baseId; upgradeDisplay(); upgradeRender();
+            }
+          });
+          list.append(button);
+        }
+      }
+      function upgradeOpen() {
+        if (upgradeBusy) return;
+        menu.style.display="none"; casePage.style.display="none"; profile.style.display="none";
+        upgradePage.style.display="block"; upgradePage.scrollTop=0;
+        upgradeMessage.textContent="";
+        upgradeTab="own"; upgradeDisplay(); upgradeRender();
+        if (upgradeSource) upgradeLoadOptions();
+      }
+      $("upgradeButton").addEventListener("click",upgradeOpen);
+      $("upgradeBack").addEventListener("click",()=>{
+        if (upgradeBusy) return;
+        upgradePage.style.display="none"; menu.style.display="block";
+      });
+      $("upgradeOwnTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="own";upgradeRender();}});
+      $("upgradeWishTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="wish";upgradeRender();}});
+      function upgradeAnimate(won,chanceBps) {
+        // Fixed pointer at 12 o'clock; stop in the sector chosen by the server.
+        const green=chanceBps*360/10000;
+        const destination = won ? green/2 : green+(360-green)/2;
+        const normalized=((upgradeRotation%360)+360)%360;
+        const desired=((360-destination)%360+360)%360;
+        const delta=(desired-normalized+360)%360;
+        upgradeRotation += 360*6+delta;
+        upgradeWheel.style.transition="transform 5100ms cubic-bezier(.12,.72,.12,1)";
+        upgradeWheel.style.transform=`rotate(${upgradeRotation}deg)`;
+        return sleep(5250);
+      }
+      $("upgradePlay").addEventListener("click",async()=>{
+        if (upgradeBusy || !upgradeSource || !upgradeTarget) return;
+        const chance=upgradeChance();
+        if (!chance || chance>7500 || !upgradeAllowed.some(x=>x.id===upgradeTarget)) return;
+        upgradeBusy=true; upgradeDisplay(); upgradeRender();
+        upgradeMessage.textContent="Перевіряємо покращення...";
+        const itemId=upgradeSource, targetBaseId=upgradeTarget;
+        try {
+          const result=await gameRequest("/upgrade/play",{itemId,targetBaseId});
+          if (result.success!==true || typeof result.won!=="boolean" || !Number.isInteger(result.chanceBps)) throw new Error("Некоректна відповідь сервера");
+          upgradeWheel.style.setProperty("--green-angle",`${result.chanceBps*360/10000}deg`);
+          upgradeMessage.textContent="Колесо крутиться...";
+          await upgradeAnimate(result.won,result.chanceBps);
+          upgradeMessage.textContent=result.won ? `УСПІХ! Отримано ${BASES[targetBaseId]?.name || "базу"}! 💚` : "Не вдалося. Поставлену базу втрачено.";
+          upgradeSource=null; upgradeTarget=null; upgradeAllowed=[]; ++upgradeRequestNumber;
+        } catch(err) { upgradeMessage.textContent=err.message; }
+        finally {upgradeBusy=false; upgradeDisplay(); upgradeRender();}
+      });
 
       // ADMIN: Telegram initData надсилається серверу для перевірки прав.
       const adminOrb = $("adminOrb"), adminOverlay = $("adminOverlay");

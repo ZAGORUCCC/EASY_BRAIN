@@ -1131,6 +1131,8 @@
       }
       function startShowcase() {
         stopShowcase();
+        // Remove the 6.2-second prize transition before restarting idle motion.
+        track.style.transition = "none";
         offset = 0;
         track.style.transform = "translate3d(0,0,0)";
         fillTrack();
@@ -1140,6 +1142,8 @@
         if (animationFrame !== null) cancelAnimationFrame(animationFrame);
         animationFrame = null;
         lastFrame = 0;
+        // A previous prize animation must not affect the idle roulette.
+        track.style.transition = "none";
         track.replaceChildren();
       }
 

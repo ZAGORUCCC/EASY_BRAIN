@@ -304,7 +304,6 @@
             text-align: center;
         }
 
-        /* Top-up (+) button: round, purple ring, matches balance style */
         .balance-topup {
             width: 32px;
             height: 32px;
@@ -666,7 +665,6 @@
                 rgba(8, 5, 14, 1) 100%);
         }
 
-        /* Безперервна стрічка: сусідні бази без CSS-проміжків. */
         .base-track {
             position: absolute;
             inset: 0 auto 0 0;
@@ -685,10 +683,6 @@
             object-fit: contain;
             filter: drop-shadow(0 8px 12px rgba(0,0,0,.4));
         }
-
-        /* =========================
-           EASY BRAIN CENTER POINTER
-        ========================= */
 
         .center-pointer {
             position: absolute;
@@ -721,9 +715,6 @@
                 0 0 22px rgba(70,160,255,.60);
         }
 
-
-        /* TOP ARROW */
-
         .center-pointer::before {
             content: "";
 
@@ -748,9 +739,6 @@
                     rgba(126, 92, 255, 0.85)
                 );
         }
-
-
-        /* BOTTOM ARROW */
 
         .center-pointer::after {
             content: "";
@@ -912,11 +900,6 @@
             object-fit: cover;
         }
 
-
-        /* =========================
-           PROFILE NAME + ID
-        ========================= */
-
         .profile-user-info {
             margin-left: 20px;
         }
@@ -1015,9 +998,12 @@
         #adminOverlay { display:none; position:fixed; inset:0; z-index:4000; background:rgba(0,0,0,.64); align-items:center; justify-content:center; padding:16px; }
         #adminOverlay.visible { display:flex; }
         .admin-panel { width:min(92vw,510px); max-height:90dvh; overflow-y:auto; background:#09080e; color:#f4edff; border:1px solid #7231a8; border-radius:19px; box-shadow:0 15px 55px #000b, 0 0 25px #6d21aa40; padding:22px; }
-        .admin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:26px; }
+        .admin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
         .admin-head h2 { margin:0; font-size:26px; color:#e3c6ff; }
         #adminClose { width:39px; height:39px; border:0; border-radius:10px; background:#df1735; color:white; font-size:28px; font-weight:800; cursor:pointer; }
+        .admin-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:20px; }
+        .admin-tab { border:1px solid #693b94; background:#1a1028; color:#d6c2ec; padding:12px 6px; border-radius:11px; font-weight:800; font-size:15px; cursor:pointer; }
+        .admin-tab.active { background:#6325a0; border-color:#d4a2ff; color:white; }
         .admin-panel label { display:block; font-size:16px; font-weight:700; margin:17px 0 8px; }
         .admin-panel input { width:100%; padding:15px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:17px; outline:none; }
         .admin-panel input:focus { border-color:#c184ff; }
@@ -1029,6 +1015,22 @@
         .admin-webhook-button { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
         .admin-webhook-button:disabled { opacity:.55; cursor:wait; }
         .admin-webhook-status { margin-top:10px; font-size:13px; color:#c7b8d9; min-height:18px; word-break:break-all; }
+        #adminPromoStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
+        #adminPromoStart:disabled { opacity:.55; cursor:wait; }
+        #adminPromoMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
+
+        /* PROMO CODE (profile) */
+        .promo-section { margin-top:26px; padding-bottom:90px; }
+        .promo-section h3 { margin:0 0 12px; font-size:19px; }
+        .promo-row { display:flex; gap:9px; align-items:stretch; }
+        #promoInput { flex:1; min-width:0; padding:14px 14px; border:2px solid #2660b5; border-radius:12px; background:#0e1524; color:white; font-size:16px; font-weight:700; outline:none; letter-spacing:1px; }
+        #promoInput:focus { border-color:#4b8fe0; box-shadow:0 0 10px rgba(75,143,224,0.45); }
+        #promoSubmit { border:2px solid #2660b5; border-radius:12px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:0 22px; font-size:16px; font-weight:900; cursor:pointer; white-space:nowrap; }
+        #promoSubmit:disabled { opacity:.55; cursor:wait; }
+        #promoSubmit:active:not(:disabled) { transform:scale(0.97); }
+        #promoMessage { min-height:18px; margin-top:10px; font-size:13.5px; font-weight:700; color:#c7b8d9; }
+        #promoMessage.ok { color:#5ee08a; }
+        #promoMessage.err { color:#ff6b7d; }
 
 
         /* UPGRADE SCREEN — isolated from case roulette */
@@ -1060,10 +1062,11 @@
         .upgrade-empty{text-align:center;grid-column:1/-1;color:#cbb4dd;padding:25px 6px}
         @media(min-width:600px){.upgrade-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
-        /* MULTI CASE: the original idle showcase stays unchanged. */
+        /* MULTI CASE */
         .case-count-picker{display:flex;justify-content:center;gap:12px;margin:8px auto 2px;width:min(85%,330px)}
         .case-count-choice{flex:1;min-height:53px;border-radius:15px;border:2px solid #35303f;background:#17121f;color:white;font-size:27px;font-weight:900;cursor:pointer}
         .case-count-choice.active{border-color:#9259ff;background:#2c1a4b;box-shadow:0 0 15px #864bff75}
+        .case-count-choice:disabled { opacity:.4; cursor:not-allowed; }
         #multiCaseRows{display:none;width:100%;align-items:center;flex-direction:column;gap:8px;margin-bottom:12px}
         #multiCaseRows .base-showcase{height:clamp(115px,19vh,165px);margin-bottom:0}
         #multiCaseRows .base-track img{height:100%}
@@ -1433,6 +1436,16 @@
           <div id="inventoryGrid" class="inventory-grid"></div>
         </section>
 
+        <!-- PROMO CODE -->
+        <section class="promo-section" aria-label="Промокод">
+          <h3>Промокод</h3>
+          <div class="promo-row">
+            <input id="promoInput" type="text" maxlength="20" placeholder="Введи промокод" autocapitalize="off" autocomplete="off" spellcheck="false">
+            <button id="promoSubmit" type="button">Ввести</button>
+          </div>
+          <div id="promoMessage" role="status" aria-live="polite"></div>
+        </section>
+
     </div>
 
 
@@ -1468,17 +1481,37 @@
     <div id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
       <section class="admin-panel">
         <div class="admin-head"><h2 id="adminTitle">Адмінпанель</h2><button id="adminClose" type="button" aria-label="Закрити">×</button></div>
-        <form id="adminForm">
-          <label for="adminTargetId">Введіть Easy Brain ID гравця</label>
-          <input id="adminTargetId" type="text" maxlength="7" placeholder="Наприклад, XO6M1Q0" autocapitalize="characters" autocomplete="off" required pattern="[A-Z0-9]{7}">
-          <label for="adminCoins">Кількість E-коїнів для додавання</label>
-          <input id="adminCoins" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 100" required>
-          <div class="admin-bottom"><button id="adminStart" type="submit">Старт</button></div>
-          <div id="adminMessage" role="status" aria-live="polite"></div>
-        </form>
-        <div class="admin-webhook-block">
-          <button id="adminSetupWebhook" type="button" class="admin-webhook-button">Налаштувати Telegram Webhook</button>
-          <div id="adminWebhookStatus" class="admin-webhook-status"></div>
+        <div class="admin-tabs" role="tablist">
+          <button id="adminTabTopup" type="button" class="admin-tab active" role="tab" aria-selected="true">Накрутка</button>
+          <button id="adminTabPromo" type="button" class="admin-tab" role="tab" aria-selected="false">Промокоди</button>
+        </div>
+
+        <div id="adminPaneTopup">
+          <form id="adminForm">
+            <label for="adminTargetId">Введіть Easy Brain ID гравця</label>
+            <input id="adminTargetId" type="text" maxlength="7" placeholder="Наприклад, XO6M1Q0" autocapitalize="characters" autocomplete="off" required pattern="[A-Z0-9]{7}">
+            <label for="adminCoins">Кількість E-коїнів для додавання</label>
+            <input id="adminCoins" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 100" required>
+            <div class="admin-bottom"><button id="adminStart" type="submit">Старт</button></div>
+            <div id="adminMessage" role="status" aria-live="polite"></div>
+          </form>
+          <div class="admin-webhook-block">
+            <button id="adminSetupWebhook" type="button" class="admin-webhook-button">Налаштувати Telegram Webhook</button>
+            <div id="adminWebhookStatus" class="admin-webhook-status"></div>
+          </div>
+        </div>
+
+        <div id="adminPanePromo" style="display:none">
+          <form id="adminPromoForm">
+            <label for="promoName">Назва промокоду</label>
+            <input id="promoName" type="text" maxlength="20" placeholder="Наприклад, BRAIN2026" autocapitalize="off" autocomplete="off" spellcheck="false" required pattern="[A-Za-z0-9]{3,20}">
+            <label for="promoUses">Кількість активацій</label>
+            <input id="promoUses" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 100" required>
+            <label for="promoCoins">Кількість E-коїнів</label>
+            <input id="promoCoins" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 50" required>
+            <div class="admin-bottom"><button id="adminPromoStart" type="submit">Старт</button></div>
+            <div id="adminPromoMessage" role="status" aria-live="polite"></div>
+          </form>
         </div>
       </section>
     </div>
@@ -1505,6 +1538,8 @@
       const idLabel = $("easyBrainId"), balanceLabel = $("balanceAmount");
       const cfg = window.EASY_BRAIN_CONFIG;
 
+      const INVENTORY_LIMIT = 10;
+
       const images = [
         "tralalelo-base-clean.png", "rose-base-clean.png",
         "aquatic-base-clean.png", "honey-bee-base-clean.png",
@@ -1520,9 +1555,8 @@
         return images[index];
       }
 
-      // Кожен елемент займає рівно 160px. Наступний починається одразу за ним.
       const ITEM_WIDTH = 160;
-      const SPEED = 95; // пікселів за секунду
+      const SPEED = 95;
       let animationFrame = null, lastFrame = 0, offset = 0;
       function addImage() {
         const image = document.createElement("img");
@@ -1549,7 +1583,6 @@
       }
       function startShowcase() {
         stopShowcase();
-        // Remove the 6.2-second prize transition before restarting idle motion.
         track.style.transition = "none";
         offset = 0;
         track.style.transform = "translate3d(0,0,0)";
@@ -1560,7 +1593,6 @@
         if (animationFrame !== null) cancelAnimationFrame(animationFrame);
         animationFrame = null;
         lastFrame = 0;
-        // A previous prize animation must not affect the idle roulette.
         track.style.transition = "none";
         track.replaceChildren();
       }
@@ -1570,7 +1602,7 @@
         profile.style.display = "none";
         casePage.style.display = "block";
         casePage.scrollTop = 0;
-        if (!spinning) { resetCasePresentation(); startShowcase(); }
+        if (!spinning) { resetCasePresentation(); startShowcase(); updateCaseCountAvailability(); }
       });
       $("caseBackButton").addEventListener("click", () => {
         if (spinning) return;
@@ -1589,7 +1621,6 @@
         profile.style.display = "none";
         menu.style.display = "block";
       });
-      // Відкриття/продаж виконує лише сервер; клієнт тільки анімує результат.
       const BASES = {
         tralalelo: {name:"Tralalelo Base", price:30, image:"tralalelo-base-clean.png", weight:5},
         rose: {name:"Rose Base", price:26, image:"rose-base-clean.png", weight:10},
@@ -1608,7 +1639,9 @@
       function renderInventory() {
         const grid = $("inventoryGrid"), status = $("inventoryStatus");
         grid.replaceChildren();
-        status.textContent = !inventoryReady ? "Завантаження..." : inventoryItems.length ? `Баз у колекції: ${inventoryItems.length}` : "Тут з’являться виграні бази";
+        status.textContent = !inventoryReady
+          ? "Завантаження..."
+          : `Баз у колекції: ${inventoryItems.length} / ${INVENTORY_LIMIT}`;
         for (const item of inventoryItems) {
           const base = BASES[item.baseId];
           if (!base) continue;
@@ -1620,6 +1653,7 @@
           sell.addEventListener("click", () => sellItem(item.id, sell));
           card.append(img, title, sell); grid.append(card);
         }
+        updateCaseCountAvailability();
       }
       async function gameRequest(path, payload={}) {
         if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
@@ -1656,7 +1690,6 @@
         }
         track.style.transition="none";
         track.style.transform="translate3d(0,0,0)";
-        // Примусово застосувати початковий стан перед плавною анімацією.
         void track.offsetWidth;
         const finalX = showcase.clientWidth/2 - (winIndex + .5)*ITEM_WIDTH;
         track.style.transition="transform 6200ms cubic-bezier(.09,.67,.11,1)";
@@ -1664,12 +1697,30 @@
         await sleep(6300);
         caseResult.textContent = `Випало: ${winner.name}!`;
       }
-      // Multi-opening: picker only changes the price; extra reels appear on Open.
       let selectedCaseCount = 1;
       const multiRows = $("multiCaseRows"), multiPrizes = $("multiCasePrizes");
       const caseCountButtons = [...document.querySelectorAll("[data-case-count]")];
+
+      function availableSlots() {
+        return Math.max(0, INVENTORY_LIMIT - inventoryItems.length);
+      }
+      // Block 2 and 3 when there are not enough free inventory slots.
+      function updateCaseCountAvailability() {
+        const slots = availableSlots();
+        for (const button of caseCountButtons) {
+          const count = Number(button.dataset.caseCount);
+          const allowed = count <= slots;
+          button.disabled = spinning || !allowed;
+        }
+        // If the current selection no longer fits, downgrade to the biggest allowed (>=1).
+        const allowedForCurrent = selectedCaseCount <= slots;
+        if (!allowedForCurrent && slots >= 1) {
+          setCaseCount(1);
+        }
+      }
       function setCaseCount(count) {
         if (spinning) return;
+        if (count > availableSlots()) count = Math.max(1, availableSlots());
         selectedCaseCount = count;
         caseCountButtons.forEach(button => {
           const active = Number(button.dataset.caseCount) === count;
@@ -1685,8 +1736,6 @@
         multiRows.style.display="none";
         document.querySelector(".open-area").classList.remove("multi-opening");
       }
-      // Clear ONLY the previous opening's temporary UI. Won items stay in Firestore
-      // and remain available in the profile inventory until the player sells them.
       function resetCasePresentation() {
         clearMultiRows();
         multiPrizes.replaceChildren();
@@ -1740,12 +1789,23 @@
         if (spinning) return;
         const count=selectedCaseCount;
         caseError.textContent="";caseResult.textContent="";
+
+        // Inventory limit is checked BEFORE the balance check, so a 10/10 user
+        // sees the limit message even if they could not afford the case anyway.
+        if (inventoryItems.length >= INVENTORY_LIMIT) {
+          caseError.textContent = `Ліміт інвентарю ${INVENTORY_LIMIT}/${INVENTORY_LIMIT}. Продай щось, щоб звільнити місце.`;
+          return;
+        }
+        if (inventoryItems.length + count > INVENTORY_LIMIT) {
+          caseError.textContent = `Недостатньо місця в інвентарі: вільно ${availableSlots()}, потрібно ${count}.`;
+          return;
+        }
+
         if (currentBalance < count*9) {caseError.textContent="Недостатньо балансу";return;}
         spinning=true;$("openCaseButton").disabled=true;caseSell.style.display="none";wonItem=null;
         caseCountButtons.forEach(b=>b.disabled=true);
         multiPrizes.replaceChildren();
         try {
-          // Server commits all prizes and the total cost in one transaction.
           const result=await gameRequest("/case/open",{count});
           const items=Array.isArray(result.items) ? result.items : [{baseId:result.baseId,itemId:result.itemId}];
           if(items.length!==count || items.some(item=>!BASES[item.baseId]||!item.itemId)) throw new Error("Некоректна відповідь сервера");
@@ -1760,7 +1820,6 @@
             clearMultiRows();
             document.querySelector(".open-area").classList.add("multi-opening");
             multiRows.style.display="flex";
-            // Order is top-to-bottom: the original first prize goes at the bottom.
             const entries=items.map(()=>createMultiReel());
             entries.slice().reverse().forEach(entry=>multiRows.append(entry.windowEl));
             entries.forEach((entry,i)=>animateMultiReel(entry,items[i].baseId));
@@ -1774,7 +1833,7 @@
           if(casePage.style.display!=="none") startShowcase();
         } finally {
           spinning=false;$("openCaseButton").disabled=false;
-          caseCountButtons.forEach(b=>b.disabled=false);
+          updateCaseCountAvailability();
         }
       });
 
@@ -1795,9 +1854,6 @@
         }
       }
 
-      // Постійний 7-символьний ID з Firebase UID. Без старих localStorage ID.
-      // Колізії для короткого ID теоретично можливі; для суворої унікальності
-      // потрібна окрема серверна реєстрація з перевіркою зайнятості.
       async function makeEasyBrainId(uid) {
         const hash = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(uid)));
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", digits = "0123456789";
@@ -1839,8 +1895,6 @@
           const userDoc = firestore.doc(db, "users", uid);
           const snapshot = await firestore.getDoc(userDoc);
           if (!snapshot.exists()) {
-            // Перший вхід: 0 E. Правила Firestore мають забороняти клієнту
-            // змінювати баланс після створення документа.
             await firestore.setDoc(userDoc, {
               easyBrainId: await makeEasyBrainId(uid),
               balance: 0
@@ -1870,7 +1924,7 @@
       }
 
 
-      // UPGRADE: the server owns the actual result and inventory mutation.
+      // UPGRADE
       const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel"), upgradePointer = document.querySelector("#upgradeScreen .upgrade-pointer");
       let upgradeSource = null, upgradeTarget = null, upgradeTab = "own";
       let upgradeBusy = false, upgradeAllowed = [], upgradeRequestNumber = 0;
@@ -1974,13 +2028,9 @@
       $("upgradeOwnTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="own";upgradeRender();}});
       $("upgradeWishTab").addEventListener("click",()=>{if(!upgradeBusy){upgradeTab="wish";upgradeRender();}});
       function upgradeAnimate(won,chanceBps) {
-        // The server has already decided the result. Choose a RANDOM stopping
-        // angle inside the corresponding stationary colored sector.
-        // The green arc is centered at 180deg (bottom), red is the rest.
         const halfAngle = chanceBps * 360 / 10000 / 2;
         const greenStart = 180 - halfAngle;
         const greenEnd = 180 + halfAngle;
-        // Keep the pointer away from the dividing lines to avoid ambiguity.
         const margin = Math.min(4, halfAngle / 3);
         const random = () => {
           const bytes = new Uint32Array(1);
@@ -2024,7 +2074,7 @@
         finally {upgradeBusy=false; upgradeDisplay(); upgradeRender();}
       });
 
-      // ADMIN: Telegram initData надсилається серверу для перевірки прав.
+      // ADMIN
       const adminOrb = $("adminOrb"), adminOverlay = $("adminOverlay");
       const adminForm = $("adminForm"), adminMessage = $("adminMessage");
       let adminAuthorized = false;
@@ -2050,8 +2100,22 @@
       $("adminClose").addEventListener("click", closeAdmin);
       adminOverlay.addEventListener("click", e => { if (e.target === adminOverlay) closeAdmin(); });
       document.addEventListener("keydown", e => { if (e.key === "Escape") closeAdmin(); });
-      // Однакова поведінка на телефоні, планшеті та ПК.
-      // На мобільному touchend відкриває панель, якщо кнопку не перетягували.
+
+      // ADMIN TABS
+      const adminTabTopup = $("adminTabTopup"), adminTabPromo = $("adminTabPromo");
+      const adminPaneTopup = $("adminPaneTopup"), adminPanePromo = $("adminPanePromo");
+      function setAdminTab(tab) {
+        const isTopup = tab === "topup";
+        adminTabTopup.classList.toggle("active", isTopup);
+        adminTabPromo.classList.toggle("active", !isTopup);
+        adminTabTopup.setAttribute("aria-selected", String(isTopup));
+        adminTabPromo.setAttribute("aria-selected", String(!isTopup));
+        adminPaneTopup.style.display = isTopup ? "block" : "none";
+        adminPanePromo.style.display = isTopup ? "none" : "block";
+      }
+      adminTabTopup.addEventListener("click", () => setAdminTab("topup"));
+      adminTabPromo.addEventListener("click", () => setAdminTab("promo"));
+
       let drag = null;
       let lastTouchAt = 0;
       let suppressClickUntil = 0;
@@ -2059,6 +2123,7 @@
         if (!adminAuthorized) return;
         adminMessage.textContent = "";
         adminOverlay.classList.add("visible");
+        setAdminTab("topup");
       }
       function beginOrbDrag(x, y) {
         if (!adminAuthorized) return;
@@ -2101,7 +2166,7 @@
       adminOrb.addEventListener("touchend", e => {
         if (!drag) return;
         lastTouchAt = Date.now();
-        e.preventDefault(); // Не запускаємо повторний синтетичний click
+        e.preventDefault();
         finishOrbDrag();
       }, { passive: false });
       adminOrb.addEventListener("touchcancel", () => {
@@ -2127,10 +2192,10 @@
         drag = null;
         adminOrb.classList.remove("dragging");
       });
-      // Доступність для клавіатури та браузерів, які створюють тільки click.
       adminOrb.addEventListener("click", () => {
         if (Date.now() >= suppressClickUntil) openAdminPanel();
       });
+
       adminForm.addEventListener("submit", async e => {
         e.preventDefault();
         if (!adminAuthorized) return;
@@ -2148,6 +2213,36 @@
         } catch (err) { adminMessage.textContent = "Помилка: " + err.message; }
         finally { button.disabled = false; }
       });
+
+      const adminPromoForm = $("adminPromoForm"), adminPromoMessage = $("adminPromoMessage");
+      adminPromoForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!adminAuthorized) return;
+        const name = $("promoName").value.trim();
+        const uses = Number($("promoUses").value);
+        const coins = Number($("promoCoins").value);
+        if (!/^[A-Za-z0-9]{3,20}$/.test(name)) {
+          adminPromoMessage.textContent = "Назва: лише латиниця та цифри, 3–20 символів, без пробілів.";
+          return;
+        }
+        if (!Number.isSafeInteger(uses) || uses < 1 || uses > 1000000) {
+          adminPromoMessage.textContent = "Кількість активацій: ціле число 1–1 000 000.";
+          return;
+        }
+        if (!Number.isSafeInteger(coins) || coins < 1 || coins > 1000000) {
+          adminPromoMessage.textContent = "Кількість E-коїнів: ціле число 1–1 000 000.";
+          return;
+        }
+        const button = $("adminPromoStart"); button.disabled = true;
+        adminPromoMessage.textContent = "Створюємо промокод...";
+        try {
+          const result = await adminRequest("/admin/create-promo", { name, uses, coins });
+          adminPromoMessage.textContent = `Готово! Промокод ${result.code}: ${result.usesLeft} активацій × ${result.coins} E.`;
+          $("promoName").value = ""; $("promoUses").value = ""; $("promoCoins").value = "";
+        } catch (err) { adminPromoMessage.textContent = "Помилка: " + err.message; }
+        finally { button.disabled = false; }
+      });
+
       $("adminSetupWebhook").addEventListener("click", async () => {
         if (!adminAuthorized) return;
         const button = $("adminSetupWebhook"), status = $("adminWebhookStatus");
@@ -2160,10 +2255,42 @@
         finally { button.disabled = false; }
       });
 
+      // PROMO REDEEM (profile)
+      const promoInput = $("promoInput"), promoSubmit = $("promoSubmit"), promoMessage = $("promoMessage");
+      function setPromoMessage(text, kind) {
+        promoMessage.textContent = text;
+        promoMessage.classList.remove("ok","err");
+        if (kind) promoMessage.classList.add(kind);
+      }
+      async function redeemPromo() {
+        const code = promoInput.value.trim();
+        if (!/^[A-Za-z0-9]{3,20}$/.test(code)) {
+          setPromoMessage("Промокод: лише латиниця та цифри, 3–20 символів.", "err");
+          return;
+        }
+        promoSubmit.disabled = true;
+        setPromoMessage("Перевіряємо...", null);
+        try {
+          const result = await gameRequest("/promo/redeem", { code });
+          if (result.success) {
+            setPromoMessage(`Готово! +${result.coins} E`, "ok");
+            promoInput.value = "";
+          } else {
+            setPromoMessage(result.error || "Помилка", "err");
+          }
+        } catch (err) {
+          setPromoMessage(err.message, "err");
+        } finally {
+          promoSubmit.disabled = false;
+        }
+      }
+      promoSubmit.addEventListener("click", redeemPromo);
+      promoInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") { e.preventDefault(); redeemPromo(); }
+      });
 
-      // =========================
+
       // STARS TOP-UP
-      // =========================
       const starsOverlay = $("starsOverlay");
       const starsInput = $("starsInput");
       const starsPreview = $("starsPreview");
@@ -2173,14 +2300,11 @@
       const STARS_MAX = 10000;
 
       function coinsForStars(stars) {
-        // 1 star = 1.25 E-coins. Balance is integer; round to nearest.
         return Math.round(stars * 5 / 4);
       }
-
       function starsValid(stars) {
         return Number.isSafeInteger(stars) && stars >= STARS_MIN && stars <= STARS_MAX;
       }
-
       function updateStarsPreview() {
         const stars = Number(starsInput.value);
         if (!starsValid(stars)) {
@@ -2192,12 +2316,8 @@
         starsPreview.innerHTML = `Ти отримаєш <strong>${coins}</strong> E-коїн${coins === 1 ? "" : coins < 5 ? "и" : "ів"}`;
         starsConfirm.disabled = false;
       }
-
       function openStarsPanel() {
-        if (!tg?.initData) {
-          caseError.textContent = "";
-          return;
-        }
+        if (!tg?.initData) return;
         starsMessage.textContent = "";
         starsOverlay.classList.add("visible");
         updateStarsPreview();
@@ -2243,7 +2363,6 @@
           tg.openInvoice(data.invoiceLink, status => {
             if (status === "paid") {
               starsMessage.textContent = "Оплачено! Коїни зарахуються протягом кількох секунд.";
-              // Закриваємо панель через невелику паузу, щоб гравець побачив статус.
               setTimeout(closeStarsPanel, 1200);
             } else if (status === "cancelled") {
               starsMessage.textContent = "Оплату скасовано.";

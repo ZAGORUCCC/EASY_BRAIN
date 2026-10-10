@@ -245,9 +245,9 @@
             align-items: center;
             justify-content: center;
 
-            gap: 9px;
+            gap: 7px;
 
-            padding: 0 15px;
+            padding: 0 12px 0 15px;
 
             background:
                 rgba(10, 7, 18, 0.82);
@@ -302,6 +302,289 @@
             min-width: 18px;
 
             text-align: center;
+        }
+
+        /* Top-up (+) button: round, purple ring, matches balance style */
+        .balance-topup {
+            width: 32px;
+            height: 32px;
+
+            margin-left: 2px;
+
+            border-radius: 50%;
+
+            border: 1.5px solid
+                rgba(160, 85, 255, 0.9);
+
+            background:
+                radial-gradient(
+                    circle at 30% 30%,
+                    rgba(140, 70, 220, 0.55),
+                    rgba(60, 20, 110, 0.55)
+                );
+
+            color: #f0dcff;
+
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+            padding-bottom: 2px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 0 10px rgba(140, 60, 255, 0.45),
+                inset 0 0 6px rgba(190, 130, 255, 0.35);
+
+            -webkit-tap-highlight-color: transparent;
+
+            flex-shrink: 0;
+        }
+
+        .balance-topup:active {
+            transform: scale(0.92);
+        }
+
+
+        /* =========================
+           STARS TOP-UP OVERLAY
+        ========================= */
+
+        #starsOverlay {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            z-index: 5000;
+
+            background: rgba(2, 0, 6, 0.78);
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 16px;
+
+            backdrop-filter: blur(3px);
+        }
+
+        #starsOverlay.visible {
+            display: flex;
+        }
+
+        .stars-panel {
+            width: min(92vw, 400px);
+
+            max-height: 90dvh;
+            overflow-y: auto;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    #170d24,
+                    #0a0612
+                );
+
+            border: 1px solid #7d3fc0;
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            color: #f4edff;
+
+            box-shadow:
+                0 15px 55px rgba(0, 0, 0, 0.75),
+                0 0 30px rgba(120, 40, 200, 0.35);
+        }
+
+        .stars-head {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .stars-head h2 {
+            margin: 0;
+
+            font-size: 21px;
+
+            color: #e3c6ff;
+        }
+
+        #starsClose {
+            width: 38px;
+            height: 38px;
+
+            border: 0;
+            border-radius: 10px;
+
+            background: #2a1440;
+
+            color: #d9b8ff;
+
+            font-size: 24px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+        }
+
+        .stars-panel label {
+            display: block;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            color: #cdb4eb;
+
+            margin: 6px 0 8px;
+        }
+
+        .stars-input-wrap {
+            position: relative;
+        }
+
+        #starsInput {
+            width: 100%;
+
+            padding: 15px 44px 15px 15px;
+
+            border: 1px solid #7430bd;
+            border-radius: 11px;
+
+            background: #171222;
+            color: white;
+
+            font-size: 20px;
+            font-weight: 800;
+
+            outline: none;
+
+            -moz-appearance: textfield;
+        }
+
+        #starsInput::-webkit-outer-spin-button,
+        #starsInput::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #starsInput:focus {
+            border-color: #c184ff;
+        }
+
+        .stars-input-wrap::after {
+            content: "⭐";
+
+            position: absolute;
+
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 20px;
+
+            pointer-events: none;
+        }
+
+        .stars-rate-hint {
+            margin: 10px 2px 0;
+
+            font-size: 12.5px;
+
+            color: #a895c4;
+        }
+
+        .stars-preview {
+            margin-top: 18px;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    #1e1030,
+                    #140c22
+                );
+
+            border: 1px solid #5c2f8c;
+
+            text-align: center;
+
+            font-size: 17px;
+            font-weight: 800;
+
+            color: #e6d2ff;
+        }
+
+        .stars-preview strong {
+            color: #ffd873;
+        }
+
+        .stars-confirm {
+            width: 100%;
+
+            margin-top: 16px;
+
+            padding: 15px;
+
+            border: 0;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #34a5ec,
+                    #0d6ec9
+                );
+
+            color: white;
+
+            font-size: 18px;
+            font-weight: 900;
+
+            letter-spacing: 0.4px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px 22px rgba(20, 110, 200, 0.5);
+        }
+
+        .stars-confirm:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .stars-confirm:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .stars-message {
+            min-height: 18px;
+
+            margin-top: 12px;
+
+            text-align: center;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: #c7b8d9;
         }
 
 
@@ -742,6 +1025,10 @@
         #adminStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
         #adminStart:disabled { opacity:.55; cursor:wait; }
         #adminMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
+        .admin-webhook-block { margin-top:18px; padding-top:16px; border-top:1px solid #3a2348; }
+        .admin-webhook-button { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
+        .admin-webhook-button:disabled { opacity:.55; cursor:wait; }
+        .admin-webhook-status { margin-top:10px; font-size:13px; color:#c7b8d9; min-height:18px; word-break:break-all; }
 
 
         /* UPGRADE SCREEN — isolated from case roulette */
@@ -808,6 +1095,57 @@
         <span id="balanceAmount">
             0
         </span>
+
+        <button
+            type="button"
+            class="balance-topup"
+            id="balanceTopUp"
+            aria-label="Поповнити баланс">
+
+            +
+
+        </button>
+
+    </div>
+
+
+    <!-- STARS TOP-UP PANEL -->
+
+    <div id="starsOverlay" role="dialog" aria-modal="true" aria-labelledby="starsTitle">
+
+        <div class="stars-panel">
+
+            <div class="stars-head">
+                <h2 id="starsTitle">Поповнення балансу</h2>
+                <button type="button" id="starsClose" aria-label="Закрити">×</button>
+            </div>
+
+            <label for="starsInput">Кількість зірок ⭐</label>
+            <div class="stars-input-wrap">
+                <input
+                    id="starsInput"
+                    type="number"
+                    min="1"
+                    max="10000"
+                    step="1"
+                    value="50"
+                    inputmode="numeric"
+                    autocomplete="off">
+            </div>
+
+            <div class="stars-rate-hint">Курс: 1 ⭐ = 1.25 E-коїнів</div>
+
+            <div class="stars-preview" id="starsPreview">
+                Ти отримаєш <strong>63</strong> E-коїни
+            </div>
+
+            <button type="button" id="starsConfirm" class="stars-confirm">
+                ПІДТВЕРДИТИ
+            </button>
+
+            <div class="stars-message" id="starsMessage" role="status" aria-live="polite"></div>
+
+        </div>
 
     </div>
 
@@ -1138,6 +1476,10 @@
           <div class="admin-bottom"><button id="adminStart" type="submit">Старт</button></div>
           <div id="adminMessage" role="status" aria-live="polite"></div>
         </form>
+        <div class="admin-webhook-block">
+          <button id="adminSetupWebhook" type="button" class="admin-webhook-button">Налаштувати Telegram Webhook</button>
+          <div id="adminWebhookStatus" class="admin-webhook-status"></div>
+        </div>
       </section>
     </div>
 
@@ -1806,6 +2148,119 @@
         } catch (err) { adminMessage.textContent = "Помилка: " + err.message; }
         finally { button.disabled = false; }
       });
+      $("adminSetupWebhook").addEventListener("click", async () => {
+        if (!adminAuthorized) return;
+        const button = $("adminSetupWebhook"), status = $("adminWebhookStatus");
+        button.disabled = true;
+        status.textContent = "Надсилаємо запит до Telegram...";
+        try {
+          const result = await adminRequest("/admin/setup-webhook");
+          status.textContent = "Готово: " + (result.webhookUrl || "webhook зареєстровано");
+        } catch (err) { status.textContent = "Помилка: " + err.message; }
+        finally { button.disabled = false; }
+      });
+
+
+      // =========================
+      // STARS TOP-UP
+      // =========================
+      const starsOverlay = $("starsOverlay");
+      const starsInput = $("starsInput");
+      const starsPreview = $("starsPreview");
+      const starsMessage = $("starsMessage");
+      const starsConfirm = $("starsConfirm");
+      const STARS_MIN = 1;
+      const STARS_MAX = 10000;
+
+      function coinsForStars(stars) {
+        // 1 star = 1.25 E-coins. Balance is integer; round to nearest.
+        return Math.round(stars * 5 / 4);
+      }
+
+      function starsValid(stars) {
+        return Number.isSafeInteger(stars) && stars >= STARS_MIN && stars <= STARS_MAX;
+      }
+
+      function updateStarsPreview() {
+        const stars = Number(starsInput.value);
+        if (!starsValid(stars)) {
+          starsPreview.innerHTML = "Введи число від " + STARS_MIN + " до " + STARS_MAX.toLocaleString("uk-UA");
+          starsConfirm.disabled = true;
+          return;
+        }
+        const coins = coinsForStars(stars);
+        starsPreview.innerHTML = `Ти отримаєш <strong>${coins}</strong> E-коїн${coins === 1 ? "" : coins < 5 ? "и" : "ів"}`;
+        starsConfirm.disabled = false;
+      }
+
+      function openStarsPanel() {
+        if (!tg?.initData) {
+          caseError.textContent = "";
+          return;
+        }
+        starsMessage.textContent = "";
+        starsOverlay.classList.add("visible");
+        updateStarsPreview();
+      }
+      function closeStarsPanel() {
+        starsOverlay.classList.remove("visible");
+        starsMessage.textContent = "";
+      }
+      $("balanceTopUp").addEventListener("click", openStarsPanel);
+      $("starsClose").addEventListener("click", closeStarsPanel);
+      starsOverlay.addEventListener("click", e => { if (e.target === starsOverlay) closeStarsPanel(); });
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && starsOverlay.classList.contains("visible")) closeStarsPanel();
+      });
+      starsInput.addEventListener("input", updateStarsPreview);
+
+      async function starsRequest(path, payload = {}) {
+        if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
+        const res = await fetch(cfg.workerUrl.replace(/\/$/, "") + path, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ initData: tg.initData, ...payload })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || `Помилка сервера (${res.status})`);
+        return data;
+      }
+
+      starsConfirm.addEventListener("click", async () => {
+        if (starsConfirm.disabled) return;
+        const stars = Number(starsInput.value);
+        if (!starsValid(stars)) return;
+        if (typeof tg.openInvoice !== "function") {
+          starsMessage.textContent = "Онови Telegram до останньої версії, щоб оплатити.";
+          return;
+        }
+        starsConfirm.disabled = true;
+        starsMessage.textContent = "Створюємо рахунок...";
+        try {
+          const data = await starsRequest("/stars/create-invoice", { stars });
+          if (!data.invoiceLink) throw new Error("Немає посилання на платіж");
+          starsMessage.textContent = "Відкриваємо оплату...";
+          tg.openInvoice(data.invoiceLink, status => {
+            if (status === "paid") {
+              starsMessage.textContent = "Оплачено! Коїни зарахуються протягом кількох секунд.";
+              // Закриваємо панель через невелику паузу, щоб гравець побачив статус.
+              setTimeout(closeStarsPanel, 1200);
+            } else if (status === "cancelled") {
+              starsMessage.textContent = "Оплату скасовано.";
+            } else if (status === "failed") {
+              starsMessage.textContent = "Помилка оплати.";
+            } else {
+              starsMessage.textContent = "Статус: " + status;
+            }
+          });
+        } catch (err) {
+          starsMessage.textContent = err.message;
+        } finally {
+          starsConfirm.disabled = false;
+          updateStarsPreview();
+        }
+      });
+
 
       connectFirebase();
       checkAdmin();

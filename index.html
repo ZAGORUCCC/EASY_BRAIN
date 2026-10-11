@@ -58,7 +58,7 @@
 
 
         /* =========================
-           BASIC CASE
+           CASE CARDS (Basic + Free)
         ========================= */
 
         .case-card {
@@ -93,6 +93,30 @@
                     0 8px 10px
                     rgba(0, 0, 0, 0.65)
                 );
+        }
+
+        /* Free case sits to the right of the basic case. */
+        .free-case-card {
+            position: absolute;
+
+            left: 200px;
+            top: 20px;
+
+            width: 170px;
+
+            z-index: 1;
+
+            cursor: pointer;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .free-case-card:active {
+            transform: scale(0.97);
+        }
+
+        .free-case-card .case-image {
+            width: 170px;
         }
 
 
@@ -147,7 +171,7 @@
 
 
         /* =========================
-           CASE SCREEN
+           CASE SCREEN (shared for basic and free)
         ========================= */
 
         #caseScreen {
@@ -176,22 +200,12 @@
             -webkit-overflow-scrolling: touch;
         }
 
-
-        /* =========================
-           CASE HEADER
-        ========================= */
-
         .case-header {
             position: relative;
 
             width: 100%;
             height: 90px;
         }
-
-
-        /* =========================
-           BACK BUTTON
-        ========================= */
 
         .case-back-button {
             position: absolute;
@@ -797,6 +811,11 @@
             transform: scale(0.94);
         }
 
+        .open-case-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
 
         /* =========================
            BASE GRID
@@ -925,7 +944,6 @@
                 );
         }
 
-
         .back-button {
             display: inline-block;
 
@@ -972,6 +990,23 @@
                 border-bottom-width: 21px;
             }
 
+            .free-case-card {
+                left: 190px;
+                width: 150px;
+            }
+
+            .free-case-card .case-image {
+                width: 150px;
+            }
+
+            .case-card .case-image {
+                width: 150px;
+            }
+
+            .case-card {
+                width: 150px;
+            }
+
         }
 
 
@@ -982,7 +1017,6 @@
         .case-result { min-height:22px; color:#e9d6ff; font-size:15px; font-weight:700; text-align:center; }
         .case-sell, .inventory-sell { border:0; border-radius:10px; padding:10px 22px; background:#d82041; color:white; font-weight:800; cursor:pointer; }
         .case-sell:disabled, .inventory-sell:disabled { opacity:.5; cursor:wait; }
-        .open-case-button:disabled { opacity:.55; cursor:wait; }
         .inventory-section { margin-top:26px; padding-bottom:90px; }
         .inventory-section h3 { margin:0 0 14px; font-size:21px; }
         .inventory-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
@@ -991,7 +1025,8 @@
         .inventory-card strong { display:block; font-size:14px; margin:6px 0 9px; }
         .inventory-sell { font-size:13px; padding:9px 12px; }
         .inventory-status { color:#bba7d0; font-size:13px; margin:10px 0; }
-        /* EASY BRAIN ADMIN PANEL */
+
+        /* ADMIN PANEL */
         #adminOrb { display:none; position:fixed; left:calc(50% - 23px); top:78px; width:46px; height:46px; z-index:3000; border-radius:50%; border:1px solid #8751d5; background:#09070e; color:#bb74ff; box-shadow:0 0 15px #7c39d870; align-items:center; justify-content:center; cursor:grab; touch-action:none; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; padding:0; }
         #adminOrb svg { width:26px; height:26px; pointer-events:none; filter:drop-shadow(0 0 5px #ad62ff); }
         #adminOrb.dragging { cursor:grabbing; }
@@ -1033,7 +1068,7 @@
         #promoMessage.err { color:#ff6b7d; }
 
 
-        /* UPGRADE SCREEN — isolated from case roulette */
+        /* UPGRADE SCREEN */
         #upgradeScreen{display:none;position:relative;width:100%;height:100dvh;overflow-y:auto;color:#f5efff;background:radial-gradient(circle at 50% 12%,#411663 0%,#170c29 42%,#050505 85%);padding:86px 14px 38px;overscroll-behavior:contain}
         .upgrade-back{position:absolute;top:20px;left:16px;background:#1c102b;border:1px solid #8145bb;border-radius:12px;color:white;padding:11px 16px;font-weight:800;font-size:17px}
         .upgrade-heading{text-align:center;font-size:26px;font-weight:900;letter-spacing:1px;color:#eee0ff;text-shadow:0 0 18px #974cff}
@@ -1078,6 +1113,77 @@
         .multi-prize{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid #7741aa;border-radius:11px;padding:8px 10px;background:#160d25;color:#f3e6ff;font-size:13px;font-weight:700}
         .multi-prize button{border:0;border-radius:8px;padding:8px;background:#cf2449;color:white;font-weight:800;white-space:nowrap}
         .multi-prize button:disabled{opacity:.5}
+
+        /* FREE CASE — bottom buttons */
+        .free-case-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: min(94%, 500px);
+            margin: 10px auto 0;
+        }
+        .subscribe-button {
+            border: 2px solid #4b8fe0;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #4b8fe0, #2660b5);
+            color: white;
+            padding: 14px 22px;
+            font-size: 15px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 6px 18px rgba(38,96,181,0.45);
+        }
+        .subscribe-button:active { transform: scale(0.97); }
+        .subscribe-button.done {
+            background: linear-gradient(180deg, #36e276, #098c3f);
+            border-color: #0aa74a;
+            box-shadow: 0 6px 18px rgba(10,167,74,0.45);
+        }
+        #freeOpenButton {
+            border: 0;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        #freeOpenButton img {
+            display: block;
+            width: 150px;
+            height: auto;
+            object-fit: contain;
+        }
+        #freeOpenButton:disabled { cursor: not-allowed; }
+        #freeOpenButton:disabled img { opacity: 0.45; }
+        #freeOpenButton .free-timer {
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffe6a6;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+        .free-case-status {
+            min-height: 18px;
+            margin: 8px auto 0;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #c7b8d9;
+        }
+        .free-case-status.err { color: #ff6b7d; }
+        .free-case-status.ok { color: #5ee08a; }
+
     </style>
 </head>
 
@@ -1160,18 +1266,13 @@
 
     <div id="menuScreen">
 
-
-        <div
-            class="case-card"
-            id="basicCase">
-
-            <img
-                src="easy-brain-case.png"
-                alt="Базовий кейс"
-                class="case-image">
-
+        <div class="case-card" id="basicCase">
+            <img src="easy-brain-case.png" alt="Базовий кейс" class="case-image">
         </div>
 
+        <div class="free-case-card" id="freeCase">
+            <img src="free-case.png" alt="Безкоштовний кейс" class="case-image">
+        </div>
 
         <div class="bottom-menu">
 
@@ -1184,7 +1285,6 @@
 
             </button>
 
-
             <button
                 type="button"
                 class="menu-button"
@@ -1193,7 +1293,6 @@
                 Upgrade
 
             </button>
-
 
             <button
                 type="button"
@@ -1207,171 +1306,81 @@
         </div>
 
     </div>
-
-
-
     <!-- =========================
-         CASE SCREEN
+         CASE SCREEN (shared for basic and free)
     ========================= -->
 
     <div id="caseScreen">
 
-
         <div class="case-header">
-
-            <button
-                type="button"
-                id="caseBackButton"
-                class="case-back-button">
-
-                ← Назад
-
-            </button>
-
+            <button type="button" id="caseBackButton" class="case-back-button">← Назад</button>
         </div>
-
-
-
-        <!-- =========================
-             CASE OPEN AREA
-        ========================= -->
 
         <div class="open-area">
 
-
             <div id="multiCaseRows" aria-label="Одночасні рулетки"></div>
 
-            <!-- RANDOM BASE WINDOW -->
-
-            <div
-                class="base-showcase"
-                id="baseShowcase">
-
-
-                <!--
-                    НЕРУХОМИЙ ПОКАЖЧИК.
-                    Бази рухаються під ним.
-                -->
-
+            <div class="base-showcase" id="baseShowcase">
                 <div class="base-track" id="baseTrack"></div>
+                <div class="center-pointer"></div>
+            </div>
 
-                <div
-                    class="center-pointer">
+            <!-- Basic case: open button + count picker + actions -->
+            <div id="basicCaseControls" style="width:100%;display:flex;flex-direction:column;align-items:center">
+                <button type="button" id="openCaseButton" class="open-case-button">
+                    <img src="open-button.png" alt="Відкрити">
+                </button>
+                <div class="case-count-picker" role="group" aria-label="Кількість кейсів">
+                  <button type="button" class="case-count-choice active" data-case-count="1" aria-pressed="true">1</button>
+                  <button type="button" class="case-count-choice" data-case-count="2" aria-pressed="false">2</button>
+                  <button type="button" class="case-count-choice" data-case-count="3" aria-pressed="false">3</button>
                 </div>
-
-
+                <div class="case-actions">
+                  <div id="caseCostLabel" class="case-cost">Вартість відкриття: 9 E</div>
+                  <div id="caseError" class="case-error" role="status"></div>
+                  <div id="caseResult" class="case-result" aria-live="polite"></div>
+                  <button type="button" id="caseSell" class="case-sell" style="display:none">Продати</button>
+                  <div id="multiCasePrizes" class="multi-prizes"></div>
+                </div>
             </div>
 
-
-
-            <!-- OPEN BUTTON -->
-
-            <button
-                type="button"
-                id="openCaseButton"
-                class="open-case-button">
-
-                <img
-                    src="open-button.png"
-                    alt="Відкрити">
-
-            </button>
-            <div class="case-count-picker" role="group" aria-label="Кількість кейсів">
-              <button type="button" class="case-count-choice active" data-case-count="1" aria-pressed="true">1</button>
-              <button type="button" class="case-count-choice" data-case-count="2" aria-pressed="false">2</button>
-              <button type="button" class="case-count-choice" data-case-count="3" aria-pressed="false">3</button>
-            </div>
-            <div class="case-actions">
-              <div id="caseCostLabel" class="case-cost">Вартість відкриття: 9 E</div>
-              <div id="caseError" class="case-error" role="status"></div>
-              <div id="caseResult" class="case-result" aria-live="polite"></div>
-              <button type="button" id="caseSell" class="case-sell" style="display:none">Продати</button>
-              <div id="multiCasePrizes" class="multi-prizes"></div>
+            <!-- Free case: subscribe + open + timer + status -->
+            <div id="freeCaseControls" style="width:100%;display:none;flex-direction:column;align-items:center">
+                <div class="free-case-buttons">
+                    <button type="button" id="subscribeButton" class="subscribe-button">Підписатися на канал</button>
+                    <button type="button" id="freeOpenButton" disabled>
+                        <img src="open-button.png" alt="Відкрити">
+                        <div class="free-timer" id="freeTimer" style="display:none">24:00:00</div>
+                    </button>
+                </div>
+                <div id="freeCaseStatus" class="free-case-status" role="status" aria-live="polite"></div>
+                <div class="case-actions" style="margin-top:8px">
+                  <div id="freeCaseResult" class="case-result" aria-live="polite"></div>
+                  <button type="button" id="freeCaseSell" class="case-sell" style="display:none">Продати</button>
+                </div>
             </div>
 
         </div>
 
+        <!-- Basic case base grid -->
+        <div class="bases-grid" id="basicBasesGrid">
+            <div class="base-item"><img src="tralalelo-base.png" alt="Tralalelo Base"></div>
+            <div class="base-item"><img src="rose-base.png" alt="Rose Base"></div>
+            <div class="base-item"><img src="aquatic-base.png" alt="Aquatic Base"></div>
+            <div class="base-item"><img src="honey-bee-base.png" alt="Honey Bee Base"></div>
+            <div class="base-item"><img src="bunny-basket-base.png" alt="Bunny Basket Base"></div>
+            <div class="base-item"><img src="taco-base.png" alt="Taco Base"></div>
+            <div class="base-item"><img src="easter-base.png" alt="Easter Base"></div>
+            <div class="base-item"><img src="lucky-base.png" alt="Lucky Base"></div>
+        </div>
 
-
-        <!-- =========================
-             BASES
-        ========================= -->
-
-        <div class="bases-grid">
-
-
-            <div class="base-item">
-
-                <img
-                    src="tralalelo-base.png"
-                    alt="Tralalelo Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="rose-base.png"
-                    alt="Rose Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="aquatic-base.png"
-                    alt="Aquatic Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="honey-bee-base.png"
-                    alt="Honey Bee Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="bunny-basket-base.png"
-                    alt="Bunny Basket Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="taco-base.png"
-                    alt="Taco Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="easter-base.png"
-                    alt="Easter Base">
-
-            </div>
-
-
-            <div class="base-item">
-
-                <img
-                    src="lucky-base.png"
-                    alt="Lucky Base">
-
-            </div>
-
-
+        <!-- Free case base grid -->
+        <div class="bases-grid" id="freeBasesGrid" style="display:none">
+            <div class="base-item"><img src="garama.png" alt="Garama and Madundung"></div>
+            <div class="base-item"><img src="puggy.png" alt="Money Money Puggy"></div>
+            <div class="base-item"><img src="lagrande-combo.png" alt="La Grande Combinasion"></div>
+            <div class="base-item"><img src="coin-5.png" alt="5 E"></div>
+            <div class="base-item"><img src="coin-2.png" alt="2 E"></div>
         </div>
 
     </div>
@@ -1384,59 +1393,22 @@
 
     <div id="profileScreen">
 
-
         <div class="profile-box">
-
-
-            <div
-                id="avatar"
-                class="avatar">
-
-                ?
-
-            </div>
-
-
+            <div id="avatar" class="avatar">?</div>
             <div class="profile-user-info">
-
-                <div
-                    id="username"
-                    class="username">
-
-                    Telegram User
-
-                </div>
-
-
-                <div
-                    id="easyBrainId"
-                    class="easy-brain-id">
-
-                    ID: -------
-
-                </div>
-
+                <div id="username" class="username">Telegram User</div>
+                <div id="easyBrainId" class="easy-brain-id">ID: -------</div>
             </div>
-
-
         </div>
 
+        <button type="button" id="backButton" class="back-button">← Назад</button>
 
-        <button
-            type="button"
-            id="backButton"
-            class="back-button">
-
-            ← Назад
-
-        </button>
         <section class="inventory-section" aria-label="Інвентар">
           <h3>Мій інвентар</h3>
           <div id="inventoryStatus" class="inventory-status">Завантаження...</div>
           <div id="inventoryGrid" class="inventory-grid"></div>
         </section>
 
-        <!-- PROMO CODE -->
         <section class="promo-section" aria-label="Промокод">
           <h3>Промокод</h3>
           <div class="promo-row">
@@ -1450,9 +1422,7 @@
 
 
 
-
-
-    <!-- UPGRADE: separate screen, case opening remains unchanged -->
+    <!-- UPGRADE -->
     <section id="upgradeScreen" aria-label="Покращення баз">
       <button type="button" id="upgradeBack" class="upgrade-back">← Назад</button>
       <div class="upgrade-heading">UPGRADE</div>
@@ -1474,7 +1444,7 @@
       <div id="upgradeList" class="upgrade-list"></div>
     </section>
 
-    <!-- Адмінпанель: кнопку показуємо лише після перевірки на сервері -->
+    <!-- ADMIN -->
     <button id="adminOrb" type="button" aria-label="Відкрити адмінпанель" title="Адмінпанель">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 2 4.7 13h6.4L10.6 22 19.3 10.7h-6.4L13.4 2Z"/></svg>
     </button>
@@ -1516,10 +1486,11 @@
       </section>
     </div>
 
-    <!-- Налаштування Firebase: заповнити лише публічні значення з Firebase Console. -->
+    <!-- CONFIG -->
     <script>
       window.EASY_BRAIN_CONFIG = {
         workerUrl: "https://easy-brain-api.m-zahorui7.workers.dev",
+        channelUrl: "https://t.me/easy_brain",
         firebase: {
           apiKey: "AIzaSyBcknkOZkPYWAYOOtMDRATY6uwosIbIBjc",
           authDomain: "easy-brain-6d4f9.firebaseapp.com",
@@ -1540,20 +1511,31 @@
 
       const INVENTORY_LIMIT = 10;
 
-      const images = [
+      // Basic case visuals
+      const BASIC_IMAGES = [
         "tralalelo-base-clean.png", "rose-base-clean.png",
         "aquatic-base-clean.png", "honey-bee-base-clean.png",
         "bunny-basket-base-clean.png", "taco-base-clean.png",
         "easter-base-clean.png", "lucky-base-clean.png"
       ];
-      images.forEach(src => { const img = new Image(); img.src = src; });
+      // Free case visuals (centered-text versions for the reel)
+      const FREE_IMAGES = [
+        "garama-center.png", "puggy-center.png",
+        "lagrande-center.png", "coin-5.png", "coin-2.png"
+      ];
+
+      let currentCaseMode = "basic"; // "basic" | "free"
       let previous = -1;
       function nextImage() {
-        let index = Math.floor(Math.random() * images.length);
-        if (index === previous) index = (index + 1) % images.length;
+        const pool = currentCaseMode === "free" ? FREE_IMAGES : BASIC_IMAGES;
+        let index = Math.floor(Math.random() * pool.length);
+        if (index === previous) index = (index + 1) % pool.length;
         previous = index;
-        return images[index];
+        return pool[index];
       }
+
+      // Preload both
+      [...BASIC_IMAGES, ...FREE_IMAGES].forEach(src => { const img = new Image(); img.src = src; });
 
       const ITEM_WIDTH = 160;
       const SPEED = 95;
@@ -1597,20 +1579,45 @@
         track.replaceChildren();
       }
 
+      // ===== Basic case =====
       $("basicCase").addEventListener("click", () => {
+        currentCaseMode = "basic";
         menu.style.display = "none";
         profile.style.display = "none";
         casePage.style.display = "block";
         casePage.scrollTop = 0;
+        $("basicCaseControls").style.display = "flex";
+        $("freeCaseControls").style.display = "none";
+        $("basicBasesGrid").style.display = "grid";
+        $("freeBasesGrid").style.display = "none";
         if (!spinning) { resetCasePresentation(); startShowcase(); updateCaseCountAvailability(); }
       });
+
+      // ===== Free case =====
+      $("freeCase").addEventListener("click", () => {
+        currentCaseMode = "free";
+        menu.style.display = "none";
+        profile.style.display = "none";
+        casePage.style.display = "block";
+        casePage.scrollTop = 0;
+        $("basicCaseControls").style.display = "none";
+        $("freeCaseControls").style.display = "flex";
+        $("basicBasesGrid").style.display = "none";
+        $("freeBasesGrid").style.display = "grid";
+        resetFreeCasePresentation();
+        startShowcase();
+        refreshFreeCaseStatus();
+      });
+
       $("caseBackButton").addEventListener("click", () => {
         if (spinning) return;
         resetCasePresentation();
+        resetFreeCasePresentation();
         stopShowcase();
         casePage.style.display = "none";
         menu.style.display = "block";
       });
+
       $("profileButton").addEventListener("click", () => {
         stopShowcase();
         menu.style.display = "none";
@@ -1621,21 +1628,29 @@
         profile.style.display = "none";
         menu.style.display = "block";
       });
+
+      // ===== BASES =====
       const BASES = {
-        tralalelo: {name:"Tralalelo Base", price:30, image:"tralalelo-base-clean.png", weight:5},
-        rose: {name:"Rose Base", price:26, image:"rose-base-clean.png", weight:10},
-        aquatic: {name:"Aquatic Base", price:19, image:"aquatic-base-clean.png", weight:20},
-        honey_bee: {name:"Honey Bee Base", price:16, image:"honey-bee-base-clean.png", weight:30},
-        bunny_basket: {name:"Bunny Basket Base", price:12, image:"bunny-basket-base-clean.png", weight:50},
-        taco: {name:"Taco Base", price:9, image:"taco-base-clean.png", weight:55},
-        easter: {name:"Easter Base", price:7, image:"easter-base-clean.png", weight:65},
-        lucky: {name:"Lucky Base", price:5, image:"lucky-base-clean.png", weight:75}
+        tralalelo: {name:"Tralalelo Base", price:30, image:"tralalelo-base-clean.png"},
+        rose: {name:"Rose Base", price:26, image:"rose-base-clean.png"},
+        aquatic: {name:"Aquatic Base", price:19, image:"aquatic-base-clean.png"},
+        honey_bee: {name:"Honey Bee Base", price:16, image:"honey-bee-base-clean.png"},
+        bunny_basket: {name:"Bunny Basket Base", price:12, image:"bunny-basket-base-clean.png"},
+        taco: {name:"Taco Base", price:9, image:"taco-base-clean.png"},
+        easter: {name:"Easter Base", price:7, image:"easter-base-clean.png"},
+        lucky: {name:"Lucky Base", price:5, image:"lucky-base-clean.png"},
+        // Free case characters
+        garama: {name:"Garama and Madundung", price:41, image:"garama.png"},
+        puggy: {name:"Money Money Puggy", price:14, image:"puggy.png"},
+        lagrande: {name:"La Grande", price:9, image:"lagrande-combo.png"}
       };
       const baseKeys = Object.keys(BASES);
+
       let currentBalance = 0, spinning = false, wonItem = null, inventoryItems = [];
       let inventoryReady = false;
       const caseError = $("caseError"), caseResult = $("caseResult"), caseSell = $("caseSell");
       const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
       function renderInventory() {
         const grid = $("inventoryGrid"), status = $("inventoryStatus");
         grid.replaceChildren();
@@ -1655,6 +1670,7 @@
         }
         updateCaseCountAvailability();
       }
+
       async function gameRequest(path, payload={}) {
         if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
         const res = await fetch(cfg.workerUrl.replace(/\/$/, "") + path, {
@@ -1668,6 +1684,7 @@
         }
         return data;
       }
+
       async function sellItem(itemId, button) {
         if (!itemId || button.disabled) return;
         button.disabled = true;
@@ -1679,6 +1696,8 @@
         finally { button.disabled = false; }
       }
       caseSell.addEventListener("click", () => { if (wonItem) sellItem(wonItem.id, caseSell); });
+
+      // ===== Basic case roulette =====
       async function animateWin(baseId) {
         stopShowcase();
         const winner = BASES[baseId];
@@ -1697,6 +1716,7 @@
         await sleep(6300);
         caseResult.textContent = `Випало: ${winner.name}!`;
       }
+
       let selectedCaseCount = 1;
       const multiRows = $("multiCaseRows"), multiPrizes = $("multiCasePrizes");
       const caseCountButtons = [...document.querySelectorAll("[data-case-count]")];
@@ -1704,7 +1724,6 @@
       function availableSlots() {
         return Math.max(0, INVENTORY_LIMIT - inventoryItems.length);
       }
-      // Block 2 and 3 when there are not enough free inventory slots.
       function updateCaseCountAvailability() {
         const slots = availableSlots();
         for (const button of caseCountButtons) {
@@ -1712,11 +1731,7 @@
           const allowed = count <= slots;
           button.disabled = spinning || !allowed;
         }
-        // If the current selection no longer fits, downgrade to the biggest allowed (>=1).
-        const allowedForCurrent = selectedCaseCount <= slots;
-        if (!allowedForCurrent && slots >= 1) {
-          setCaseCount(1);
-        }
+        if (selectedCaseCount > slots && slots >= 1) setCaseCount(1);
       }
       function setCaseCount(count) {
         if (spinning) return;
@@ -1785,13 +1800,12 @@
           row.append(name,button);multiPrizes.append(row);
         }
       }
+
       $("openCaseButton").addEventListener("click", async () => {
         if (spinning) return;
         const count=selectedCaseCount;
         caseError.textContent="";caseResult.textContent="";
 
-        // Inventory limit is checked BEFORE the balance check, so a 10/10 user
-        // sees the limit message even if they could not afford the case anyway.
         if (inventoryItems.length >= INVENTORY_LIMIT) {
           caseError.textContent = `Ліміт інвентарю ${INVENTORY_LIMIT}/${INVENTORY_LIMIT}. Продай щось, щоб звільнити місце.`;
           return;
@@ -1800,7 +1814,6 @@
           caseError.textContent = `Недостатньо місця в інвентарі: вільно ${availableSlots()}, потрібно ${count}.`;
           return;
         }
-
         if (currentBalance < count*9) {caseError.textContent="Недостатньо балансу";return;}
         spinning=true;$("openCaseButton").disabled=true;caseSell.style.display="none";wonItem=null;
         caseCountButtons.forEach(b=>b.disabled=true);
@@ -1837,6 +1850,157 @@
         }
       });
 
+      // ===== FREE CASE =====
+      const subscribeButton = $("subscribeButton");
+      const freeOpenButton = $("freeOpenButton");
+      const freeTimer = $("freeTimer");
+      const freeCaseStatus = $("freeCaseStatus");
+      const freeCaseResult = $("freeCaseResult");
+      const freeCaseSell = $("freeCaseSell");
+      let freeCaseSubscribed = false;
+      let freeCaseNextAvailableAt = null;
+      let freeCaseTimerId = null;
+      let freeWonItem = null;
+
+      function setFreeStatus(text, kind) {
+        freeCaseStatus.textContent = text || "";
+        freeCaseStatus.classList.remove("ok","err");
+        if (kind) freeCaseStatus.classList.add(kind);
+      }
+
+      function resetFreeCasePresentation() {
+        freeCaseResult.textContent = "";
+        freeCaseSell.style.display = "none";
+        freeWonItem = null;
+        setFreeStatus("");
+      }
+
+      function updateFreeTimerUI() {
+        if (!freeCaseNextAvailableAt) {
+          freeTimer.style.display = "none";
+          return;
+        }
+        const remainingMs = Date.parse(freeCaseNextAvailableAt) - Date.now();
+        if (!Number.isFinite(remainingMs) || remainingMs <= 0) {
+          freeTimer.style.display = "none";
+          freeCaseNextAvailableAt = null;
+          refreshFreeCaseStatus();
+          return;
+        }
+        const totalSec = Math.floor(remainingMs / 1000);
+        const h = String(Math.floor(totalSec / 3600)).padStart(2,"0");
+        const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2,"0");
+        const s = String(totalSec % 60).padStart(2,"0");
+        freeTimer.textContent = `${h}:${m}:${s}`;
+        freeTimer.style.display = "block";
+      }
+
+      function refreshFreeTimer() {
+        if (freeCaseTimerId) clearInterval(freeCaseTimerId);
+        freeCaseTimerId = setInterval(updateFreeTimerUI, 1000);
+        updateFreeTimerUI();
+      }
+
+      function updateFreeCaseButton() {
+        const blocked = !freeCaseSubscribed || !!freeCaseNextAvailableAt;
+        freeOpenButton.disabled = blocked;
+        subscribeButton.classList.toggle("done", freeCaseSubscribed);
+        subscribeButton.textContent = freeCaseSubscribed ? "✓ Підписано" : "Підписатися на канал";
+      }
+
+      async function refreshFreeCaseStatus() {
+        try {
+          const data = await gameRequest("/free-case/status", {});
+          freeCaseSubscribed = !!data.subscribed;
+          freeCaseNextAvailableAt = data.nextAvailableAt || null;
+          updateFreeCaseButton();
+          updateFreeTimerUI();
+          if (!freeCaseSubscribed) {
+            setFreeStatus("Підпишись на канал @easy_brain, щоб відкрити безкоштовний кейс.", "err");
+          } else if (freeCaseNextAvailableAt) {
+            setFreeStatus("Наступний безкоштовний кейс буде доступний після таймера.", null);
+          } else {
+            setFreeStatus("Готово! Можеш відкривати безкоштовний кейс.", "ok");
+          }
+        } catch (err) {
+          setFreeStatus(err.message, "err");
+        }
+      }
+
+      subscribeButton.addEventListener("click", () => {
+        // Opens channel; refresh happens when user comes back.
+        try { tg.openTelegramLink(cfg.channelUrl); }
+        catch (_) { window.open(cfg.channelUrl, "_blank"); }
+      });
+
+      freeOpenButton.addEventListener("click", async () => {
+        if (freeOpenButton.disabled || spinning) return;
+        spinning = true;
+        freeOpenButton.disabled = true;
+        resetFreeCasePresentation();
+        try {
+          const result = await gameRequest("/free-case/open", {});
+          if (result.kind === "item") {
+            const baseId = result.baseId;
+            // Reel with free-case visuals only
+            stopShowcase();
+            const winner = BASES[baseId];
+            const freePool = ["garama","puggy","lagrande"].map(k => BASES[k].image);
+            const winIndex = 38, total = 45;
+            for (let i=0;i<total;i++) {
+              const img = document.createElement("img");
+              const src = i===winIndex ? winner.image : freePool[Math.floor(Math.random()*freePool.length)];
+              img.src = src; img.alt = "Base"; img.draggable = false; track.append(img);
+            }
+            track.style.transition="none";
+            track.style.transform="translate3d(0,0,0)";
+            void track.offsetWidth;
+            const finalX = showcase.clientWidth/2 - (winIndex + .5)*ITEM_WIDTH;
+            track.style.transition="transform 6200ms cubic-bezier(.09,.67,.11,1)";
+            track.style.transform=`translate3d(${finalX}px,0,0)`;
+            await sleep(6300);
+            freeCaseResult.textContent = `Випало: ${winner.name}!`;
+            freeWonItem = { id: result.itemId, baseId };
+            freeCaseSell.textContent = `Продати — ${winner.price} E`;
+            freeCaseSell.style.display = "inline-block";
+          } else {
+            // Coin: instant credit
+            stopShowcase();
+            const img = document.createElement("img");
+            img.src = result.coins === 5 ? "coin-5.png" : "coin-2.png";
+            img.alt = `${result.coins} E`;
+            track.append(img);
+            track.style.transition = "none";
+            track.style.transform = "translate3d(0,0,0)";
+            await sleep(800);
+            freeCaseResult.textContent = `Випало: +${result.coins} E!`;
+            startShowcase();
+          }
+          // Refresh cooldown state after opening
+          await refreshFreeCaseStatus();
+        } catch (err) {
+          freeCaseResult.textContent = "";
+          setFreeStatus(err.message, "err");
+          startShowcase();
+        } finally {
+          spinning = false;
+          updateFreeCaseButton();
+        }
+      });
+
+      freeCaseSell.addEventListener("click", async () => {
+        if (!freeWonItem || freeCaseSell.disabled) return;
+        freeCaseSell.disabled = true;
+        try {
+          const res = await gameRequest("/case/sell", { itemId: freeWonItem.id });
+          freeCaseResult.textContent = `Продано! +${res.price} E`;
+          freeWonItem = null;
+          freeCaseSell.style.display = "none";
+        } catch (err) { setFreeStatus(err.message, "err"); }
+        finally { freeCaseSell.disabled = false; }
+      });
+
+      // ===== Telegram user =====
       const tg = window.Telegram?.WebApp;
       tg?.ready();
       tg?.expand();
@@ -1869,11 +2033,6 @@
           idLabel.textContent = "ID: відкрийте через Telegram";
           return;
         }
-        if (cfg.workerUrl.includes("PASTE_") ||
-            Object.values(cfg.firebase).some(value => !value || value.includes("PASTE_"))) {
-          idLabel.textContent = "ID: налаштуйте Firebase";
-          return;
-        }
         try {
           const [{ initializeApp }, auth, firestore] = await Promise.all([
             import("https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js"),
@@ -1904,8 +2063,8 @@
           firestore.onSnapshot(itemsCollection, snap => {
             inventoryItems = snap.docs.map(d => ({id:d.id, ...d.data()}));
             inventoryReady = true; renderInventory();
-             if (upgradeSource && !inventoryItems.some(i=>i.id===upgradeSource) && !upgradeBusy) {upgradeSource=null;upgradeTarget=null;upgradeAllowed=[];++upgradeRequestNumber;}
-             if (!upgradeBusy) {upgradeDisplay();upgradeRender();}
+            if (upgradeSource && !inventoryItems.some(i=>i.id===upgradeSource) && !upgradeBusy) {upgradeSource=null;upgradeTarget=null;upgradeAllowed=[];++upgradeRequestNumber;}
+            if (!upgradeBusy) {upgradeDisplay();upgradeRender();}
           }, err => { console.error("Inventory:",err); $("inventoryStatus").textContent="Помилка завантаження інвентарю"; });
           firestore.onSnapshot(userDoc, snap => {
             if (!snap.exists()) return;
@@ -1917,6 +2076,9 @@
             console.error("Firestore:", error);
             idLabel.textContent = "ID: помилка доступу";
           });
+          // First status check for free case
+          refreshFreeCaseStatus();
+          refreshFreeTimer();
         } catch (error) {
           console.error("Easy Brain login:", error);
           idLabel.textContent = "ID: помилка підключення";
@@ -1924,7 +2086,7 @@
       }
 
 
-      // UPGRADE
+      // ===== UPGRADE =====
       const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel"), upgradePointer = document.querySelector("#upgradeScreen .upgrade-pointer");
       let upgradeSource = null, upgradeTarget = null, upgradeTab = "own";
       let upgradeBusy = false, upgradeAllowed = [], upgradeRequestNumber = 0;
@@ -1990,6 +2152,7 @@
         }
         for (const entry of entries) {
           const base=BASES[entry.baseId];
+          if (!base) continue;
           const button=document.createElement("button"); button.type="button";
           button.className="upgrade-item";
           if (upgradeTab==="own" ? upgradeSource===entry.itemId : upgradeTarget===entry.baseId) button.classList.add("selected");
@@ -2074,7 +2237,7 @@
         finally {upgradeBusy=false; upgradeDisplay(); upgradeRender();}
       });
 
-      // ADMIN
+      // ===== ADMIN =====
       const adminOrb = $("adminOrb"), adminOverlay = $("adminOverlay");
       const adminForm = $("adminForm"), adminMessage = $("adminMessage");
       let adminAuthorized = false;
@@ -2101,7 +2264,6 @@
       adminOverlay.addEventListener("click", e => { if (e.target === adminOverlay) closeAdmin(); });
       document.addEventListener("keydown", e => { if (e.key === "Escape") closeAdmin(); });
 
-      // ADMIN TABS
       const adminTabTopup = $("adminTabTopup"), adminTabPromo = $("adminTabPromo");
       const adminPaneTopup = $("adminPaneTopup"), adminPanePromo = $("adminPanePromo");
       function setAdminTab(tab) {
@@ -2127,10 +2289,7 @@
       }
       function beginOrbDrag(x, y) {
         if (!adminAuthorized) return;
-        drag = {
-          x, y, left: adminOrb.offsetLeft, top: adminOrb.offsetTop,
-          moved: false
-        };
+        drag = { x, y, left: adminOrb.offsetLeft, top: adminOrb.offsetTop, moved: false };
       }
       function moveOrbDrag(x, y) {
         if (!drag) return;
@@ -2255,7 +2414,7 @@
         finally { button.disabled = false; }
       });
 
-      // PROMO REDEEM (profile)
+      // PROMO REDEEM
       const promoInput = $("promoInput"), promoSubmit = $("promoSubmit"), promoMessage = $("promoMessage");
       function setPromoMessage(text, kind) {
         promoMessage.textContent = text;
@@ -2289,8 +2448,7 @@
         if (e.key === "Enter") { e.preventDefault(); redeemPromo(); }
       });
 
-
-      // STARS TOP-UP
+      // ===== STARS TOP-UP =====
       const starsOverlay = $("starsOverlay");
       const starsInput = $("starsInput");
       const starsPreview = $("starsPreview");
@@ -2299,9 +2457,7 @@
       const STARS_MIN = 1;
       const STARS_MAX = 10000;
 
-      function coinsForStars(stars) {
-        return Math.round(stars * 5 / 4);
-      }
+      function coinsForStars(stars) { return Math.round(stars * 5 / 4); }
       function starsValid(stars) {
         return Number.isSafeInteger(stars) && stars >= STARS_MIN && stars <= STARS_MAX;
       }
@@ -2336,7 +2492,7 @@
 
       async function starsRequest(path, payload = {}) {
         if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
-        const res = await fetch(cfg.workerUrl.replace(/\/$/, "") + path, {
+        const res = await fetch(cfg.workerUrl.replace(/\/$/, "" ) + path, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ initData: tg.initData, ...payload })

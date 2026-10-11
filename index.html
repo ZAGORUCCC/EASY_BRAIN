@@ -2,1015 +2,96 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Brain</title>
-
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-
-            width: 100%;
-            height: 100%;
-
-            font-family: Arial, sans-serif;
-
-            background: #050505;
-        }
-
-        body {
-            overflow: hidden;
-        }
-
-
-        /* =========================
-           MAIN MENU
-        ========================= */
-
-        #menuScreen {
-            display: block;
-
-            position: relative;
-
-            width: 100%;
-            height: 100vh;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-        }
-
-
-        /* =========================
-           CASE CARDS (Basic + Free)
-        ========================= */
-
-        .case-card {
-            position: absolute;
-
-            left: 12px;
-            top: 20px;
-
-            width: 170px;
-
-            z-index: 1;
-
-            cursor: pointer;
-
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .case-card:active {
-            transform: scale(0.97);
-        }
-
-        .case-image {
-            display: block;
-
-            width: 170px;
-            height: auto;
-
-            object-fit: contain;
-
-            filter:
-                drop-shadow(
-                    0 8px 10px
-                    rgba(0, 0, 0, 0.65)
-                );
-        }
-
-        /* Free case sits to the right of the basic case. */
-        .free-case-card {
-            position: absolute;
-
-            left: 200px;
-            top: 20px;
-
-            width: 170px;
-
-            z-index: 1;
-
-            cursor: pointer;
-
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .free-case-card:active {
-            transform: scale(0.97);
-        }
-
-        .free-case-card .case-image {
-            width: 170px;
-        }
-
-
-        /* =========================
-           BOTTOM MENU
-        ========================= */
-
-        .bottom-menu {
-            position: absolute;
-
-            left: 50%;
-            bottom: 35px;
-
-            transform: translateX(-50%);
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 20px;
-
-            width: max-content;
-
-            z-index: 100;
-        }
-
-        .menu-button {
-            border: none;
-
-            background: transparent;
-
-            color: white;
-
-            font-size: 24px;
-            font-weight: 600;
-
-            padding: 8px 10px;
-
-            cursor: pointer;
-
-            -webkit-tap-highlight-color:
-                rgba(0, 122, 255, 0.35);
-        }
-
-        .menu-button:active {
-            background:
-                rgba(0, 122, 255, 0.25);
-
-            border-radius: 10px;
-        }
-
-
-        /* =========================
-           CASE SCREEN (shared for basic and free)
-        ========================= */
-
-        #caseScreen {
-            display: none;
-
-            position: relative;
-
-            width: 100%;
-            height: 100vh;
-
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 50% 15%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 78%
-                );
-
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            overscroll-behavior: contain;
-
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .case-header {
-            position: relative;
-
-            width: 100%;
-            height: 90px;
-        }
-
-        .case-back-button {
-            position: absolute;
-
-            left: 16px;
-            top: 18px;
-
-            z-index: 20;
-
-            border: none;
-
-            background:
-                rgba(0, 0, 0, 0.32);
-
-            color: white;
-
-            font-size: 19px;
-            font-weight: 600;
-
-            padding: 10px 14px;
-
-            border-radius: 12px;
-
-            cursor: pointer;
-
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .case-back-button:active {
-            transform: scale(0.96);
-        }
-
-
-        /* =========================
-           BALANCE
-        ========================= */
-
-        .balance-box {
-            position: fixed;
-
-            right: 16px;
-            top: 18px;
-
-            z-index: 1000;
-
-            min-width: 105px;
-            height: 48px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 7px;
-
-            padding: 0 12px 0 15px;
-
-            background:
-                rgba(10, 7, 18, 0.82);
-
-            border:
-                1px solid
-                rgba(150, 70, 255, 0.65);
-
-            border-radius: 14px;
-
-            box-shadow:
-                0 0 14px
-                rgba(120, 30, 255, 0.18);
-
-            font-size: 21px;
-            font-weight: 700;
-
-            color: white;
-
-            backdrop-filter: blur(5px);
-        }
-
-        .balance-coin {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 30px;
-            height: 30px;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffe96a,
-                    #ffb300
-                );
-
-            color: #17100a;
-
-            font-size: 20px;
-            font-weight: 900;
-
-            box-shadow:
-                inset 0 0 0 2px
-                rgba(255, 255, 255, 0.25);
-        }
-
-        #balanceAmount {
-            min-width: 18px;
-
-            text-align: center;
-        }
-
-        .balance-topup {
-            width: 32px;
-            height: 32px;
-
-            margin-left: 2px;
-
-            border-radius: 50%;
-
-            border: 1.5px solid
-                rgba(160, 85, 255, 0.9);
-
-            background:
-                radial-gradient(
-                    circle at 30% 30%,
-                    rgba(140, 70, 220, 0.55),
-                    rgba(60, 20, 110, 0.55)
-                );
-
-            color: #f0dcff;
-
-            font-size: 22px;
-            font-weight: 900;
-            line-height: 1;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0;
-            padding-bottom: 2px;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 0 10px rgba(140, 60, 255, 0.45),
-                inset 0 0 6px rgba(190, 130, 255, 0.35);
-
-            -webkit-tap-highlight-color: transparent;
-
-            flex-shrink: 0;
-        }
-
-        .balance-topup:active {
-            transform: scale(0.92);
-        }
-
-
-        /* =========================
-           STARS TOP-UP OVERLAY
-        ========================= */
-
-        #starsOverlay {
-            display: none;
-
-            position: fixed;
-            inset: 0;
-
-            z-index: 5000;
-
-            background: rgba(2, 0, 6, 0.78);
-
-            align-items: center;
-            justify-content: center;
-
-            padding: 16px;
-
-            backdrop-filter: blur(3px);
-        }
-
-        #starsOverlay.visible {
-            display: flex;
-        }
-
-        .stars-panel {
-            width: min(92vw, 400px);
-
-            max-height: 90dvh;
-            overflow-y: auto;
-
-            background:
-                linear-gradient(
-                    160deg,
-                    #170d24,
-                    #0a0612
-                );
-
-            border: 1px solid #7d3fc0;
-
-            border-radius: 20px;
-
-            padding: 22px;
-
-            color: #f4edff;
-
-            box-shadow:
-                0 15px 55px rgba(0, 0, 0, 0.75),
-                0 0 30px rgba(120, 40, 200, 0.35);
-        }
-
-        .stars-head {
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-
-            margin-bottom: 18px;
-        }
-
-        .stars-head h2 {
-            margin: 0;
-
-            font-size: 21px;
-
-            color: #e3c6ff;
-        }
-
-        #starsClose {
-            width: 38px;
-            height: 38px;
-
-            border: 0;
-            border-radius: 10px;
-
-            background: #2a1440;
-
-            color: #d9b8ff;
-
-            font-size: 24px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            flex-shrink: 0;
-        }
-
-        .stars-panel label {
-            display: block;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            color: #cdb4eb;
-
-            margin: 6px 0 8px;
-        }
-
-        .stars-input-wrap {
-            position: relative;
-        }
-
-        #starsInput {
-            width: 100%;
-
-            padding: 15px 44px 15px 15px;
-
-            border: 1px solid #7430bd;
-            border-radius: 11px;
-
-            background: #171222;
-            color: white;
-
-            font-size: 20px;
-            font-weight: 800;
-
-            outline: none;
-
-            -moz-appearance: textfield;
-        }
-
-        #starsInput::-webkit-outer-spin-button,
-        #starsInput::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        #starsInput:focus {
-            border-color: #c184ff;
-        }
-
-        .stars-input-wrap::after {
-            content: "⭐";
-
-            position: absolute;
-
-            right: 14px;
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            font-size: 20px;
-
-            pointer-events: none;
-        }
-
-        .stars-rate-hint {
-            margin: 10px 2px 0;
-
-            font-size: 12.5px;
-
-            color: #a895c4;
-        }
-
-        .stars-preview {
-            margin-top: 18px;
-
-            padding: 14px;
-
-            border-radius: 12px;
-
-            background:
-                linear-gradient(
-                    160deg,
-                    #1e1030,
-                    #140c22
-                );
-
-            border: 1px solid #5c2f8c;
-
-            text-align: center;
-
-            font-size: 17px;
-            font-weight: 800;
-
-            color: #e6d2ff;
-        }
-
-        .stars-preview strong {
-            color: #ffd873;
-        }
-
-        .stars-confirm {
-            width: 100%;
-
-            margin-top: 16px;
-
-            padding: 15px;
-
-            border: 0;
-            border-radius: 14px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #34a5ec,
-                    #0d6ec9
-                );
-
-            color: white;
-
-            font-size: 18px;
-            font-weight: 900;
-
-            letter-spacing: 0.4px;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 6px 22px rgba(20, 110, 200, 0.5);
-        }
-
-        .stars-confirm:disabled {
-            opacity: 0.5;
-            cursor: wait;
-        }
-
-        .stars-confirm:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        .stars-message {
-            min-height: 18px;
-
-            margin-top: 12px;
-
-            text-align: center;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color: #c7b8d9;
-        }
-
-
-        /* =========================
-           OPEN AREA
-        ========================= */
-
-        .open-area {
-            width: 100%;
-
-            height: 62vh;
-            min-height: 430px;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: flex-end;
-
-            padding: 0 0 22px 0;
-        }
-
-
-        /* =========================
-           RANDOM BASE WINDOW
-        ========================= */
-
-        .base-showcase {
-            position: relative;
-
-            width: calc(100% - 24px);
-            max-width: 620px;
-
-            height: 235px;
-
-            margin-bottom: 20px;
-
-            overflow: hidden;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(42, 19, 67, 0.88),
-                    rgba(12, 8, 18, 0.94)
-                );
-
-            border:
-                1px solid
-                rgba(161, 82, 255, 0.35);
-
-            box-shadow:
-                inset 0 0 35px
-                rgba(107, 34, 174, 0.15),
-                0 8px 28px
-                rgba(0, 0, 0, 0.35);
-        }
-
-
-        /* =========================
-           EDGE DARKENING
-        ========================= */
-
-        .base-showcase::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            z-index: 40;
-            pointer-events: none;
-            background: linear-gradient(90deg,
-                rgba(8, 5, 14, 1) 0%,
-                rgba(8, 5, 14, .98) 12%,
-                rgba(8, 5, 14, .76) 22%,
-                rgba(8, 5, 14, 0) 38%,
-                rgba(8, 5, 14, 0) 62%,
-                rgba(8, 5, 14, .76) 78%,
-                rgba(8, 5, 14, .98) 88%,
-                rgba(8, 5, 14, 1) 100%);
-        }
-
-        .base-track {
-            position: absolute;
-            inset: 0 auto 0 0;
-            display: flex;
-            align-items: center;
-            gap: 0;
-            width: max-content;
-            height: 100%;
-            will-change: transform;
-        }
-        .base-track img {
-            display: block;
-            flex: 0 0 160px;
-            width: 160px;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,.4));
-        }
-
-        .center-pointer {
-            position: absolute;
-
-            left: 50%;
-            top: 0;
-
-            width: 4px;
-            height: 100%;
-
-            transform: translateX(-50%);
-
-            z-index: 100;
-
-            pointer-events: none;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #ffffff 0%,
-                    #bca4ff 22%,
-                    #8a5cff 50%,
-                    #65c7ff 78%,
-                    #ffffff 100%
-                );
-
-            box-shadow:
-                0 0 5px rgba(255,255,255,.95),
-                0 0 12px rgba(130,88,255,.95),
-                0 0 22px rgba(70,160,255,.60);
-        }
-
-        .center-pointer::before {
-            content: "";
-
-            position: absolute;
-
-            left: 50%;
-            top: 0;
-
-            transform: translateX(-50%);
-
-            width: 0;
-            height: 0;
-
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-
-            border-top: 24px solid #ffffff;
-
-            filter:
-                drop-shadow(
-                    0 4px 5px
-                    rgba(126, 92, 255, 0.85)
-                );
-        }
-
-        .center-pointer::after {
-            content: "";
-
-            position: absolute;
-
-            left: 50%;
-            bottom: 0;
-
-            transform: translateX(-50%);
-
-            width: 0;
-            height: 0;
-
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-
-            border-bottom: 24px solid #ffffff;
-
-            filter:
-                drop-shadow(
-                    0 -4px 5px
-                    rgba(85, 164, 255, 0.85)
-                );
-        }
-
-
-        /* =========================
-           OPEN BUTTON
-        ========================= */
-
-        .open-case-button {
-            border: none;
-            outline: none;
-
-            background: transparent;
-
-            padding: 0;
-            margin: 0;
-
-            cursor: pointer;
-
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .open-case-button img {
-            display: block;
-
-            width: 150px;
-            height: auto;
-
-            object-fit: contain;
-        }
-
-        .open-case-button:active {
-            transform: scale(0.94);
-        }
-
-        .open-case-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-
-        /* =========================
-           BASE GRID
-        ========================= */
-
-        .bases-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 12px;
-
-            width: 100%;
-
-            padding:
-                0
-                12px
-                30px;
-        }
-
-        .base-item {
-            width: 100%;
-
-            overflow: hidden;
-
-            border-radius: 12px;
-        }
-
-        .base-item img {
-            display: block;
-
-            width: 100%;
-            height: auto;
-
-            border-radius: 12px;
-        }
-
-
-        /* =========================
-           PROFILE
-        ========================= */
-
-        #profileScreen {
-            overflow-y: auto;
-            display: none;
-
-            position: relative;
-
-            width: 100%;
-            height: 100vh;
-
-            padding:
-                35px
-                25px;
-
-            background:
-                radial-gradient(
-                    circle at 75% 20%,
-                    #3b155c 0%,
-                    #160c24 35%,
-                    #050505 75%
-                );
-
-            color: white;
-        }
-
-        .profile-box {
-            display: flex;
-
-            align-items: center;
-
-            margin-top: 30px;
-        }
-
-        .avatar {
-            width: 90px;
-            height: 90px;
-
-            border-radius: 50%;
-
-            background: #333;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            font-size: 36px;
-            font-weight: bold;
-
-            flex-shrink: 0;
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-        }
-
-        .profile-user-info {
-            margin-left: 20px;
-        }
-
-        .username {
-            font-size: 27px;
-
-            font-weight: bold;
-        }
-
-        .easy-brain-id {
-            margin-top: 7px;
-
-            font-size: 16px;
-            font-weight: 600;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.65
-                );
-        }
-
-        .back-button {
-            display: inline-block;
-
-            margin-top: 40px;
-
-            color: white;
-
-            font-size: 20px;
-            font-weight: 600;
-
-            background: transparent;
-
-            border: none;
-
-            padding: 0;
-
-            cursor: pointer;
-        }
-
-
-        /* =========================
-           SMALL PHONES
-        ========================= */
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: Arial, sans-serif; background: #050505; }
+        body { overflow: hidden; }
+
+        #menuScreen { display: block; position: relative; width: 100%; height: 100vh; background: radial-gradient(circle at 75% 20%, #3b155c 0%, #160c24 35%, #050505 75%); }
+
+        .case-card { position: absolute; left: 12px; top: 20px; width: 170px; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .case-card:active { transform: scale(0.97); }
+        .case-image { display: block; width: 170px; height: auto; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.65)); }
+        .free-case-card { position: absolute; left: 200px; top: 20px; width: 170px; z-index: 1; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .free-case-card:active { transform: scale(0.97); }
+        .free-case-card .case-image { width: 170px; }
+
+        .bottom-menu { position: absolute; left: 50%; bottom: 35px; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 20px; width: max-content; z-index: 100; }
+        .menu-button { border: none; background: transparent; color: white; font-size: 24px; font-weight: 600; padding: 8px 10px; cursor: pointer; -webkit-tap-highlight-color: rgba(0, 122, 255, 0.35); }
+        .menu-button:active { background: rgba(0, 122, 255, 0.25); border-radius: 10px; }
+
+        #caseScreen { display: none; position: relative; width: 100%; height: 100vh; color: white; background: radial-gradient(circle at 50% 15%, #3b155c 0%, #160c24 35%, #050505 78%); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+        .case-header { position: relative; width: 100%; height: 90px; }
+        .case-back-button { position: absolute; left: 16px; top: 18px; z-index: 20; border: none; background: rgba(0, 0, 0, 0.32); color: white; font-size: 19px; font-weight: 600; padding: 10px 14px; border-radius: 12px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .case-back-button:active { transform: scale(0.96); }
+
+        .balance-box { position: fixed; right: 16px; top: 18px; z-index: 1000; min-width: 105px; height: 48px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 0 12px 0 15px; background: rgba(10, 7, 18, 0.82); border: 1px solid rgba(150, 70, 255, 0.65); border-radius: 14px; box-shadow: 0 0 14px rgba(120, 30, 255, 0.18); font-size: 21px; font-weight: 700; color: white; backdrop-filter: blur(5px); }
+        .balance-coin { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(145deg, #ffe96a, #ffb300); color: #17100a; font-size: 20px; font-weight: 900; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25); }
+        #balanceAmount { min-width: 18px; text-align: center; }
+        .balance-topup { width: 32px; height: 32px; margin-left: 2px; border-radius: 50%; border: 1.5px solid rgba(160, 85, 255, 0.9); background: radial-gradient(circle at 30% 30%, rgba(140, 70, 220, 0.55), rgba(60, 20, 110, 0.55)); color: #f0dcff; font-size: 22px; font-weight: 900; line-height: 1; display: flex; align-items: center; justify-content: center; padding: 0; padding-bottom: 2px; cursor: pointer; box-shadow: 0 0 10px rgba(140, 60, 255, 0.45), inset 0 0 6px rgba(190, 130, 255, 0.35); -webkit-tap-highlight-color: transparent; flex-shrink: 0; }
+        .balance-topup:active { transform: scale(0.92); }
+
+        #starsOverlay { display: none; position: fixed; inset: 0; z-index: 5000; background: rgba(2, 0, 6, 0.78); align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(3px); }
+        #starsOverlay.visible { display: flex; }
+        .stars-panel { width: min(92vw, 400px); max-height: 90dvh; overflow-y: auto; background: linear-gradient(160deg, #170d24, #0a0612); border: 1px solid #7d3fc0; border-radius: 20px; padding: 22px; color: #f4edff; box-shadow: 0 15px 55px rgba(0, 0, 0, 0.75), 0 0 30px rgba(120, 40, 200, 0.35); }
+        .stars-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        .stars-head h2 { margin: 0; font-size: 21px; color: #e3c6ff; }
+        #starsClose { width: 38px; height: 38px; border: 0; border-radius: 10px; background: #2a1440; color: #d9b8ff; font-size: 24px; font-weight: 800; cursor: pointer; flex-shrink: 0; }
+        .stars-panel label { display: block; font-size: 14px; font-weight: 700; color: #cdb4eb; margin: 6px 0 8px; }
+        .stars-input-wrap { position: relative; }
+        #starsInput { width: 100%; padding: 15px 44px 15px 15px; border: 1px solid #7430bd; border-radius: 11px; background: #171222; color: white; font-size: 20px; font-weight: 800; outline: none; -moz-appearance: textfield; }
+        #starsInput::-webkit-outer-spin-button, #starsInput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        #starsInput:focus { border-color: #c184ff; }
+        .stars-input-wrap::after { content: "⭐"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; pointer-events: none; }
+        .stars-rate-hint { margin: 10px 2px 0; font-size: 12.5px; color: #a895c4; }
+        .stars-preview { margin-top: 18px; padding: 14px; border-radius: 12px; background: linear-gradient(160deg, #1e1030, #140c22); border: 1px solid #5c2f8c; text-align: center; font-size: 17px; font-weight: 800; color: #e6d2ff; }
+        .stars-preview strong { color: #ffd873; }
+        .stars-confirm { width: 100%; margin-top: 16px; padding: 15px; border: 0; border-radius: 14px; background: linear-gradient(180deg, #34a5ec, #0d6ec9); color: white; font-size: 18px; font-weight: 900; letter-spacing: 0.4px; cursor: pointer; box-shadow: 0 6px 22px rgba(20, 110, 200, 0.5); }
+        .stars-confirm:disabled { opacity: 0.5; cursor: wait; }
+        .stars-confirm:active:not(:disabled) { transform: scale(0.98); }
+        .stars-message { min-height: 18px; margin-top: 12px; text-align: center; font-size: 13px; font-weight: 700; color: #c7b8d9; }
+
+        .open-area { width: 100%; height: 62vh; min-height: 430px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 0 22px 0; }
+        .base-showcase { position: relative; width: calc(100% - 24px); max-width: 620px; height: 235px; margin-bottom: 20px; overflow: hidden; border-radius: 18px; background: linear-gradient(180deg, rgba(42, 19, 67, 0.88), rgba(12, 8, 18, 0.94)); border: 1px solid rgba(161, 82, 255, 0.35); box-shadow: inset 0 0 35px rgba(107, 34, 174, 0.15), 0 8px 28px rgba(0, 0, 0, 0.35); }
+        .base-showcase::after { content: ""; position: absolute; inset: 0; z-index: 40; pointer-events: none; background: linear-gradient(90deg, rgba(8, 5, 14, 1) 0%, rgba(8, 5, 14, .98) 12%, rgba(8, 5, 14, .76) 22%, rgba(8, 5, 14, 0) 38%, rgba(8, 5, 14, 0) 62%, rgba(8, 5, 14, .76) 78%, rgba(8, 5, 14, .98) 88%, rgba(8, 5, 14, 1) 100%); }
+        .base-track { position: absolute; inset: 0 auto 0 0; display: flex; align-items: center; gap: 0; width: max-content; height: 100%; will-change: transform; }
+        .base-track img { display: block; flex: 0 0 160px; width: 160px; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(0,0,0,.4)); }
+        .center-pointer { position: absolute; left: 50%; top: 0; width: 4px; height: 100%; transform: translateX(-50%); z-index: 100; pointer-events: none; background: linear-gradient(180deg, #ffffff 0%, #bca4ff 22%, #8a5cff 50%, #65c7ff 78%, #ffffff 100%); box-shadow: 0 0 5px rgba(255,255,255,.95), 0 0 12px rgba(130,88,255,.95), 0 0 22px rgba(70,160,255,.60); }
+        .center-pointer::before { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent; border-top: 24px solid #ffffff; filter: drop-shadow(0 4px 5px rgba(126, 92, 255, 0.85)); }
+        .center-pointer::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent; border-bottom: 24px solid #ffffff; filter: drop-shadow(0 -4px 5px rgba(85, 164, 255, 0.85)); }
+
+        .open-case-button { border: none; outline: none; background: transparent; padding: 0; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .open-case-button img { display: block; width: 150px; height: auto; object-fit: contain; }
+        .open-case-button:active { transform: scale(0.94); }
+        .open-case-button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .bases-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; width: 100%; padding: 0 12px 30px; }
+        .base-item { width: 100%; overflow: hidden; border-radius: 12px; }
+        .base-item img { display: block; width: 100%; height: auto; border-radius: 12px; }
+
+        #profileScreen { overflow-y: auto; display: none; position: relative; width: 100%; height: 100vh; padding: 35px 25px; background: radial-gradient(circle at 75% 20%, #3b155c 0%, #160c24 35%, #050505 75%); color: white; }
+        .profile-box { display: flex; align-items: center; margin-top: 30px; }
+        .avatar { width: 90px; height: 90px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 36px; font-weight: bold; flex-shrink: 0; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-user-info { margin-left: 20px; }
+        .username { font-size: 27px; font-weight: bold; }
+        .easy-brain-id { margin-top: 7px; font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.65); }
+        .back-button { display: inline-block; margin-top: 40px; color: white; font-size: 20px; font-weight: 600; background: transparent; border: none; padding: 0; cursor: pointer; }
 
         @media (max-width: 430px) {
-
-            .base-showcase {
-                height: 215px;
-            }
-
-            .center-pointer {
-                width: 3px;
-            }
-
-            .center-pointer::before {
-                border-left-width: 15px;
-                border-right-width: 15px;
-                border-top-width: 21px;
-            }
-
-            .center-pointer::after {
-                border-left-width: 15px;
-                border-right-width: 15px;
-                border-bottom-width: 21px;
-            }
-
-            .free-case-card {
-                left: 190px;
-                width: 150px;
-            }
-
-            .free-case-card .case-image {
-                width: 150px;
-            }
-
-            .case-card .case-image {
-                width: 150px;
-            }
-
-            .case-card {
-                width: 150px;
-            }
-
+            .base-showcase { height: 215px; }
+            .center-pointer { width: 3px; }
+            .center-pointer::before { border-left-width: 15px; border-right-width: 15px; border-top-width: 21px; }
+            .center-pointer::after { border-left-width: 15px; border-right-width: 15px; border-bottom-width: 21px; }
+            .free-case-card { left: 190px; width: 150px; }
+            .free-case-card .case-image { width: 150px; }
+            .case-card .case-image { width: 150px; }
+            .case-card { width: 150px; }
         }
 
-
-        /* CASE OPENING + INVENTORY */
         .case-actions { display:flex; flex-direction:column; align-items:center; gap:7px; width:100%; }
         .case-cost { color:#bba7d0; font-size:13px; font-weight:700; }
         .case-error { min-height:17px; color:#ff566b; font-size:13px; font-weight:700; text-align:center; }
@@ -1026,7 +107,6 @@
         .inventory-sell { font-size:13px; padding:9px 12px; }
         .inventory-status { color:#bba7d0; font-size:13px; margin:10px 0; }
 
-        /* ADMIN PANEL */
         #adminOrb { display:none; position:fixed; left:calc(50% - 23px); top:78px; width:46px; height:46px; z-index:3000; border-radius:50%; border:1px solid #8751d5; background:#09070e; color:#bb74ff; box-shadow:0 0 15px #7c39d870; align-items:center; justify-content:center; cursor:grab; touch-action:none; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; padding:0; }
         #adminOrb svg { width:26px; height:26px; pointer-events:none; filter:drop-shadow(0 0 5px #ad62ff); }
         #adminOrb.dragging { cursor:grabbing; }
@@ -1054,7 +134,6 @@
         #adminPromoStart:disabled { opacity:.55; cursor:wait; }
         #adminPromoMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
 
-        /* PROMO CODE (profile) */
         .promo-section { margin-top:26px; padding-bottom:90px; }
         .promo-section h3 { margin:0 0 12px; font-size:19px; }
         .promo-row { display:flex; gap:9px; align-items:stretch; }
@@ -1067,8 +146,6 @@
         #promoMessage.ok { color:#5ee08a; }
         #promoMessage.err { color:#ff6b7d; }
 
-
-        /* UPGRADE SCREEN */
         #upgradeScreen{display:none;position:relative;width:100%;height:100dvh;overflow-y:auto;color:#f5efff;background:radial-gradient(circle at 50% 12%,#411663 0%,#170c29 42%,#050505 85%);padding:86px 14px 38px;overscroll-behavior:contain}
         .upgrade-back{position:absolute;top:20px;left:16px;background:#1c102b;border:1px solid #8145bb;border-radius:12px;color:white;padding:11px 16px;font-weight:800;font-size:17px}
         .upgrade-heading{text-align:center;font-size:26px;font-weight:900;letter-spacing:1px;color:#eee0ff;text-shadow:0 0 18px #974cff}
@@ -1097,7 +174,6 @@
         .upgrade-empty{text-align:center;grid-column:1/-1;color:#cbb4dd;padding:25px 6px}
         @media(min-width:600px){.upgrade-list{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
-        /* MULTI CASE */
         .case-count-picker{display:flex;justify-content:center;gap:12px;margin:8px auto 2px;width:min(85%,330px)}
         .case-count-choice{flex:1;min-height:53px;border-radius:15px;border:2px solid #35303f;background:#17121f;color:white;font-size:27px;font-weight:900;cursor:pointer}
         .case-count-choice.active{border-color:#9259ff;background:#2c1a4b;box-shadow:0 0 15px #864bff75}
@@ -1114,210 +190,68 @@
         .multi-prize button{border:0;border-radius:8px;padding:8px;background:#cf2449;color:white;font-weight:800;white-space:nowrap}
         .multi-prize button:disabled{opacity:.5}
 
-        /* FREE CASE — bottom buttons */
-        .free-case-buttons {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: min(94%, 500px);
-            margin: 10px auto 0;
-        }
-        .subscribe-button {
-            border: 2px solid #4b8fe0;
-            border-radius: 14px;
-            background: linear-gradient(180deg, #4b8fe0, #2660b5);
-            color: white;
-            padding: 14px 22px;
-            font-size: 15px;
-            font-weight: 900;
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: 0 6px 18px rgba(38,96,181,0.45);
-        }
+        .free-case-buttons { display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; width: min(94%, 500px); margin: 10px auto 0; }
+        .subscribe-button { border: 2px solid #4b8fe0; border-radius: 14px; background: linear-gradient(180deg, #4b8fe0, #2660b5); color: white; padding: 14px 22px; font-size: 15px; font-weight: 900; cursor: pointer; white-space: nowrap; box-shadow: 0 6px 18px rgba(38,96,181,0.45); }
         .subscribe-button:active { transform: scale(0.97); }
-        .subscribe-button.done {
-            background: linear-gradient(180deg, #36e276, #098c3f);
-            border-color: #0aa74a;
-            box-shadow: 0 6px 18px rgba(10,167,74,0.45);
-        }
-        #freeOpenButton {
-            border: 0;
-            background: transparent;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-        }
-        #freeOpenButton img {
-            display: block;
-            width: 150px;
-            height: auto;
-            object-fit: contain;
-        }
+        .subscribe-button.done { background: linear-gradient(180deg, #36e276, #098c3f); border-color: #0aa74a; box-shadow: 0 6px 18px rgba(10,167,74,0.45); }
+        #freeOpenButton { border: 0; background: transparent; padding: 0; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; position: relative; }
+        #freeOpenButton img { display: block; width: 150px; height: auto; object-fit: contain; }
         #freeOpenButton:disabled { cursor: not-allowed; }
         #freeOpenButton:disabled img { opacity: 0.45; }
-        #freeOpenButton .free-timer {
-            position: absolute;
-            left: 50%;
-            bottom: 8px;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            border-radius: 8px;
-            padding: 4px 10px;
-            font-size: 13px;
-            font-weight: 800;
-            color: #ffe6a6;
-            letter-spacing: 0.5px;
-            pointer-events: none;
-        }
-        .free-case-status {
-            min-height: 18px;
-            margin: 8px auto 0;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 700;
-            color: #c7b8d9;
-        }
+        #freeOpenButton .free-timer { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); background: rgba(0,0,0,0.7); border-radius: 8px; padding: 4px 10px; font-size: 13px; font-weight: 800; color: #ffe6a6; letter-spacing: 0.5px; pointer-events: none; }
+        .free-case-status { min-height: 18px; margin: 8px auto 0; text-align: center; font-size: 13px; font-weight: 700; color: #c7b8d9; }
         .free-case-status.err { color: #ff6b7d; }
         .free-case-status.ok { color: #5ee08a; }
-
     </style>
-</head>
-
-
-<body>
-
+</head><body>
 
     <!-- GLOBAL BALANCE -->
-
-    <div
-        class="balance-box"
-        id="balanceBox">
-
-        <div class="balance-coin">
-            E
-        </div>
-
-        <span id="balanceAmount">
-            0
-        </span>
-
-        <button
-            type="button"
-            class="balance-topup"
-            id="balanceTopUp"
-            aria-label="Поповнити баланс">
-
-            +
-
-        </button>
-
+    <div class="balance-box" id="balanceBox">
+        <div class="balance-coin">E</div>
+        <span id="balanceAmount">0</span>
+        <button type="button" class="balance-topup" id="balanceTopUp" aria-label="Поповнити баланс">+</button>
     </div>
 
-
     <!-- STARS TOP-UP PANEL -->
-
     <div id="starsOverlay" role="dialog" aria-modal="true" aria-labelledby="starsTitle">
-
         <div class="stars-panel">
-
             <div class="stars-head">
                 <h2 id="starsTitle">Поповнення балансу</h2>
                 <button type="button" id="starsClose" aria-label="Закрити">×</button>
             </div>
-
             <label for="starsInput">Кількість зірок ⭐</label>
             <div class="stars-input-wrap">
-                <input
-                    id="starsInput"
-                    type="number"
-                    min="1"
-                    max="10000"
-                    step="1"
-                    value="50"
-                    inputmode="numeric"
-                    autocomplete="off">
+                <input id="starsInput" type="number" min="1" max="10000" step="1" value="50" inputmode="numeric" autocomplete="off">
             </div>
-
             <div class="stars-rate-hint">Курс: 1 ⭐ = 1.25 E-коїнів</div>
-
-            <div class="stars-preview" id="starsPreview">
-                Ти отримаєш <strong>63</strong> E-коїни
-            </div>
-
-            <button type="button" id="starsConfirm" class="stars-confirm">
-                ПІДТВЕРДИТИ
-            </button>
-
+            <div class="stars-preview" id="starsPreview">Ти отримаєш <strong>63</strong> E-коїни</div>
+            <button type="button" id="starsConfirm" class="stars-confirm">ПІДТВЕРДИТИ</button>
             <div class="stars-message" id="starsMessage" role="status" aria-live="polite"></div>
-
         </div>
-
     </div>
 
-
-
-    <!-- =========================
-         MAIN MENU
-    ========================= -->
-
+    <!-- MAIN MENU -->
     <div id="menuScreen">
-
         <div class="case-card" id="basicCase">
             <img src="easy-brain-case.png" alt="Базовий кейс" class="case-image">
         </div>
-
         <div class="free-case-card" id="freeCase">
             <img src="free-case.png" alt="Безкоштовний кейс" class="case-image">
         </div>
-
         <div class="bottom-menu">
-
-            <button
-                type="button"
-                class="menu-button"
-                id="casesButton">
-
-                Cases
-
-            </button>
-
-            <button
-                type="button"
-                class="menu-button"
-                id="upgradeButton">
-
-                Upgrade
-
-            </button>
-
-            <button
-                type="button"
-                class="menu-button"
-                id="profileButton">
-
-                Profile
-
-            </button>
-
+            <button type="button" class="menu-button" id="casesButton">Cases</button>
+            <button type="button" class="menu-button" id="upgradeButton">Upgrade</button>
+            <button type="button" class="menu-button" id="profileButton">Profile</button>
         </div>
-
     </div>
-    <!-- =========================
-         CASE SCREEN (shared for basic and free)
-    ========================= -->
 
+    <!-- CASE SCREEN (shared for basic and free) -->
     <div id="caseScreen">
-
         <div class="case-header">
             <button type="button" id="caseBackButton" class="case-back-button">← Назад</button>
         </div>
 
         <div class="open-area">
-
             <div id="multiCaseRows" aria-label="Одночасні рулетки"></div>
 
             <div class="base-showcase" id="baseShowcase">
@@ -1325,7 +259,7 @@
                 <div class="center-pointer"></div>
             </div>
 
-            <!-- Basic case: open button + count picker + actions -->
+            <!-- Basic case controls -->
             <div id="basicCaseControls" style="width:100%;display:flex;flex-direction:column;align-items:center">
                 <button type="button" id="openCaseButton" class="open-case-button">
                     <img src="open-button.png" alt="Відкрити">
@@ -1344,7 +278,7 @@
                 </div>
             </div>
 
-            <!-- Free case: subscribe + open + timer + status -->
+            <!-- Free case controls -->
             <div id="freeCaseControls" style="width:100%;display:none;flex-direction:column;align-items:center">
                 <div class="free-case-buttons">
                     <button type="button" id="subscribeButton" class="subscribe-button">Підписатися на канал</button>
@@ -1359,7 +293,6 @@
                   <button type="button" id="freeCaseSell" class="case-sell" style="display:none">Продати</button>
                 </div>
             </div>
-
         </div>
 
         <!-- Basic case base grid -->
@@ -1382,17 +315,10 @@
             <div class="base-item"><img src="coin-5.png" alt="5 E"></div>
             <div class="base-item"><img src="coin-2.png" alt="2 E"></div>
         </div>
-
     </div>
 
-
-
-    <!-- =========================
-         PROFILE
-    ========================= -->
-
+    <!-- PROFILE -->
     <div id="profileScreen">
-
         <div class="profile-box">
             <div id="avatar" class="avatar">?</div>
             <div class="profile-user-info">
@@ -1417,10 +343,7 @@
           </div>
           <div id="promoMessage" role="status" aria-live="polite"></div>
         </section>
-
     </div>
-
-
 
     <!-- UPGRADE -->
     <section id="upgradeScreen" aria-label="Покращення баз">
@@ -1500,9 +423,7 @@
           appId: "1:656285514139:web:68ccd78028b018635f893e"
         }
       };
-    </script>
-
-    <script type="module">
+    </script>    <script type="module">
       const $ = id => document.getElementById(id);
       const menu = $("menuScreen"), profile = $("profileScreen"), casePage = $("caseScreen");
       const showcase = $("baseShowcase"), track = $("baseTrack");
@@ -1511,20 +432,18 @@
 
       const INVENTORY_LIMIT = 10;
 
-      // Basic case visuals
       const BASIC_IMAGES = [
         "tralalelo-base-clean.png", "rose-base-clean.png",
         "aquatic-base-clean.png", "honey-bee-base-clean.png",
         "bunny-basket-base-clean.png", "taco-base-clean.png",
         "easter-base-clean.png", "lucky-base-clean.png"
       ];
-      // Free case visuals (centered-text versions for the reel)
       const FREE_IMAGES = [
         "garama-center.png", "puggy-center.png",
         "lagrande-center.png", "coin-5.png", "coin-2.png"
       ];
 
-      let currentCaseMode = "basic"; // "basic" | "free"
+      let currentCaseMode = "basic";
       let previous = -1;
       function nextImage() {
         const pool = currentCaseMode === "free" ? FREE_IMAGES : BASIC_IMAGES;
@@ -1534,7 +453,6 @@
         return pool[index];
       }
 
-      // Preload both
       [...BASIC_IMAGES, ...FREE_IMAGES].forEach(src => { const img = new Image(); img.src = src; });
 
       const ITEM_WIDTH = 160;
@@ -1579,7 +497,6 @@
         track.replaceChildren();
       }
 
-      // ===== Basic case =====
       $("basicCase").addEventListener("click", () => {
         currentCaseMode = "basic";
         menu.style.display = "none";
@@ -1593,7 +510,6 @@
         if (!spinning) { resetCasePresentation(); startShowcase(); updateCaseCountAvailability(); }
       });
 
-      // ===== Free case =====
       $("freeCase").addEventListener("click", () => {
         currentCaseMode = "free";
         menu.style.display = "none";
@@ -1629,8 +545,7 @@
         menu.style.display = "block";
       });
 
-      // ===== BASES =====
-      const BASES = {
+      const BASE_ITEMS = {
         tralalelo: {name:"Tralalelo Base", price:30, image:"tralalelo-base-clean.png"},
         rose: {name:"Rose Base", price:26, image:"rose-base-clean.png"},
         aquatic: {name:"Aquatic Base", price:19, image:"aquatic-base-clean.png"},
@@ -1638,13 +553,16 @@
         bunny_basket: {name:"Bunny Basket Base", price:12, image:"bunny-basket-base-clean.png"},
         taco: {name:"Taco Base", price:9, image:"taco-base-clean.png"},
         easter: {name:"Easter Base", price:7, image:"easter-base-clean.png"},
-        lucky: {name:"Lucky Base", price:5, image:"lucky-base-clean.png"},
-        // Free case characters
+        lucky: {name:"Lucky Base", price:5, image:"lucky-base-clean.png"}
+      };
+      const FREE_ITEMS = {
         garama: {name:"Garama and Madundung", price:41, image:"garama.png"},
         puggy: {name:"Money Money Puggy", price:14, image:"puggy.png"},
         lagrande: {name:"La Grande", price:9, image:"lagrande-combo.png"}
       };
-      const baseKeys = Object.keys(BASES);
+      const BASES = { ...BASE_ITEMS, ...FREE_ITEMS };
+      const baseKeys = Object.keys(BASE_ITEMS);
+      const freeBaseKeys = Object.keys(FREE_ITEMS);
 
       let currentBalance = 0, spinning = false, wonItem = null, inventoryItems = [];
       let inventoryReady = false;
@@ -1697,7 +615,6 @@
       }
       caseSell.addEventListener("click", () => { if (wonItem) sellItem(wonItem.id, caseSell); });
 
-      // ===== Basic case roulette =====
       async function animateWin(baseId) {
         stopShowcase();
         const winner = BASES[baseId];
@@ -1928,7 +845,6 @@
       }
 
       subscribeButton.addEventListener("click", () => {
-        // Opens channel; refresh happens when user comes back.
         try { tg.openTelegramLink(cfg.channelUrl); }
         catch (_) { window.open(cfg.channelUrl, "_blank"); }
       });
@@ -1942,10 +858,9 @@
           const result = await gameRequest("/free-case/open", {});
           if (result.kind === "item") {
             const baseId = result.baseId;
-            // Reel with free-case visuals only
             stopShowcase();
             const winner = BASES[baseId];
-            const freePool = ["garama","puggy","lagrande"].map(k => BASES[k].image);
+            const freePool = freeBaseKeys.map(k => FREE_ITEMS[k].image);
             const winIndex = 38, total = 45;
             for (let i=0;i<total;i++) {
               const img = document.createElement("img");
@@ -1964,7 +879,6 @@
             freeCaseSell.textContent = `Продати — ${winner.price} E`;
             freeCaseSell.style.display = "inline-block";
           } else {
-            // Coin: instant credit
             stopShowcase();
             const img = document.createElement("img");
             img.src = result.coins === 5 ? "coin-5.png" : "coin-2.png";
@@ -1976,7 +890,6 @@
             freeCaseResult.textContent = `Випало: +${result.coins} E!`;
             startShowcase();
           }
-          // Refresh cooldown state after opening
           await refreshFreeCaseStatus();
         } catch (err) {
           freeCaseResult.textContent = "";
@@ -1999,7 +912,6 @@
         } catch (err) { setFreeStatus(err.message, "err"); }
         finally { freeCaseSell.disabled = false; }
       });
-
       // ===== Telegram user =====
       const tg = window.Telegram?.WebApp;
       tg?.ready();
@@ -2076,7 +988,6 @@
             console.error("Firestore:", error);
             idLabel.textContent = "ID: помилка доступу";
           });
-          // First status check for free case
           refreshFreeCaseStatus();
           refreshFreeTimer();
         } catch (error) {
@@ -2144,7 +1055,11 @@
         $("upgradeWishTab").classList.toggle("active",upgradeTab==="wish");
         let entries = upgradeTab==="own"
           ? inventoryItems.filter(i=>BASES[i.baseId]).map(i=>({itemId:i.id,baseId:i.baseId}))
-          : (upgradeSource ? upgradeAllowed.map(b=>({baseId:b.id})) : baseKeys.map(baseId=>({baseId})));
+          : (upgradeSource
+              ? upgradeAllowed.slice().sort((a,b) => b.price - a.price).map(b => ({baseId:b.id}))
+              : Object.keys(BASES)
+                  .map(baseId => ({baseId}))
+                  .sort((a,b) => (BASES[b.baseId]?.price || 0) - (BASES[a.baseId]?.price || 0)));
         if (!entries.length) {
           const empty=document.createElement("div"); empty.className="upgrade-empty";
           empty.textContent=upgradeTab==="own" ? (inventoryReady?"У тебе поки немає баз":"Завантаження інвентарю...") : "Немає доступних баз для покращення";
@@ -2492,7 +1407,7 @@
 
       async function starsRequest(path, payload = {}) {
         if (!tg?.initData) throw new Error("Відкрий гру через Telegram");
-        const res = await fetch(cfg.workerUrl.replace(/\/$/, "" ) + path, {
+        const res = await fetch(cfg.workerUrl.replace(/\/$/, "") + path, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ initData: tg.initData, ...payload })

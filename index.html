@@ -116,43 +116,39 @@
         .admin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
         .admin-head h2 { margin:0; font-size:26px; color:#e3c6ff; }
         #adminClose { width:39px; height:39px; border:0; border-radius:10px; background:#df1735; color:white; font-size:28px; font-weight:800; cursor:pointer; }
-        .admin-tabs { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; margin-bottom:20px; }
-        .admin-tab { border:1px solid #693b94; background:#1a1028; color:#d6c2ec; padding:10px 4px; border-radius:11px; font-weight:800; font-size:13px; cursor:pointer; }
+        .admin-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px; margin-bottom:20px; }
+        .admin-tab { border:1px solid #693b94; background:#1a1028; color:#d6c2ec; padding:10px 4px; border-radius:11px; font-weight:800; font-size:12px; cursor:pointer; }
         .admin-tab.active { background:#6325a0; border-color:#d4a2ff; color:white; }
-        .admin-panel label { display:block; font-size:16px; font-weight:700; margin:17px 0 8px; }
-        .admin-panel input, .admin-panel textarea { width:100%; padding:15px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:17px; outline:none; font-family:inherit; }
+        .admin-panel label { display:block; font-size:15px; font-weight:700; margin:15px 0 7px; }
+        .admin-panel input, .admin-panel textarea { width:100%; padding:14px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:16px; outline:none; font-family:inherit; }
         .admin-panel input:focus, .admin-panel textarea:focus { border-color:#c184ff; }
         .admin-panel textarea { resize: vertical; min-height: 60px; }
-        .admin-bottom { display:flex; justify-content:flex-end; margin-top:25px; }
-        #adminStart, #adminPromoStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
-        #adminStart:disabled, #adminPromoStart:disabled { opacity:.55; cursor:wait; }
-        #adminMessage, #adminPromoMessage, #adminBanMessage, #adminUnbanMessage, #adminFindMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; word-break:break-word; }
+        .admin-bottom { display:flex; justify-content:flex-end; margin-top:22px; }
+        #adminStart, #adminPromoStart, #adminBanStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:12px 28px; font-size:17px; font-weight:800; cursor:pointer; }
+        #adminBanStart { background: linear-gradient(#e2473d,#a81f1a); }
+        #adminStart:disabled, #adminPromoStart:disabled, #adminBanStart:disabled { opacity:.55; cursor:wait; }
+        #adminMessage, #adminPromoMessage, #adminBanMessage, #adminUnbanMessage, #adminFindMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:13px; color:#c7b8d9; word-break:break-word; }
         .admin-webhook-block { margin-top:18px; padding-top:16px; border-top:1px solid #3a2348; }
         .admin-webhook-button { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
         .admin-webhook-button:disabled { opacity:.55; cursor:wait; }
         .admin-webhook-status { margin-top:10px; font-size:13px; color:#c7b8d9; min-height:18px; word-break:break-all; }
-
-        #adminBanStart { border:0; border-radius:11px; background:linear-gradient(#e2473d,#a81f1a); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
-        #adminBanStart:disabled { opacity:.55; cursor:wait; }
-        #adminUnbanStart { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
+        #adminUnbanStart { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; margin-top:8px; }
         #adminUnbanStart:disabled { opacity:.55; cursor:wait; }
-        .admin-bans-table { margin-top:20px; font-size:13px; }
+        .admin-bans-table { margin-top:18px; font-size:13px; }
         .admin-bans-table table { width:100%; border-collapse: collapse; }
-        .admin-bans-table th, .admin-bans-table td { padding:8px 6px; border-bottom:1px solid #3a2348; text-align:left; vertical-align: top; }
-        .admin-bans-table th { color:#c7b8d9; font-weight:800; font-size:12px; text-transform:uppercase; }
+        .admin-bans-table th, .admin-bans-table td { padding:8px 5px; border-bottom:1px solid #3a2348; text-align:left; vertical-align: top; word-break: break-word; }
+        .admin-bans-table th { color:#c7b8d9; font-weight:800; font-size:11px; text-transform:uppercase; }
         .admin-bans-empty { color:#8a7ba0; text-align:center; padding: 15px 0; font-style: italic; }
-        .admin-ban-separator { margin-top:22px; padding-top:18px; border-top:1px solid #3a2348; }
+        .admin-ban-separator { margin-top:20px; padding-top:16px; border-top:1px solid #3a2348; }
 
-        .user-result { display:flex; align-items:center; gap:12px; padding:10px; border:1px solid #3a2348; border-radius:12px; margin-top:10px; background:#120c1c; cursor:pointer; transition: background 0.15s; }
-        .user-result:hover { background:#1a1028; }
-        .user-avatar { width:46px; height:46px; border-radius:50%; background:#2a1a40; flex-shrink:0; object-fit:cover; display:flex; align-items:center; justify-content:center; font-weight:800; color:#d6c2ec; font-size:18px; overflow:hidden; }
-        .user-avatar img { width:100%; height:100%; object-fit:cover; }
-        .user-info { flex:1; min-width:0; }
-        .user-name { font-size:15px; font-weight:800; color:white; word-break:break-word; }
-        .user-username { font-size:12px; color:#9a8ab0; margin-top:2px; }
-        .user-id-hidden { font-size:13px; color:#6a5a80; margin-top:2px; font-style:italic; }
-        .user-id-shown { font-size:15px; color:#ffd873; font-weight:800; margin-top:4px; letter-spacing:1px; }
-        .user-ban-hint { font-size:11px; color:#9a8ab0; margin-top:4px; }
+        .admin-user-card { display:flex; align-items:center; gap:11px; padding:10px; border:1px solid #3a2348; border-radius:12px; margin-top:10px; background:#0e0a18; cursor:pointer; transition: border-color .15s, background .15s; }
+        .admin-user-card:hover, .admin-user-card.active { border-color:#a55fff; background:#1a1130; }
+        .admin-user-card img, .admin-user-card .placeholder { width:46px; height:46px; border-radius:50%; object-fit:cover; background:#2a1440; display:flex; align-items:center; justify-content:center; color:#d9b8ff; font-weight:800; font-size:18px; flex-shrink:0; }
+        .admin-user-card .info { flex: 1; min-width: 0; }
+        .admin-user-card .name { font-size:15px; font-weight:800; color:#f4edff; word-break:break-word; }
+        .admin-user-card .uname { font-size:12px; color:#a895c4; margin-top:2px; word-break:break-all; }
+        .admin-user-card .id { font-size:12px; color:#5ee08a; font-weight:800; margin-top:3px; }
+        .admin-user-card .id.hidden { color:#8a7ba0; font-style:italic; font-weight:600; }
 
         .promo-section { margin-top:26px; padding-bottom:90px; }
         .promo-section h3 { margin:0 0 12px; font-size:19px; }
@@ -223,18 +219,7 @@
         .free-case-status.err { color: #ff6b7d; }
         .free-case-status.ok { color: #5ee08a; }
 
-        #banScreen {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: #ffffff;
-            color: #1a1024;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 24px;
-            text-align: center;
-        }
+        #banScreen { display: none; position: fixed; inset: 0; z-index: 99999; background: #ffffff; color: #1a1024; align-items: center; justify-content: center; padding: 30px 24px; text-align: center; }
         #banScreen.visible { display: flex; }
         .ban-content { max-width: 440px; width: 100%; }
         .ban-emoji { font-size: 72px; line-height: 1; margin-bottom: 18px; }
@@ -244,13 +229,13 @@
     </style>
 </head><body>
 
-    <!-- BAN SCREEN (shown before anything else if user is banned) -->
-    <div id="banScreen">
+    <!-- BAN SCREEN (white fullscreen when banned) -->
+    <div id="banScreen" role="alertdialog" aria-modal="true">
         <div class="ban-content">
             <div class="ban-emoji">🚫</div>
             <div class="ban-title">ТЕБЕ ЗАБЛОКОВАНО</div>
-            <div class="ban-reason" id="banReason"></div>
-            <div class="ban-until" id="banUntil"></div>
+            <div class="ban-reason" id="banReason">Порушення правил гри</div>
+            <div class="ban-until" id="banUntil">Розблокування: —</div>
         </div>
     </div>
 
@@ -294,7 +279,7 @@
         </div>
     </div>
 
-    <!-- CASE SCREEN (shared for basic and free) -->
+    <!-- CASE SCREEN -->
     <div id="caseScreen">
         <div class="case-header">
             <button type="button" id="caseBackButton" class="case-back-button">← Назад</button>
@@ -423,6 +408,7 @@
     <div id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
       <section class="admin-panel">
         <div class="admin-head"><h2 id="adminTitle">Адмінпанель</h2><button id="adminClose" type="button" aria-label="Закрити">×</button></div>
+
         <div class="admin-tabs" role="tablist">
           <button id="adminTabTopup" type="button" class="admin-tab active" role="tab" aria-selected="true">Накрутка</button>
           <button id="adminTabPromo" type="button" class="admin-tab" role="tab" aria-selected="false">Промокоди</button>
@@ -430,6 +416,7 @@
           <button id="adminTabFind" type="button" class="admin-tab" role="tab" aria-selected="false">Пошук ID</button>
         </div>
 
+        <!-- TAB: TOPUP -->
         <div id="adminPaneTopup">
           <form id="adminForm">
             <label for="adminTargetId">Введіть Easy Brain ID гравця</label>
@@ -445,6 +432,7 @@
           </div>
         </div>
 
+        <!-- TAB: PROMO -->
         <div id="adminPanePromo" style="display:none">
           <form id="adminPromoForm">
             <label for="promoName">Назва промокоду</label>
@@ -458,35 +446,35 @@
           </form>
         </div>
 
+        <!-- TAB: BAN -->
         <div id="adminPaneBan" style="display:none">
-          <form id="adminBanForm">
-            <label for="adminBanId">ID користувача (Telegram ID, числовий)</label>
-            <input id="adminBanId" type="text" placeholder="Наприклад, 123456789" inputmode="numeric" autocomplete="off" required>
-            <label for="adminBanDays">На скільки днів забанити (1–3650)</label>
-            <input id="adminBanDays" type="number" min="1" max="3650" step="1" value="7" required>
-            <label for="adminBanReason">Причина бану</label>
-            <textarea id="adminBanReason" maxlength="300" placeholder="Наприклад: порушення правил гри" required></textarea>
-            <div class="admin-bottom"><button id="adminBanStart" type="submit">Забанити</button></div>
-            <div id="adminBanMessage" role="status" aria-live="polite"></div>
-          </form>
+          <label for="adminBanId">Easy Brain ID гравця</label>
+          <input id="adminBanId" type="text" maxlength="7" placeholder="Наприклад, XO6M1Q0" autocapitalize="characters" autocomplete="off" pattern="[A-Z0-9]{7}">
+          <label for="adminBanDays">Кількість днів бану</label>
+          <input id="adminBanDays" type="number" min="1" max="3650" step="1" placeholder="Наприклад, 7">
+          <label for="adminBanReason">Причина бану</label>
+          <textarea id="adminBanReason" maxlength="300" placeholder="Наприклад, чітерство" rows="3"></textarea>
+          <div class="admin-bottom"><button id="adminBanStart" type="button">Забанити</button></div>
+          <div id="adminBanMessage" role="status" aria-live="polite"></div>
 
           <div class="admin-ban-separator">
-            <label for="adminUnbanId">ID користувача для розблокування</label>
-            <input id="adminUnbanId" type="text" placeholder="Наприклад, 123456789" inputmode="numeric" autocomplete="off">
+            <label for="adminUnbanId">Easy Brain ID гравця (для розбану)</label>
+            <input id="adminUnbanId" type="text" maxlength="7" placeholder="Наприклад, XO6M1Q0" autocapitalize="characters" autocomplete="off" pattern="[A-Z0-9]{7}">
             <button id="adminUnbanStart" type="button">Розблокувати</button>
             <div id="adminUnbanMessage" role="status" aria-live="polite"></div>
           </div>
 
-          <div class="admin-bans-table" id="adminBansTable"></div>
+          <div class="admin-bans-table" id="adminBansTable">
+            <div class="admin-bans-empty">Завантаження...</div>
+          </div>
         </div>
 
+        <!-- TAB: FIND -->
         <div id="adminPaneFind" style="display:none">
-          <form id="adminFindForm">
-            <label for="adminFindName">Ім'я гравця (як у Telegram)</label>
-            <input id="adminFindName" type="text" maxlength="128" placeholder="Наприклад, Іван" autocomplete="off" required>
-            <div class="admin-bottom"><button id="adminFindStart" type="submit">Знайти</button></div>
-            <div id="adminFindMessage" role="status" aria-live="polite"></div>
-          </form>
+          <label for="adminFindName">Ім'я гравця в Telegram</label>
+          <input id="adminFindName" type="text" maxlength="128" placeholder="Наприклад, Іван" autocapitalize="off" autocomplete="off" spellcheck="false">
+          <div class="admin-bottom"><button id="adminFindStart" type="button" style="border:0;border-radius:11px;background:linear-gradient(#4b8fe0,#2660b5);color:white;padding:12px 28px;font-size:17px;font-weight:800;cursor:pointer">Знайти</button></div>
+          <div id="adminFindMessage" role="status" aria-live="polite"></div>
           <div id="adminFindResults"></div>
         </div>
       </section>
@@ -649,30 +637,8 @@
 
       let currentBalance = 0, spinning = false, wonItem = null, inventoryItems = [];
       let inventoryReady = false;
-      let bannedScreen = false;
       const caseError = $("caseError"), caseResult = $("caseResult"), caseSell = $("caseSell");
       const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-      function showBanScreen(reason, until) {
-        bannedScreen = true;
-        $("banReason").textContent = reason ? `Причина: ${reason}` : "Причину не вказано";
-        if (until) {
-          const date = new Date(until);
-          const formatted = date.toLocaleString("uk-UA", {
-            day: "2-digit", month: "2-digit", year: "numeric",
-            hour: "2-digit", minute: "2-digit"
-          });
-          $("banUntil").textContent = `Розблокування: ${formatted}`;
-        } else {
-          $("banUntil").textContent = "";
-        }
-        $("banScreen").classList.add("visible");
-      }
-
-      function hideBanScreen() {
-        bannedScreen = false;
-        $("banScreen").classList.remove("visible");
-      }
 
       function renderInventory() {
         const grid = $("inventoryGrid"), status = $("inventoryStatus");
@@ -702,10 +668,7 @@
         });
         const data = await res.json().catch(()=>({}));
         if (!res.ok) {
-          if (data.code === "BANNED") {
-            showBanScreen(data.banReason, data.banUntil);
-            throw new Error("Ти заблокований");
-          }
+          if (data.code === "BANNED") { showBanScreen(data.banUntil, data.banReason); }
           if (res.status === 402 || data.code === "INSUFFICIENT_BALANCE") throw new Error("Недостатньо балансу");
           throw new Error(data.error || `Помилка сервера (${res.status})`);
         }
@@ -893,14 +856,12 @@
         freeCaseStatus.classList.remove("ok","err");
         if (kind) freeCaseStatus.classList.add(kind);
       }
-
       function resetFreeCasePresentation() {
         freeCaseResult.textContent = "";
         freeCaseSell.style.display = "none";
         freeWonItem = null;
         setFreeStatus("");
       }
-
       function updateFreeTimerUI() {
         if (!freeCaseNextAvailableAt) {
           freeTimer.style.display = "none";
@@ -920,20 +881,17 @@
         freeTimer.textContent = `${h}:${m}:${s}`;
         freeTimer.style.display = "block";
       }
-
       function refreshFreeTimer() {
         if (freeCaseTimerId) clearInterval(freeCaseTimerId);
         freeCaseTimerId = setInterval(updateFreeTimerUI, 1000);
         updateFreeTimerUI();
       }
-
       function updateFreeCaseButton() {
         const blocked = !freeCaseSubscribed || !!freeCaseNextAvailableAt;
         freeOpenButton.disabled = blocked;
         subscribeButton.classList.toggle("done", freeCaseSubscribed);
         subscribeButton.textContent = freeCaseSubscribed ? "✓ Підписано" : "Підписатися на канал";
       }
-
       async function refreshFreeCaseStatus() {
         try {
           const data = await gameRequest("/free-case/status", {});
@@ -952,12 +910,10 @@
           setFreeStatus(err.message, "err");
         }
       }
-
       subscribeButton.addEventListener("click", () => {
         try { tg.openTelegramLink(cfg.channelUrl); }
         catch (_) { window.open(cfg.channelUrl, "_blank"); }
       });
-
       freeOpenButton.addEventListener("click", async () => {
         if (freeOpenButton.disabled || spinning) return;
         spinning = true;
@@ -1009,7 +965,6 @@
           updateFreeCaseButton();
         }
       });
-
       freeCaseSell.addEventListener("click", async () => {
         if (!freeWonItem || freeCaseSell.disabled) return;
         freeCaseSell.disabled = true;
@@ -1021,6 +976,23 @@
         } catch (err) { setFreeStatus(err.message, "err"); }
         finally { freeCaseSell.disabled = false; }
       });
+
+      // ===== BAN SCREEN =====
+      function showBanScreen(untilIso, reason) {
+        const reasonEl = $("banReason"), untilEl = $("banUntil");
+        reasonEl.textContent = reason || "Порушення правил гри";
+        if (untilIso) {
+          const d = new Date(untilIso);
+          const formatted = d.toLocaleString("uk-UA", {
+            day:"2-digit", month:"2-digit", year:"numeric",
+            hour:"2-digit", minute:"2-digit"
+          });
+          untilEl.textContent = `Розблокування: ${formatted}`;
+        } else {
+          untilEl.textContent = "Розблокування: —";
+        }
+        $("banScreen").classList.add("visible");
+      }
 
       // ===== Telegram user =====
       const tg = window.Telegram?.WebApp;
@@ -1068,8 +1040,8 @@
             body: JSON.stringify({ initData: tg.initData })
           });
           const authResult = await response.json().catch(() => ({}));
-          if (authResult && authResult.banned) {
-            showBanScreen(authResult.banReason, authResult.banUntil);
+          if (authResult.banned) {
+            showBanScreen(authResult.banUntil, authResult.banReason);
             return;
           }
           if (!response.ok) throw new Error("Telegram API: " + response.status);
@@ -1109,6 +1081,7 @@
           idLabel.textContent = "ID: помилка підключення";
         }
       }
+
       // ===== UPGRADE =====
       const upgradePage = $("upgradeScreen"), upgradeWheel = $("upgradeWheel"), upgradePointer = document.querySelector("#upgradeScreen .upgrade-pointer");
       let upgradeSource = null, upgradeTarget = null, upgradeTab = "own";
@@ -1291,25 +1264,25 @@
       adminOverlay.addEventListener("click", e => { if (e.target === adminOverlay) closeAdmin(); });
       document.addEventListener("keydown", e => { if (e.key === "Escape") closeAdmin(); });
 
-      const adminTabTopup = $("adminTabTopup"), adminTabPromo = $("adminTabPromo");
-      const adminTabBan = $("adminTabBan"), adminTabFind = $("adminTabFind");
-      const adminPaneTopup = $("adminPaneTopup"), adminPanePromo = $("adminPanePromo");
-      const adminPaneBan = $("adminPaneBan"), adminPaneFind = $("adminPaneFind");
+      const adminTabs = {
+        topup: { btn: $("adminTabTopup"), pane: $("adminPaneTopup") },
+        promo: { btn: $("adminTabPromo"), pane: $("adminPanePromo") },
+        ban:   { btn: $("adminTabBan"),   pane: $("adminPaneBan") },
+        find:  { btn: $("adminTabFind"),  pane: $("adminPaneFind") }
+      };
       function setAdminTab(tab) {
-        const map = { topup: adminPaneTopup, promo: adminPanePromo, ban: adminPaneBan, find: adminPaneFind };
-        const tabs = { topup: adminTabTopup, promo: adminTabPromo, ban: adminTabBan, find: adminTabFind };
-        for (const key of Object.keys(map)) {
-          const active = key === tab;
-          tabs[key].classList.toggle("active", active);
-          tabs[key].setAttribute("aria-selected", String(active));
-          map[key].style.display = active ? "block" : "none";
+        for (const key of Object.keys(adminTabs)) {
+          const isActive = key === tab;
+          adminTabs[key].btn.classList.toggle("active", isActive);
+          adminTabs[key].btn.setAttribute("aria-selected", String(isActive));
+          adminTabs[key].pane.style.display = isActive ? "block" : "none";
         }
-        if (tab === "ban") loadBanList();
+        if (tab === "ban") refreshBanList();
       }
-      adminTabTopup.addEventListener("click", () => setAdminTab("topup"));
-      adminTabPromo.addEventListener("click", () => setAdminTab("promo"));
-      adminTabBan.addEventListener("click", () => setAdminTab("ban"));
-      adminTabFind.addEventListener("click", () => setAdminTab("find"));
+      adminTabs.topup.btn.addEventListener("click", () => setAdminTab("topup"));
+      adminTabs.promo.btn.addEventListener("click", () => setAdminTab("promo"));
+      adminTabs.ban.btn.addEventListener("click", () => setAdminTab("ban"));
+      adminTabs.find.btn.addEventListener("click", () => setAdminTab("find"));
 
       let drag = null;
       let lastTouchAt = 0;
@@ -1388,6 +1361,7 @@
         if (Date.now() >= suppressClickUntil) openAdminPanel();
       });
 
+      // TOPUP
       adminForm.addEventListener("submit", async e => {
         e.preventDefault();
         if (!adminAuthorized) return;
@@ -1406,6 +1380,7 @@
         finally { button.disabled = false; }
       });
 
+      // PROMO
       const adminPromoForm = $("adminPromoForm"), adminPromoMessage = $("adminPromoMessage");
       adminPromoForm.addEventListener("submit", async e => {
         e.preventDefault();
@@ -1447,154 +1422,153 @@
         finally { button.disabled = false; }
       });
 
-      // ===== ADMIN: BAN =====
-      const adminBanForm = $("adminBanForm"), adminBanMessage = $("adminBanMessage");
-      adminBanForm.addEventListener("submit", async e => {
-        e.preventDefault();
+      // BAN
+      const adminBanMessage = $("adminBanMessage");
+      const adminUnbanMessage = $("adminUnbanMessage");
+      const adminBansTable = $("adminBansTable");
+
+      function formatUntil(iso) {
+        const d = new Date(iso);
+        return d.toLocaleString("uk-UA", {
+          day:"2-digit", month:"2-digit", year:"numeric",
+          hour:"2-digit", minute:"2-digit"
+        });
+      }
+
+      async function refreshBanList() {
         if (!adminAuthorized) return;
-        const rawId = $("adminBanId").value.trim();
-        const targetId = Number(rawId);
+        adminBansTable.innerHTML = '<div class="admin-bans-empty">Завантаження...</div>';
+        try {
+          const data = await adminRequest("/admin/list-bans");
+          const bans = Array.isArray(data.bans) ? data.bans : [];
+          if (!bans.length) {
+            adminBansTable.innerHTML = '<div class="admin-bans-empty">Немає активних банів</div>';
+            return;
+          }
+          const rows = bans.map(b => `
+            <tr>
+              <td><b>${escapeHtml(b.easyBrainId || '—')}</b></td>
+              <td>${escapeHtml(formatUntil(b.until))}</td>
+              <td>${escapeHtml(b.reason || '')}</td>
+            </tr>
+          `).join("");
+          adminBansTable.innerHTML = `
+            <table>
+              <thead><tr><th>ID</th><th>До</th><th>Причина</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>`;
+        } catch (err) {
+          adminBansTable.innerHTML = `<div class="admin-bans-empty">Помилка: ${escapeHtml(err.message)}</div>`;
+        }
+      }
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, c => ({
+          '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+        })[c]);
+      }
+
+      $("adminBanStart").addEventListener("click", async () => {
+        if (!adminAuthorized) return;
+        const id = $("adminBanId").value.trim().toUpperCase();
         const days = Number($("adminBanDays").value);
         const reason = $("adminBanReason").value.trim();
-        if (!Number.isSafeInteger(targetId) || targetId <= 0) {
-          adminBanMessage.textContent = "ID має бути числовим (наприклад, 123456789).";
+        if (!/^[A-Z0-9]{7}$/.test(id)) {
+          adminBanMessage.textContent = "Easy Brain ID: 7 символів A–Z, 0–9.";
           return;
         }
         if (!Number.isSafeInteger(days) || days < 1 || days > 3650) {
-          adminBanMessage.textContent = "Днів: ціле число 1–3650.";
+          adminBanMessage.textContent = "Кількість днів: 1–3650.";
           return;
         }
         if (!reason) {
-          adminBanMessage.textContent = "Напишіть щось у причину.";
+          adminBanMessage.textContent = "Напишіть щось у причину";
           return;
         }
         const button = $("adminBanStart"); button.disabled = true;
         adminBanMessage.textContent = "Застосовуємо бан...";
         try {
-          const result = await adminRequest("/admin/ban", { targetId, days, reason });
-          const until = new Date(result.until).toLocaleString("uk-UA");
-          adminBanMessage.textContent = `Забанено користувача ${targetId} до ${until}.`;
-          $("adminBanId").value = ""; $("adminBanReason").value = "";
-          loadBanList();
+          const result = await adminRequest("/admin/ban", { easyBrainId: id, days, reason });
+          const name = [result.firstName, result.lastName].filter(Boolean).join(" ");
+          adminBanMessage.textContent = `Готово! Забанено ${name || id} до ${formatUntil(result.until)}.`;
+          $("adminBanId").value = ""; $("adminBanDays").value = ""; $("adminBanReason").value = "";
+          refreshBanList();
         } catch (err) { adminBanMessage.textContent = "Помилка: " + err.message; }
         finally { button.disabled = false; }
       });
 
-      const adminUnbanBtn = $("adminUnbanStart"), adminUnbanMessage = $("adminUnbanMessage");
-      adminUnbanBtn.addEventListener("click", async () => {
+      $("adminUnbanStart").addEventListener("click", async () => {
         if (!adminAuthorized) return;
-        const rawId = $("adminUnbanId").value.trim();
-        const targetId = Number(rawId);
-        if (!Number.isSafeInteger(targetId) || targetId <= 0) {
-          adminUnbanMessage.textContent = "ID має бути числовим.";
+        const id = $("adminUnbanId").value.trim().toUpperCase();
+        if (!/^[A-Z0-9]{7}$/.test(id)) {
+          adminUnbanMessage.textContent = "Easy Brain ID: 7 символів A–Z, 0–9.";
           return;
         }
-        adminUnbanBtn.disabled = true;
-        adminUnbanMessage.textContent = "Знімаємо бан...";
+        const button = $("adminUnbanStart"); button.disabled = true;
+        adminUnbanMessage.textContent = "Розблоковуємо...";
         try {
-          await adminRequest("/admin/unban", { targetId });
-          adminUnbanMessage.textContent = `Готово! Користувача ${targetId} розблоковано.`;
+          await adminRequest("/admin/unban", { easyBrainId: id });
+          adminUnbanMessage.textContent = `Готово! ${id} розблоковано.`;
           $("adminUnbanId").value = "";
-          loadBanList();
+          refreshBanList();
         } catch (err) { adminUnbanMessage.textContent = "Помилка: " + err.message; }
-        finally { adminUnbanBtn.disabled = false; }
-      });
-
-      async function loadBanList() {
-        if (!adminAuthorized) return;
-        const container = $("adminBansTable");
-        container.innerHTML = '<div class="admin-bans-empty">Завантаження...</div>';
-        try {
-          const result = await adminRequest("/admin/list-bans");
-          const bans = Array.isArray(result.bans) ? result.bans : [];
-          if (!bans.length) {
-            container.innerHTML = '<div class="admin-bans-empty">Активних банів немає</div>';
-            return;
-          }
-          const rows = bans.map(b => {
-            const until = new Date(b.until).toLocaleString("uk-UA", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
-            return `<tr><td>${b.telegramId}</td><td>${until}</td><td>${escapeHtml(b.reason)}</td></tr>`;
-          }).join("");
-          container.innerHTML = `<table><thead><tr><th>ID</th><th>До</th><th>Причина</th></tr></thead><tbody>${rows}</tbody></table>`;
-        } catch (err) {
-          container.innerHTML = `<div class="admin-bans-empty">Помилка: ${escapeHtml(err.message)}</div>`;
-        }
-      }
-
-      function escapeHtml(s) {
-        return String(s || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-      }
-
-      // ===== ADMIN: FIND USER =====
-      const adminFindForm = $("adminFindForm"), adminFindMessage = $("adminFindMessage");
-      const adminFindResults = $("adminFindResults");
-
-      function renderFindResults(users) {
-        adminFindResults.innerHTML = "";
-        if (!users.length) return;
-        for (const u of users) {
-          const row = document.createElement("div");
-          row.className = "user-result";
-          const avatar = document.createElement("div");
-          avatar.className = "user-avatar";
-          if (u.photoUrl) {
-            const img = document.createElement("img");
-            img.src = u.photoUrl; img.alt = u.firstName;
-            avatar.append(img);
-          } else {
-            avatar.textContent = (u.firstName || "?")[0].toUpperCase();
-          }
-          const info = document.createElement("div");
-          info.className = "user-info";
-          const displayName = [u.firstName, u.lastName].filter(Boolean).join(" ");
-          const nameEl = document.createElement("div");
-          nameEl.className = "user-name";
-          nameEl.textContent = displayName || "(без імені)";
-          const userEl = document.createElement("div");
-          userEl.className = "user-username";
-          userEl.textContent = u.username ? "@" + u.username : "немає username";
-          const idEl = document.createElement("div");
-          idEl.className = "user-id-hidden";
-          idEl.textContent = "Натисни, щоб показати ID";
-          info.append(nameEl, userEl, idEl);
-          row.append(avatar, info);
-          row.addEventListener("click", () => {
-            if (idEl.dataset.shown === "1") {
-              idEl.className = "user-id-hidden";
-              idEl.textContent = "Натисни, щоб показати ID";
-              idEl.dataset.shown = "0";
-            } else {
-              idEl.className = "user-id-shown";
-              idEl.textContent = "Easy Brain ID: " + (u.easyBrainId || "---");
-              idEl.dataset.shown = "1";
-            }
-          });
-          adminFindResults.append(row);
-        }
-      }
-
-      adminFindForm.addEventListener("submit", async e => {
-        e.preventDefault();
-        if (!adminAuthorized) return;
-        const name = $("adminFindName").value.trim();
-        if (!name) { adminFindMessage.textContent = "Введи ім'я."; return; }
-        const button = $("adminFindStart"); button.disabled = true;
-        adminFindMessage.textContent = "Шукаємо...";
-        adminFindResults.innerHTML = "";
-        try {
-          const result = await adminRequest("/admin/find-user", { name });
-          const users = Array.isArray(result.users) ? result.users : [];
-          if (!users.length) {
-            adminFindMessage.textContent = "Нічого не знайдено. Гравець ні разу не заходив, або ім'я вказано не точно.";
-          } else {
-            adminFindMessage.textContent = `Знайдено: ${users.length}`;
-            renderFindResults(users);
-          }
-        } catch (err) { adminFindMessage.textContent = "Помилка: " + err.message; }
         finally { button.disabled = false; }
       });
 
-      // PROMO REDEEM
+      // FIND
+      const adminFindMessage = $("adminFindMessage");
+      const adminFindResults = $("adminFindResults");
+      $("adminFindStart").addEventListener("click", async () => {
+        if (!adminAuthorized) return;
+        const name = $("adminFindName").value.trim();
+        if (!name) {
+          adminFindMessage.textContent = "Введи ім'я гравця.";
+          return;
+        }
+        adminFindMessage.textContent = "Шукаємо...";
+        adminFindResults.replaceChildren();
+        try {
+          const data = await adminRequest("/admin/find-user", { name });
+          const users = Array.isArray(data.users) ? data.users : [];
+          if (!users.length) {
+            adminFindMessage.textContent = "Гравець ні разу не заходив";
+            return;
+          }
+          adminFindMessage.textContent = `Знайдено: ${users.length}`;
+          for (const u of users) {
+            const card = document.createElement("div");
+            card.className = "admin-user-card";
+            const avatar = u.photoUrl
+              ? `<img src="${escapeHtml(u.photoUrl)}" alt="">`
+              : `<div class="placeholder">${escapeHtml((u.firstName||'?')[0].toUpperCase())}</div>`;
+            const fullName = [u.firstName, u.lastName].filter(Boolean).join(" ");
+            const uname = u.username ? "@" + u.username : "—";
+            card.innerHTML = `
+              ${avatar}
+              <div class="info">
+                <div class="name">${escapeHtml(fullName || '—')}</div>
+                <div class="uname">${escapeHtml(uname)}</div>
+                <div class="id hidden">Натисни, щоб показати ID</div>
+              </div>
+            `;
+            card.addEventListener("click", () => {
+              const idEl = card.querySelector(".id");
+              if (idEl.classList.contains("hidden")) {
+                idEl.textContent = `Easy Brain ID: ${u.easyBrainId || '—'}`;
+                idEl.classList.remove("hidden");
+              } else {
+                idEl.textContent = "Натисни, щоб показати ID";
+                idEl.classList.add("hidden");
+              }
+            });
+            adminFindResults.append(card);
+          }
+        } catch (err) {
+          adminFindMessage.textContent = "Помилка: " + err.message;
+        }
+      });
+
+      // PROMO REDEEM (profile)
       const promoInput = $("promoInput"), promoSubmit = $("promoSubmit"), promoMessage = $("promoMessage");
       function setPromoMessage(text, kind) {
         promoMessage.textContent = text;
@@ -1628,7 +1602,7 @@
         if (e.key === "Enter") { e.preventDefault(); redeemPromo(); }
       });
 
-      // ===== STARS TOP-UP =====
+      // STARS TOP-UP
       const starsOverlay = $("starsOverlay");
       const starsInput = $("starsInput");
       const starsPreview = $("starsPreview");

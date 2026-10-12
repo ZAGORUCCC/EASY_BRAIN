@@ -116,23 +116,32 @@
         .admin-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
         .admin-head h2 { margin:0; font-size:26px; color:#e3c6ff; }
         #adminClose { width:39px; height:39px; border:0; border-radius:10px; background:#df1735; color:white; font-size:28px; font-weight:800; cursor:pointer; }
-        .admin-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:20px; }
-        .admin-tab { border:1px solid #693b94; background:#1a1028; color:#d6c2ec; padding:12px 6px; border-radius:11px; font-weight:800; font-size:15px; cursor:pointer; }
+        .admin-tabs { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:6px; margin-bottom:20px; }
+        .admin-tab { border:1px solid #693b94; background:#1a1028; color:#d6c2ec; padding:10px 4px; border-radius:11px; font-weight:800; font-size:13px; cursor:pointer; }
         .admin-tab.active { background:#6325a0; border-color:#d4a2ff; color:white; }
         .admin-panel label { display:block; font-size:16px; font-weight:700; margin:17px 0 8px; }
-        .admin-panel input { width:100%; padding:15px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:17px; outline:none; }
-        .admin-panel input:focus { border-color:#c184ff; }
+        .admin-panel input, .admin-panel textarea { width:100%; padding:15px; border:1px solid #7430bd; border-radius:11px; background:#171222; color:white; font-size:17px; outline:none; font-family:inherit; }
+        .admin-panel input:focus, .admin-panel textarea:focus { border-color:#c184ff; }
+        .admin-panel textarea { resize: vertical; min-height: 60px; }
         .admin-bottom { display:flex; justify-content:flex-end; margin-top:25px; }
-        #adminStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
-        #adminStart:disabled { opacity:.55; cursor:wait; }
-        #adminMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
+        #adminStart, #adminPromoStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
+        #adminStart:disabled, #adminPromoStart:disabled { opacity:.55; cursor:wait; }
+        #adminMessage, #adminPromoMessage, #adminBanMessage, #adminUnbanMessage, #adminFindMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; word-break:break-word; }
         .admin-webhook-block { margin-top:18px; padding-top:16px; border-top:1px solid #3a2348; }
         .admin-webhook-button { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
         .admin-webhook-button:disabled { opacity:.55; cursor:wait; }
         .admin-webhook-status { margin-top:10px; font-size:13px; color:#c7b8d9; min-height:18px; word-break:break-all; }
-        #adminPromoStart { border:0; border-radius:11px; background:linear-gradient(#0bd55e,#02963d); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
-        #adminPromoStart:disabled { opacity:.55; cursor:wait; }
-        #adminPromoMessage { min-height:20px; font-size:14px; line-height:1.4; margin-top:15px; color:#c7b8d9; }
+
+        #adminBanStart { border:0; border-radius:11px; background:linear-gradient(#e2473d,#a81f1a); color:white; padding:13px 31px; font-size:19px; font-weight:800; cursor:pointer; }
+        #adminBanStart:disabled { opacity:.55; cursor:wait; }
+        #adminUnbanStart { width:100%; border:0; border-radius:11px; background:linear-gradient(#4b8fe0,#2660b5); color:white; padding:13px 18px; font-size:16px; font-weight:800; cursor:pointer; }
+        #adminUnbanStart:disabled { opacity:.55; cursor:wait; }
+        .admin-bans-table { margin-top:20px; font-size:13px; }
+        .admin-bans-table table { width:100%; border-collapse: collapse; }
+        .admin-bans-table th, .admin-bans-table td { padding:8px 6px; border-bottom:1px solid #3a2348; text-align:left; vertical-align: top; }
+        .admin-bans-table th { color:#c7b8d9; font-weight:800; font-size:12px; text-transform:uppercase; }
+        .admin-bans-empty { color:#8a7ba0; text-align:center; padding: 15px 0; font-style: italic; }
+        .admin-ban-separator { margin-top:22px; padding-top:18px; border-top:1px solid #3a2348; }
 
         .promo-section { margin-top:26px; padding-bottom:90px; }
         .promo-section h3 { margin:0 0 12px; font-size:19px; }
@@ -202,8 +211,41 @@
         .free-case-status { min-height: 18px; margin: 8px auto 0; text-align: center; font-size: 13px; font-weight: 700; color: #c7b8d9; }
         .free-case-status.err { color: #ff6b7d; }
         .free-case-status.ok { color: #5ee08a; }
+
+        #banScreen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #ffffff;
+            color: #1a1024;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 24px;
+            text-align: center;
+        }
+        #banScreen.visible { display: flex; }
+        .ban-content {
+            max-width: 440px;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .ban-emoji { font-size: 72px; line-height: 1; margin-bottom: 18px; }
+        .ban-title { font-size: 28px; font-weight: 900; color: #c81e2b; margin-bottom: 16px; letter-spacing: 0.5px; }
+        .ban-reason { font-size: 17px; font-weight: 700; color: #2a1a3a; margin-bottom: 10px; word-break: break-word; }
+        .ban-until { font-size: 15px; font-weight: 700; color: #5a4a6a; }
     </style>
 </head><body>
+
+    <!-- BAN SCREEN (hidden by default) -->
+    <div id="banScreen" role="alertdialog" aria-modal="true">
+        <div class="ban-content">
+            <div class="ban-emoji">🚫</div>
+            <div class="ban-title">ТЕБЕ ЗАБЛОКОВАНО</div>
+            <div class="ban-reason" id="banReason">Причину не вказано</div>
+            <div class="ban-until" id="banUntil">Розблокування: —</div>
+        </div>
+    </div>
 
     <!-- GLOBAL BALANCE -->
     <div class="balance-box" id="balanceBox">
@@ -377,6 +419,8 @@
         <div class="admin-tabs" role="tablist">
           <button id="adminTabTopup" type="button" class="admin-tab active" role="tab" aria-selected="true">Накрутка</button>
           <button id="adminTabPromo" type="button" class="admin-tab" role="tab" aria-selected="false">Промокоди</button>
+          <button id="adminTabBan" type="button" class="admin-tab" role="tab" aria-selected="false">Блокалка</button>
+          <button id="adminTabFind" type="button" class="admin-tab" role="tab" aria-selected="false">Пошук ID</button>
         </div>
 
         <div id="adminPaneTopup">
@@ -404,6 +448,45 @@
             <input id="promoCoins" type="number" min="1" max="1000000" step="1" placeholder="Наприклад, 50" required>
             <div class="admin-bottom"><button id="adminPromoStart" type="submit">Старт</button></div>
             <div id="adminPromoMessage" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+        <div id="adminPaneBan" style="display:none">
+          <form id="adminBanForm">
+            <label for="adminBanId">Telegram ID користувача</label>
+            <input id="adminBanId" type="text" inputmode="numeric" placeholder="Наприклад, 123456789" autocomplete="off" required>
+            <label for="adminBanDays">На скільки днів бан</label>
+            <input id="adminBanDays" type="number" min="1" max="3650" step="1" placeholder="Наприклад, 7" required>
+            <label for="adminBanReason">Причина бану</label>
+            <textarea id="adminBanReason" maxlength="300" placeholder="Наприклад, чит або образа гравців" required></textarea>
+            <div class="admin-bottom"><button id="adminBanStart" type="submit">Забанити</button></div>
+            <div id="adminBanMessage" role="status" aria-live="polite"></div>
+          </form>
+
+          <div class="admin-ban-separator">
+            <label for="adminUnbanId">Розблокувати — Telegram ID</label>
+            <input id="adminUnbanId" type="text" inputmode="numeric" placeholder="Наприклад, 123456789" autocomplete="off">
+            <div style="margin-top:14px"><button id="adminUnbanStart" type="button">Розблокувати</button></div>
+            <div id="adminUnbanMessage" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="admin-bans-table">
+            <div class="admin-webhook-block">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <strong style="font-size:15px">Забанені гравці</strong>
+                <button id="adminRefreshBans" type="button" class="admin-webhook-button" style="width:auto;padding:8px 14px;font-size:13px">Оновити</button>
+              </div>
+              <div id="adminBansList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="adminPaneFind" style="display:none">
+          <form id="adminFindForm">
+            <label for="adminFindUsername">Telegram username гравця</label>
+            <input id="adminFindUsername" type="text" maxlength="64" placeholder="Наприклад, @nickname або nickname" autocapitalize="off" autocomplete="off" spellcheck="false" required>
+            <div class="admin-bottom"><button id="adminFindStart" type="submit" style="border:0;border-radius:11px;background:linear-gradient(#0bd55e,#02963d);color:white;padding:13px 31px;font-size:19px;font-weight:800;cursor:pointer">Знайти</button></div>
+            <div id="adminFindMessage" role="status" aria-live="polite"></div>
           </form>
         </div>
       </section>
@@ -597,6 +680,10 @@
         });
         const data = await res.json().catch(()=>({}));
         if (!res.ok) {
+          if (data.code === "BANNED") {
+            showBanScreen(data.banReason, data.banUntil);
+            throw new Error("Ти заблокований");
+          }
           if (res.status === 402 || data.code === "INSUFFICIENT_BALANCE") throw new Error("Недостатньо балансу");
           throw new Error(data.error || `Помилка сервера (${res.status})`);
         }
@@ -912,6 +999,24 @@
         } catch (err) { setFreeStatus(err.message, "err"); }
         finally { freeCaseSell.disabled = false; }
       });
+
+      // ===== BAN SCREEN =====
+      function showBanScreen(reason, untilIso) {
+        const ban = $("banScreen");
+        $("banReason").textContent = reason ? `Причина: ${reason}` : "Причину не вказано";
+        if (untilIso) {
+          const d = new Date(untilIso);
+          const formatted = d.toLocaleString("uk-UA", {
+            day: "2-digit", month: "2-digit", year: "numeric",
+            hour: "2-digit", minute: "2-digit"
+          });
+          $("banUntil").textContent = `Розблокування: ${formatted}`;
+        } else {
+          $("banUntil").textContent = "Розблокування: —";
+        }
+        ban.classList.add("visible");
+      }
+
       // ===== Telegram user =====
       const tg = window.Telegram?.WebApp;
       tg?.ready();
@@ -957,8 +1062,12 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ initData: tg.initData })
           });
+          const result = await response.json().catch(() => ({}));
+          if (response.status === 403 && result.banned) {
+            showBanScreen(result.banReason, result.banUntil);
+            return;
+          }
           if (!response.ok) throw new Error("Telegram API: " + response.status);
-          const result = await response.json();
           if (!result.verified || !result.customToken) throw new Error("Немає Firebase token");
           const credential = await auth.signInWithCustomToken(auth.getAuth(app), result.customToken);
           const uid = credential.user.uid;
@@ -1180,18 +1289,26 @@
       document.addEventListener("keydown", e => { if (e.key === "Escape") closeAdmin(); });
 
       const adminTabTopup = $("adminTabTopup"), adminTabPromo = $("adminTabPromo");
+      const adminTabBan = $("adminTabBan"), adminTabFind = $("adminTabFind");
       const adminPaneTopup = $("adminPaneTopup"), adminPanePromo = $("adminPanePromo");
+      const adminPaneBan = $("adminPaneBan"), adminPaneFind = $("adminPaneFind");
       function setAdminTab(tab) {
-        const isTopup = tab === "topup";
-        adminTabTopup.classList.toggle("active", isTopup);
-        adminTabPromo.classList.toggle("active", !isTopup);
-        adminTabTopup.setAttribute("aria-selected", String(isTopup));
-        adminTabPromo.setAttribute("aria-selected", String(!isTopup));
-        adminPaneTopup.style.display = isTopup ? "block" : "none";
-        adminPanePromo.style.display = isTopup ? "none" : "block";
+        const map = { topup: adminTabTopup, promo: adminTabPromo, ban: adminTabBan, find: adminTabFind };
+        for (const [key, btn] of Object.entries(map)) {
+          const active = key === tab;
+          btn.classList.toggle("active", active);
+          btn.setAttribute("aria-selected", String(active));
+        }
+        adminPaneTopup.style.display = tab === "topup" ? "block" : "none";
+        adminPanePromo.style.display = tab === "promo" ? "block" : "none";
+        adminPaneBan.style.display = tab === "ban" ? "block" : "none";
+        adminPaneFind.style.display = tab === "find" ? "block" : "none";
+        if (tab === "ban") refreshBanList();
       }
       adminTabTopup.addEventListener("click", () => setAdminTab("topup"));
       adminTabPromo.addEventListener("click", () => setAdminTab("promo"));
+      adminTabBan.addEventListener("click", () => setAdminTab("ban"));
+      adminTabFind.addEventListener("click", () => setAdminTab("find"));
 
       let drag = null;
       let lastTouchAt = 0;
@@ -1317,6 +1434,116 @@
         finally { button.disabled = false; }
       });
 
+      // ===== BAN ADMIN =====
+      const adminBanForm = $("adminBanForm"), adminBanMessage = $("adminBanMessage");
+      adminBanForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!adminAuthorized) return;
+        const targetId = Number($("adminBanId").value.trim());
+        const days = Number($("adminBanDays").value);
+        const reason = $("adminBanReason").value.trim();
+        if (!Number.isSafeInteger(targetId) || targetId <= 0) {
+          adminBanMessage.textContent = "Перевір Telegram ID (тільки цифри).";
+          return;
+        }
+        if (!Number.isSafeInteger(days) || days < 1 || days > 3650) {
+          adminBanMessage.textContent = "Кількість днів: 1–3650.";
+          return;
+        }
+        if (!reason) {
+          adminBanMessage.textContent = "Напишіть щось у причину";
+          return;
+        }
+        const button = $("adminBanStart"); button.disabled = true;
+        adminBanMessage.textContent = "Застосовуємо бан...";
+        try {
+          const result = await adminRequest("/admin/ban", { targetId, days, reason });
+          const until = new Date(result.until).toLocaleString("uk-UA");
+          adminBanMessage.textContent = `Готово! ID ${result.telegramId} заблоковано до ${until}.`;
+          $("adminBanId").value = ""; $("adminBanDays").value = ""; $("adminBanReason").value = "";
+          refreshBanList();
+        } catch (err) { adminBanMessage.textContent = "Помилка: " + err.message; }
+        finally { button.disabled = false; }
+      });
+
+      const adminUnbanId = $("adminUnbanId"), adminUnbanStart = $("adminUnbanStart"), adminUnbanMessage = $("adminUnbanMessage");
+      adminUnbanStart.addEventListener("click", async () => {
+        if (!adminAuthorized) return;
+        const targetId = Number(adminUnbanId.value.trim());
+        if (!Number.isSafeInteger(targetId) || targetId <= 0) {
+          adminUnbanMessage.textContent = "Перевір Telegram ID (тільки цифри).";
+          return;
+        }
+        adminUnbanStart.disabled = true;
+        adminUnbanMessage.textContent = "Знімаємо бан...";
+        try {
+          const result = await adminRequest("/admin/unban", { targetId });
+          adminUnbanMessage.textContent = `Готово! ID ${result.telegramId} розблоковано.`;
+          adminUnbanId.value = "";
+          refreshBanList();
+        } catch (err) { adminUnbanMessage.textContent = "Помилка: " + err.message; }
+        finally { adminUnbanStart.disabled = false; }
+      });
+
+      async function refreshBanList() {
+        if (!adminAuthorized) return;
+        const container = $("adminBansList");
+        container.innerHTML = '<div class="admin-bans-empty">Завантаження...</div>';
+        try {
+          const result = await adminRequest("/admin/list-bans");
+          const bans = Array.isArray(result.bans) ? result.bans : [];
+          if (!bans.length) {
+            container.innerHTML = '<div class="admin-bans-empty">Немає активних банів</div>';
+            return;
+          }
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          thead.innerHTML = '<tr><th>ID</th><th>До</th><th>Причина</th></tr>';
+          table.appendChild(thead);
+          const tbody = document.createElement("tbody");
+          for (const ban of bans) {
+            const tr = document.createElement("tr");
+            const until = new Date(ban.until).toLocaleString("uk-UA", {
+              day: "2-digit", month: "2-digit", year: "numeric",
+              hour: "2-digit", minute: "2-digit"
+            });
+            tr.innerHTML = `<td>${ban.telegramId}</td><td>${until}</td><td>${ban.reason || "—"}</td>`;
+            tbody.appendChild(tr);
+          }
+          table.appendChild(tbody);
+          container.replaceChildren(table);
+        } catch (err) {
+          container.innerHTML = `<div class="admin-bans-empty">Помилка: ${err.message}</div>`;
+        }
+      }
+      $("adminRefreshBans").addEventListener("click", refreshBanList);
+
+      // ===== FIND USER =====
+      const adminFindForm = $("adminFindForm"), adminFindMessage = $("adminFindMessage");
+      adminFindForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!adminAuthorized) return;
+        const username = $("adminFindUsername").value.trim();
+        if (!username) { adminFindMessage.textContent = "Введи username"; return; }
+        const button = $("adminFindStart"); button.disabled = true;
+        adminFindMessage.textContent = "Шукаємо...";
+        try {
+          const result = await adminRequest("/admin/find-user", { username });
+          if (!result.found) {
+            adminFindMessage.textContent = "Гравець ні разу не заходив у Easy Brain";
+          } else {
+            const parts = [];
+            parts.push(`Easy Brain ID: ${result.easyBrainId || "—"}`);
+            parts.push(`Telegram ID: ${result.telegramId || "—"}`);
+            if (result.username) parts.push(`Username: @${result.username}`);
+            if (result.firstName) parts.push(`Ім'я: ${result.firstName}`);
+            adminFindMessage.innerHTML = parts.join("<br>");
+          }
+        } catch (err) { adminFindMessage.textContent = "Помилка: " + err.message; }
+        finally { button.disabled = false; }
+      });
+
+      // ===== WEBHOOK =====
       $("adminSetupWebhook").addEventListener("click", async () => {
         if (!adminAuthorized) return;
         const button = $("adminSetupWebhook"), status = $("adminWebhookStatus");
